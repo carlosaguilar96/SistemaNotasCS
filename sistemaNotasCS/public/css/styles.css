@@ -1,0 +1,54 @@
+body{
+    background-color: #F1F1F1;
+}
+
+#divHeader{
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: fixed;
+    z-index:4000;
+}
+
+#navHeader{
+    background-color: #B84C4C;
+}
+
+#navHeader .row{
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: left;
+}
+
+#navHeader p{
+    text-transform: uppercase;
+    font-weight:bold;
+    font-size: 24pt;
+    color:white;
+}
+
+#navHeader .navbar-brand{
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+}
+
+#divFooter{
+    width: 100%;
+    color:black
+}
+
+#navFooter{
+    background-color: #CFCBCB
+}
+
+p #titulo{
+    font-weight: bold;
+    font-size:14pt;
+    font-style: italic
+}
+
+label{
+    font-weight: bold;
+}
