@@ -9,6 +9,10 @@
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link href="{{ asset('css/styles.css') }}" type="text/css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script src="https://unpkg.com/imask"></script>
+        <script src="{{ asset('js/profesor/validarFormCrear.js') }}"></script>
 
     </head>
     <body>
@@ -23,6 +27,17 @@
             </nav>
         </div>
         <div class="container" style="width:100%; margin-top:100pt;">
+            @if (session('errorAgregarProfesor'))
+            <script>
+                Swal.fire({
+                    title: "Profesor no agregado",
+                    text: "{{ session('errorAgregarProfesor') }}",
+                    icon: "error",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C", 
+                });       
+            </script>
+            @endif
             <div class="row">
                 <div class="col-12">
                     <p class="text-center" style="font-size:16pt; font-weight:bold; color:black">Nuevo profesor</p>
@@ -40,29 +55,29 @@
 										</ul>
 									</div>
 								@endif
-								<form method="POST" action="" enctype="multipart/form-data">
+								<form method="POST" action="{{route('admin.guardarProfesor')}}" enctype="multipart/form-data">
 									@csrf
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="col-12 mb-3">
                                                 <label for="dui" class="form-label">DUI</label>
-                                                <input type="text" class="form-control" name="dui" id="dui" placeholder="Documento único de identidad del profesor">
+                                                <input type="text" class="form-control" name="dui" id="dui" placeholder="Documento único de identidad del profesor" value="{{ old('dui') }}">
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <label for="carnet" class="form-label">Carnet</label>
-                                                <input type="text" class="form-control" name="carnet" id="carnet" placeholder="Carnet del profesor">
+                                                <input type="text" class="form-control" name="carnet" id="carnet" placeholder="Carnet del profesor" value="{{ old('carnet') }}">
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <label for="nombre" class="form-label">Nombre</label>
-                                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del profesor">
+                                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del profesor" value="{{ old('nombre') }}">
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <label for="apellido" class="form-label">Apellidos</label>
-                                                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellidos del profesor">
+                                                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellidos del profesor" value="{{ old('apellido') }}">
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <label for="correo" class="form-label">Correo</label>
-                                                <input type="text" class="form-control" name="correo" id="correo" placeholder="Correo del profesor">
+                                                <input type="text" class="form-control" name="correo" id="correo" placeholder="Correo del profesor" value="{{ old('correo') }}">
                                             </div>
                                             <div class="col-12 mb-4">
                                                 <label for="foto" class="form-label">Foto</label>
@@ -75,7 +90,7 @@
                                                 @foreach ($materias as $materia)
                                                 <div class="col-12 text-start" style="text-align: center; display: flex;justify-content: center;">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="top25[]" value="{{$materia->idMateria}}" id="cb{{$materia->nombreMateria}}">
+                                                    <input class="form-check-input" type="checkbox" name="materias[]" value="{{$materia->idMateria}}" id="cb{{$materia->nombreMateria}}">
                                                     <label class="form-check-label" for="cb{{$materia->nombreMateria}}">
                                                       {{$materia->nombreMateria}}
                                                     </label>

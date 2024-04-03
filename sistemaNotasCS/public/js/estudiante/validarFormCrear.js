@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //Iniciando máscara para campos de texto
     var txtNIE = document.getElementById('nie');
     
-    if(txtNIE != null) //Verificando  que exista un elemento con el id txtPhone
+    if(txtNIE != null) 
     {
         var maskOptions = {
             mask: '00000000'
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     var txtCarnet = document.getElementById('carnet');
     
-    if(txtCarnet != null) //Verificando  que exista un elemento con el id txtPhone
+    if(txtCarnet != null) 
     {
         var maskOptions = {
             mask: 'aa000000'

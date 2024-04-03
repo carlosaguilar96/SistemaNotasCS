@@ -10,6 +10,17 @@
         });       
     </script>
 @endif
+@if (session('exitoAgregarProfesor'))
+    <script>
+        Swal.fire({
+            title: "Profesor agregado",
+            text: "{{ session('exitoAgregarProfesor') }}",
+            icon: "success",
+            button: "OK",
+            confirmButtonColor: "#B84C4C",
+        });       
+    </script>
+@endif
     <div class="row text-center">
         <div class="col-12">
             <p class="text-center" style="font-size:16pt; font-weight:bold; color:black">Gestión de usuarios</p>

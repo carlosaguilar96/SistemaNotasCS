@@ -29,7 +29,7 @@
             </nav>
         </div>
         <div class="container" style="width:100%; margin-top:100pt;">
-            @if (session('exitoAgregarEstudiante'))
+            @if (session('errorAgregarEstudiante'))
             <script>
                 Swal.fire({
                     title: "Estudiante no agregado",

@@ -14,7 +14,7 @@ CREATE TABLE `estudiante` (
 );
 
 CREATE TABLE `profesor` (
-  `DUI` int PRIMARY KEY NOT NULL,
+  `DUI` varchar(10) PRIMARY KEY NOT NULL,
   `carnet` varchar(100) NOT NULL,
   `nombres` varchar(50) NOT NULL,
   `apellidos` varchar(50) NOT NULL,
@@ -86,6 +86,14 @@ INSERT INTO `materia` (`nombreMateria`) VALUES
 ('Proyecto de Graduación'),
 ('Mercadeo'),
 ('Matemática Pre Universitaria');
+
+CREATE TABLE `detalleprofesormateria` (
+  `idDetalle` int PRIMARY KEY AUTO_INCREMENT,
+  `idProfesor` varchar(10) NOT NULL,
+  `idMateria` int NOT NULL,
+  FOREIGN KEY(`idProfesor`) REFERENCES `profesor`(`DUI`),
+  FOREIGN KEY(`idMateria`) REFERENCES `materia`(`idMateria`)
+);
 
 
 
