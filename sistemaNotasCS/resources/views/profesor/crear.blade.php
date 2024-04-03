@@ -69,20 +69,29 @@
                                                 <input class="form-control" type="file" id="foto" name="foto">
                                             </div>
                                         </div>
-                                        <div class="col-6">
-
-                                        </div>                          
-                                    </div>
-									<div class="row">
-										<button class="btn btn-warning mt-2 mx-auto d-block " style="width:auto;" type="submit">Agregar Profesor</button>
-									</div>										
+                                        <div class="col-lg-6 mt-lg-0 mt-4">
+                                            <div class="row text-center">
+                                                <p class="text-center" style="font-size:12pt; color:black; font-weight:bold;">Seleccione las materias que el profesor puede impartir</p>
+                                                @foreach ($materias as $materia)
+                                                <div class="col-12 text-start" style="text-align: center; display: flex;justify-content: center;">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="top25[]" value="{{$materia->idMateria}}" id="cb{{$materia->nombreMateria}}">
+                                                    <label class="form-check-label" for="cb{{$materia->nombreMateria}}">
+                                                      {{$materia->nombreMateria}}
+                                                    </label>
+                                                </div>                                                  
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>  
+                                        <div class="col-12 mt-lg-0 mt-4">
+                                            <button class="btn btn-warning mt-2 mx-auto d-block " style="width:auto;" type="submit">Agregar Profesor</button>
+                                        </div>                        
+                                    </div>										
 								</form>		
-							</div>										
-						</div>
+						</div>										
 					</div>
-                </div>
+				</div>
             </div>
         </div>
-        @include('footer')
-    </body>
-</html>
+@include('sitioAdmin.footer')
