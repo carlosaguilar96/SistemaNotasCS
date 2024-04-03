@@ -30,11 +30,7 @@ CREATE TABLE `etapa` (
 
 INSERT INTO `etapa` (`nombreEtapa`) VALUES
 ('Tercer Ciclo'),
-('Bachillerato General'),
-('Bachillerato Técnico en Desarrollo de Software'),
-('Bachillerato Técnico en Servicios Turísticos'),
-('Bachillerato Técnico Comercial'),
-('Bachillerato Técnico en Salud');
+('Bachillerato General');
 
 CREATE TABLE `grado` (
   `idGrado` int PRIMARY KEY AUTO_INCREMENT,
