@@ -2,7 +2,7 @@
 
 INTEGRANTES DEL PROYECTO
 
-- Aguilar Linares, José Carlos          AL210841    GTUPO 01T
+- Aguilar Linares, José Carlos          AL210841    GRUPO 01T
 - Campos Monterroza, Carlos Fernando	CM210153    GRUPO 01T
 - Cruz Reyes, Christopher Amílcar	    CR211136    GRUPO 01T
 - Díaz García, Jorge Antonio	        DG101201    GRUPO 01T
