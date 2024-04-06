@@ -41,4 +41,10 @@ Route::prefix('admin')->group(function(){
     Route::get('/crearProfesor',[ProfesorController::class,'crearProfesor'])->name('admin.crearProfesor');
     //Ruta para insertar profesor a la bd
     Route::post('/guardarProfesor',[ProfesorController::class,'storeProfesor'])->name('admin.guardarProfesor');
+
+    //Rutas relacionadas al ProfesorController
+    //Ruta para mostrar vista para crear administrador
+    Route::get('/crearAdministrador',[AdminController::class,'creacionAdmin'])->name('admin.crearAdmin');
+    //Ruta para insertar profesor a la bd
+    Route::post('/guardarAdministrador',[AdminController::class,'storeAdmin'])->name('admin.guardarAdmin');
 });
