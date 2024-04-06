@@ -95,6 +95,16 @@ CREATE TABLE `detalleprofesormateria` (
   FOREIGN KEY(`idMateria`) REFERENCES `materia`(`idMateria`)
 );
 
+CREATE TABLE `administrador` (
+  `DUI` varchar(10) PRIMARY KEY NOT NULL,
+  `carnet` varchar(100) NOT NULL,
+  `nombres` varchar(50) NOT NULL,
+  `apellidos` varchar(50) NOT NULL,
+  `correo` varchar(125) NOT NULL,
+  `foto` varchar(150) NOT NULL,
+  `estadoeliminacion` int NOT NULL
+);
+
 
 
 
