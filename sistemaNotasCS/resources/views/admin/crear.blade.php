@@ -61,23 +61,23 @@
                                         
                                             <div class="col-lg-6 mb-3">
                                                 <label for="dui" class="form-label">DUI</label>
-                                                <input type="text" class="form-control" name="dui" id="dui" placeholder="Documento único de identidad del profesor" value="{{ old('dui') }}">
+                                                <input type="text" class="form-control" name="dui" id="dui" placeholder="Documento único de identidad del administrador" value="{{ old('dui') }}">
                                             </div>
                                             <div class="col-lg-6 mb-3">
                                                 <label for="carnet" class="form-label">Carnet</label>
-                                                <input type="text" class="form-control" name="carnet" id="carnet" placeholder="Carnet del profesor" value="{{ old('carnet') }}">
+                                                <input type="text" class="form-control" name="carnet" id="carnet" placeholder="Carnet del administrador" value="{{ old('carnet') }}">
                                             </div>
                                             <div class="col-lg-6 mb-3">
                                                 <label for="nombre" class="form-label">Nombre</label>
-                                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del profesor" value="{{ old('nombre') }}">
+                                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del administrador" value="{{ old('nombre') }}">
                                             </div>
                                             <div class="col-lg-6 mb-3">
                                                 <label for="apellido" class="form-label">Apellidos</label>
-                                                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellidos del profesor" value="{{ old('apellido') }}">
+                                                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellidos del administrador" value="{{ old('apellido') }}">
                                             </div>
                                             <div class="col-lg-6 mb-3">
                                                 <label for="correo" class="form-label">Correo</label>
-                                                <input type="text" class="form-control" name="correo" id="correo" placeholder="Correo del profesor" value="{{ old('correo') }}">
+                                                <input type="text" class="form-control" name="correo" id="correo" placeholder="Correo del administrador" value="{{ old('correo') }}">
                                             </div>
                                             <div class="col-lg-6 mb-4">
                                                 <label for="foto" class="form-label">Foto</label>
