@@ -108,4 +108,11 @@ class EstudianteController extends Controller
             return to_route('admin.crearEstudiante')->with('errorAgregarEstudiante','Error al ingresar estudiante. Intente otra vez.');
         }
     }
+
+    //función para mostrar la vista para gestión de estudiantes
+    public function index(){
+        $estudiantesActivos = DB::table('estudiante')->where('estadoEliminacion','=',1)->orderBy('apellidos','asc')->get();
+        $estudiantesInactivos = DB::table('estudiante')->where('estadoEliminacion','=',0)->orderBy('apellidos','asc')->get();
+        return view('estudiante.index',compact('estudiantesActivos','estudiantesInactivos'));
+    }
 }

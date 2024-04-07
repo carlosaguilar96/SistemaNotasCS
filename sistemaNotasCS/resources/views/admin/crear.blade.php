@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" href="http://127.0.0.1:8000/img/logo.png" type="image/x-icon">
+        <link rel="shortcut icon" href="{{asset('img/logo.png')}}" type="image/x-icon">
 
         <title>Colegio Salarrué</title>
         
@@ -93,5 +93,4 @@
 					</div>
 				</div>
             </div>
-        </div>
 @include('sitioAdmin.footer')

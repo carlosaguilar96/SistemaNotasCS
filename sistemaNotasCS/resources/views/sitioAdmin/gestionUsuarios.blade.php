@@ -50,7 +50,7 @@
         </a>
       </div>
       <div class="col-lg-3 col-md-4 col-6 mb-3">
-        <a class="link-body-emphasis link-underline link-underline-opacity-0" href="#">
+        <a class="link-body-emphasis link-underline link-underline-opacity-0" href="{{route('admin.indexEstudiantes')}}">
           <div class="card" style="width: 100%; height:200">
             <h6 class="card-header bg-warning">Gestión de estudiantes</h6>
             <div class="card-body">
