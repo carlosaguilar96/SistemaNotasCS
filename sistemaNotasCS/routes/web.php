@@ -37,6 +37,14 @@ Route::prefix('admin')->group(function(){
     Route::post('/guardarEstudiante',[EstudianteController::class,'storeEstudiante'])->name('admin.guardarEstudiante');
     //Ruta para mostrar vista index
     Route::get('/indexEstudiantes',[EstudianteController::class,'index'])->name('admin.indexEstudiantes');
+    //Ruta para mostrar estudiante
+    //NO PONER NADA AQUÍ
+    //Ruta para actualizar información del estudiante
+    //NO PONER NADA AQUÍ
+    //Ruta para obtener información del estudiante
+    //NO PONER NADA AQUÍ
+    //Ruta para borrar estudiante
+    //NO PONER NADA AQUÍ
 
     //Rutas relacionadas al ProfesorController
     //Ruta para mostrar vista para crear profesor
@@ -44,7 +52,7 @@ Route::prefix('admin')->group(function(){
     //Ruta para insertar profesor a la bd
     Route::post('/guardarProfesor',[ProfesorController::class,'storeProfesor'])->name('admin.guardarProfesor');
 
-    //Rutas relacionadas al ProfesorController
+    //Rutas relacionadas al AdminController
     //Ruta para mostrar vista para crear administrador
     Route::get('/crearAdministrador',[AdminController::class,'creacionAdmin'])->name('admin.crearAdmin');
     //Ruta para insertar profesor a la bd
