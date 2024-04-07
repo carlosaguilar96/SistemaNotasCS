@@ -10,7 +10,8 @@ CREATE TABLE `estudiante` (
   `sexo` int NOT NULL,
   `correo` varchar(250) NOT NULL,
   `foto` varchar(150) NOT NULL,
-  `estadoeliminacion` int NOT NULL
+  `estadoeliminacion` int NOT NULL,
+  `estadoFinalizacion` int NOT NULL
 );
 
 CREATE TABLE `profesor` (
@@ -50,6 +51,7 @@ CREATE TABLE `detallegradoestudiante` (
   `idDetalle` int PRIMARY KEY AUTO_INCREMENT,
   `idGrado` int NOT NULL,
   `idEstudiante` int NOT NULL,
+  `estadoFinalizacion` int NOT NULL,
   FOREIGN KEY(`idGrado`) REFERENCES `grado`(`idGrado`),
   FOREIGN KEY(`idEstudiante`) REFERENCES `estudiante`(`NIE`)
 );

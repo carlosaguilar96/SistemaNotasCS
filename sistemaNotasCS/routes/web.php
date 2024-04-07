@@ -38,13 +38,16 @@ Route::prefix('admin')->group(function(){
     //Ruta para mostrar vista index
     Route::get('/indexEstudiantes',[EstudianteController::class,'index'])->name('admin.indexEstudiantes');
     //Ruta para mostrar estudiante
-    //NO PONER NADA AQUÍ
+    Route::get('/mostrarEstudiante/{id}',[EstudianteController::class,'show'])->name('admin.showEstudiante');
     //Ruta para actualizar información del estudiante
-    //NO PONER NADA AQUÍ
+    Route::put('/actualizarEstudiante',[EstudianteController::class, 'update'])->name('admin.updateEstudiante');
+    Route::put('/actualizarEstudianteFoto',[EstudianteController::class,'updateFoto'])->name('admin.updateEstudianteFoto');
     //Ruta para obtener información del estudiante
-    //NO PONER NADA AQUÍ
+    Route::get('/obtenerInformacionEstudiante/{id}',[EstudianteController::class,'getStudent'])->name('admin.getEstudiante');
     //Ruta para borrar estudiante
-    //NO PONER NADA AQUÍ
+    Route::delete('/eliminarEstudiante',[EstudianteController::class,'delete'])->name('admin.deleteEstudiante');
+    //Ruta para borrar estudiante
+    Route::put('/restaurarEstudiante',[EstudianteController::class,'restore'])->name('admin.restoreEstudiante');
 
     //Rutas relacionadas a Gestión de Profesores
     //Ruta para mostrar vista para crear profesor

@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
         <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
 
+        <script src="{{asset('js/estudiante/showModals.js')}}"></script>
     </head>
     <body>
         <script>
@@ -39,6 +40,50 @@
             </nav>
         </div>
         <div class="container" style="width:100%; margin-top:100pt;">
+            @if (session('exitoEliminacion'))
+            <script>
+                Swal.fire({
+                    title: "Estudiante eliminado",
+                    text: "{{ session('exitoEliminacion') }}",
+                    icon: "success",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C", 
+                });       
+            </script>
+            @endif
+            @if (session('errorEliminacion'))
+            <script>
+                Swal.fire({
+                    title: "Estudiante no eliminado",
+                    text: "{{ session('errorEliminacion') }}",
+                    icon: "error",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C", 
+                });       
+            </script>
+            @endif
+            @if (session('exitoReactivar'))
+            <script>
+                Swal.fire({
+                    title: "Estudiante reactivado",
+                    text: "{{ session('exitoReactivar') }}",
+                    icon: "success",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C", 
+                });       
+            </script>
+            @endif
+            @if (session('errorReactivar'))
+            <script>
+                Swal.fire({
+                    title: "Estudiante no reactivado",
+                    text: "{{ session('errorReactivar') }}",
+                    icon: "error",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C", 
+                });       
+            </script>
+            @endif
             <div class="row">
                 <p class="text-center" style="font-size:16pt; font-weight:bold; color:black">Gestión de estudiantes</p>
                 <p class="text-center" style="font-size:12pt; color:black">Listado de estudiantes activos e inactivos con opciones para ver información y eliminar o reactivar estudiante</p>
@@ -76,7 +121,7 @@
                                                 <td>
                                                     <div class="row">
                                                         <div class="col-6 mx-0 px-0">
-                                                            <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="#"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
+                                                            <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="{{route('admin.showEstudiante',$estudiante->NIE)}}"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
                                                         </div>
                                                         <div class="col-6 mx-0 px-0">
                                                             <button 
@@ -84,9 +129,8 @@
                                                                 class="btn btn-danger icon-button"
                                                                 data-bs-toggle="tooltip" 
                                                                 data-bs-placement="bottom" 
-                                                                data-bs-title="Eliminar" 
-                                                                value=""
-                                                                onclick="">
+                                                                data-bs-title="Eliminar"
+                                                                onclick="eliminarEstudiante({{$estudiante->NIE}})">
                                                                 <i class="fa-solid fa-trash"></i>
                                                             </button>
                                                         </div>	
@@ -115,20 +159,21 @@
                                                 <td>
                                                     <div class="row">
                                                         <div class="col-6 mx-0 px-0">
-                                                            <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="#"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
+                                                            <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="{{route('admin.showEstudiante',$estudiante->NIE)}}"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
                                                         </div>
+                                                        @if($estudiante->estadoFinalizacion==0)
                                                         <div class="col-6 mx-0 px-0">
                                                             <button 
                                                                 type="button" 
-                                                                class="btn btn-danger icon-button"
+                                                                class="btn btn-success icon-button"
                                                                 data-bs-toggle="tooltip" 
                                                                 data-bs-placement="bottom" 
-                                                                data-bs-title="Eliminar" 
-                                                                value=""
-                                                                onclick="">
-                                                                <i class="fa-solid fa-trash"></i>
+                                                                data-bs-title="Reactivar"
+                                                                onclick="reactivarEstudiante({{$estudiante->NIE}})">
+                                                                <i class="fa-solid fa-trash-can-arrow-up"></i>
                                                             </button>
                                                         </div>	
+                                                        @endif
                                                     </div>		
                                                 </td>
                                             </tr>
@@ -139,6 +184,62 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal para eliminar estudiante -->
+        <div class="modal fade" id="eliminarEstudiante" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar estudiante</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" action="{{route('admin.deleteEstudiante')}}">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal-body">
+                            <p id="textoConfirmarEliminar"></p>
+                            <div class="row">
+                                <div class="col-lg-6 mb-4" hidden>
+                                    <label for="id" class="form-label">NIE</label>
+                                    <input type="text" class="form-control" name="id" id="id" placeholder="Número de identificación del estudiante" value="{{ old('nie') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
+                            <button class="btn btn-danger" type="submit">Eliminar</button>
+                          </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal para reactivar estudiante -->
+        <div class="modal fade" id="reactivarEstudiante" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Reactivar estudiante</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" action="{{route('admin.restoreEstudiante')}}">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <p id="textoConfirmarReactivar"></p>
+                            <div class="row">
+                                <div class="col-lg-6 mb-4" hidden>
+                                    <label for="idR" class="form-label">NIE</label>
+                                    <input type="text" class="form-control" name="idR" id="idR" placeholder="Número de identificación del estudiante" value="{{ old('nie') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
+                            <button class="btn btn-success" type="submit">Reactivar</button>
+                          </div>
+                    </form>
                 </div>
             </div>
         </div>
