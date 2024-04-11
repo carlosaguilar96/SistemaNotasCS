@@ -52,3 +52,30 @@ p #titulo{
 label{
     font-weight: bold;
 }
+
+#offcanvasNavbar{
+    background-color: #B84C4C;
+    color:white;
+}
+
+.offcanvas-title{
+    font-size:20pt;
+    font-weight: bold;
+}
+
+.offcanvas-body{
+    color:white;
+    font-size:14pt;
+}
+
+.nav-link{
+    color:white;
+}
+
+.dropdown-menu{
+    background-color: #F1F1F1;
+}
+
+.dropdown-item:hover{
+    background-color: #CFCBCB;
+}

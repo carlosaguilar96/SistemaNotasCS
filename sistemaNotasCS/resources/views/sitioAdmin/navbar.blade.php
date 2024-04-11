@@ -10,37 +10,59 @@
             </button>
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
-                  <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">MENÚ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                  <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                      </a>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                          <hr class="dropdown-divider">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{route('admin.inicio')}}">INICIO</a>
                         </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                  <form class="d-flex mt-3" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                  </form>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#">MI PERFIL</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                USUARIOS
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{route('admin.crearEstudiante')}}">AGREGAR ESTUDIANTE</a></li>
+                                <li><a class="dropdown-item" href="{{route('admin.indexEstudiantes')}}">GESTIÓN ESTUDIANTES</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{route('admin.crearProfesor')}}">AGREGAR PROFESOR</a></li>
+                                <li><a class="dropdown-item" href="{{route('admin.indexProfesores')}}">GESTIÓN PROFESORES</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{route('admin.crearAdmin')}}">AGREGAR ADMINISTRADOR</a></li>
+                                <li><a class="dropdown-item" href="{{route('admin.indexAdministradores')}}">GESTIÓN ADMINISTRADORES</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#">AÑO ESCOLAR</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                GRADOS
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{route('admin.showGrado',1)}}">SÉPTIMO GRADO</a></li>
+                                <li><a class="dropdown-item" href="{{route('admin.showGrado',2)}}">OCTAVO GRADO</a></li>
+                                <li><a class="dropdown-item" href="{{route('admin.showGrado',3)}}">NOVENO GRADO</a></li>
+                                <li><a class="dropdown-item" href="{{route('admin.showGrado',4)}}">PRIMER AÑO GENERAL</a></li>
+                                <li><a class="dropdown-item" href="{{route('admin.showGrado',5)}}">SEGUNDO AÑO GENERAL</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{route('admin.indexMaterias')}}">MATERIAS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#">CAMBIAR CONTRASEÑA</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="#">CERRAR SESIÓN</a>
+                        </li>
+                    </ul>
                 </div>
-          
+            </div>
         </div>                
     </nav>
 </div>
