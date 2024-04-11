@@ -162,10 +162,20 @@ class AdminController extends Controller
         }
     }
 
+    public function restore(Request $request){
+        try{
+			$id = $request->input('idR');
+            DB::table('administrador')->where('DUI', $id)->update(['estadoeliminacion' => 1]);
+			return to_route('admin.indexAdministradores')->with('exitoReactivar','El estudiante se ha reactivado exitosamente.');
+		}catch(Exception $e){
+			return to_route('admin.indexAdministradores')->with('errorReactivar','Ha ocurrido un error al reactivar el estudiante.');
+		}
+    }
+
     public function updateFoto(Request $request){
         $id = $request->input('id');
-        $estudiante = Administrador::find($id);
-        $fotoEliminar = $estudiante->foto;
+        $profesor = Administrador::find($id);
+        $fotoEliminar = $profesor->foto;
 
         //validaciones para los campos del formulario
         $validator = Validator::make($request->all(), [
@@ -177,8 +187,8 @@ class AdminController extends Controller
         //intenta actualizar la foto del estudiante
         try{
             $fileName = time().".".$request->file('foto')->extension();
-            $request->file('foto')->move(public_path("img/fotosE"),$fileName);
-            DB::table('estudiante')->where('NIE','=',$id)->update(
+            $request->file('foto')->move(public_path("img/fotosA"),$fileName);
+            DB::table('administrador')->where('DUI','=',$id)->update(
                 [
                     'foto' => $fileName,
                 ]
@@ -189,15 +199,5 @@ class AdminController extends Controller
         } catch(QueryException $e){
             return to_route('admin.showAdministrador',$id)->with('errorModificarFoto','Ha ocurrido un error al actualizar la foto.');
         }
-    }
-
-    public function restore(Request $request){
-        try{
-			$id = $request->input('idR');
-            DB::table('administrador')->where('DUI', $id)->update(['estadoeliminacion' => 1]);
-			return to_route('admin.indexAdministradores')->with('exitoReactivar','El estudiante se ha reactivado exitosamente.');
-		}catch(Exception $e){
-			return to_route('admin.indexAdministradores')->with('errorReactivar','Ha ocurrido un error al reactivar el estudiante.');
-		}
     }
 }

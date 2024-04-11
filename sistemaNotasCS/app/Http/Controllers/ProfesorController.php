@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Credenciales;
 use App\Models\DetalleProfesorMateria;
+use Illuminate\Database\QueryException;
 
 class ProfesorController extends Controller
 {
@@ -120,9 +121,8 @@ class ProfesorController extends Controller
                         ->where('DUI','=',$id)->get();
         
         $informacion = DB::table('detalleprofesormateria')
-                        ->join('materia', 'materia.idMateria','=','detalleprofesormateria.idMateria')
-                        ->join('profesor','profesor.DUI','=','detalleprofesormateria.idProfesor')
-                        ->where('DUI','=',$id)
+                        ->join('materia','detalleprofesormateria.idMateria','=','materia.idMateria')
+                        ->where('detalleprofesormateria.idProfesor','=',$id)
                         ->get();
         
         $materiasDisponibles = DB::table('materia')
@@ -185,11 +185,67 @@ class ProfesorController extends Controller
     public function deleteMateria(Request $request){
         try{
 			$id = $request->input('idA');
-            DB::table('detalleProfesorMateria')->where('idMateria', $id)->delete();
-			return to_route('admin.showProfesor')->with('exitoEliminacion','La materia ha sido eliminada exitosamente.');
+            DB::table('detalleProfesorMateria')->where('idDetalle', $id)->delete();
+			return to_route('admin.showProfesor',$request->input('dui'))->with('exitoEliminacion','La materia ha sido eliminada exitosamente.');
 		}catch(Exception $e){
-			return to_route('admin.showProfesor')->with('errorEliminacion','Ha ocurrido un error al eliminar la materia.');
+			return to_route('admin.showProfesor',$request->input('dui'))->with('errorEliminacion','Ha ocurrido un error al eliminar la materia.');
 		}
+    }
+
+    public function update(Request $request){
+        $id = $request->input('dui');
+        //validaciones para los campos del formulario
+        $validator = Validator::make($request->all(), [
+            'nombre' => ['required','string'],
+            'apellido' => ['required', 'string'],
+            'correo' => ['required', 'email'],            
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->with('errorModificar','Ha ocurrido un error al actualizar la información.');
+        }
+        //intenta actualizar la información del profesor
+        try{
+            DB::table('profesor')->where('DUI','=',$id)->update(
+                [
+                    'nombres' => $request->nombre,
+                    'apellidos' => $request->apellido,
+                    'correo' => $request->correo,
+                ]
+            );
+            return to_route('admin.showProfesor',$id)->with('exitoModificar','La información del profesor ha sido actualizada.');            
+        } catch(QueryException $e){
+            return to_route('admin.showProfesor',$id)->with('errorModificar','Ha ocurrido un error al actualizar la información.');
+        }
+    }
+
+    public function updateFoto(Request $request){
+        $id = $request->input('id');
+        $profesor = Profesor::find($id);
+        $fotoEliminar = $profesor->foto;
+
+        //validaciones para los campos del formulario
+        $validator = Validator::make($request->all(), [
+            'foto'=> ['required','image']            
+        ]);
+        if($validator->fails()){
+            return redirect()->back()->with('errorModificarFoto','Ha ocurrido un error al actualizar la foto.');
+        }
+        //intenta actualizar la foto del estudiante
+        try{
+            $fileName = time().".".$request->file('foto')->extension();
+            $request->file('foto')->move(public_path("img/fotosP"),$fileName);
+            DB::table('profesor')->where('DUI','=',$id)->update(
+                [
+                    'foto' => $fileName,
+                ]
+            );
+            //elimina la foto anterior
+            unlink(public_path("img/fotosP/".$fotoEliminar));
+            return to_route('admin.showProfesor',$id)->with('exitoModificarFoto','La foto del administrador ha sido actualizada.');            
+        } catch(QueryException $e){
+            return to_route('admin.showProfesor',$id)->with('errorModificarFoto','Ha ocurrido un error al actualizar la foto.');
+        }
     }
     
 }

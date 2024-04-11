@@ -68,9 +68,12 @@ Route::prefix('admin')->group(function(){
     //Ruta para agregar materias a profesores en la bd
     Route::post('/agregarMateria',[ProfesorController::class,'agregarDetallePM'])->name('admin.agregarMateria');
     //Ruta para borrar materia que imparte profesor
-    Route::delete('/eliminarMateria',[ProfesorController::class,'deleteMateria'])->name('admin.deleteMateria');
+    Route::delete('/eliminarMateriaProfesor',[ProfesorController::class,'deleteMateria'])->name('admin.deleteMateriaProfesor');
     //Ruta para obtener el detalle de las materias que imparte el profesor
     Route::get('/obtenerDetalleMateria/{id}',[ProfesorController::class,'getProfesorMateria'])->name('admin.getProfesorMateria');
+    //Ruta para actualizar información del profesor
+    Route::put('/actualizarProfesor',[ProfesorController::class, 'update'])->name('admin.updateProfesor');
+    Route::put('/actualizarProfesorFoto',[ProfesorController::class,'updateFoto'])->name('admin.updateProfesorFoto');
 
     //Rutas relacionadas a Gestión de Administradores
     //Ruta para mostrar vista para crear administrador

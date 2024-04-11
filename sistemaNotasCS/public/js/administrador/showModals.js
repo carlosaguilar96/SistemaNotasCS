@@ -34,15 +34,15 @@ const actualizarFotoModal = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionEstudiante/${id}`,            
+        url : `http://127.0.0.1:8000/admin/obtenerInformacionAdministrador/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
         success : function(data) {
-            const {NIE} = data;
-            $('#id').val(NIE);
+            const {DUI} = data;
+            $('#id').val(id);
             
-            $('#modalFoto').modal('show');                        
+            $('#modalFotoAdmin').modal('show');                        
         },
     
         // código a ejecutar si la petición falla;
