@@ -224,7 +224,7 @@ class EstudianteController extends Controller
 
     public function restore(Request $request){
         try{
-			$id = $request->input('idR');
+			$id = $request->input('id');
             DB::table('estudiante')->where('NIE', $id)->update(['estadoeliminacion' => 1]);
 			return to_route('admin.indexEstudiantes')->with('exitoReactivar','El estudiante se ha reactivado exitosamente.');
 		}catch(Exception $e){

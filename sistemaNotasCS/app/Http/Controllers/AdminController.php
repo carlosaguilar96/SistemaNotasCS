@@ -9,6 +9,7 @@ use App\Models\Usuario;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Credenciales;
 use Exception;
+use Illuminate\Database\QueryException;
 
 class AdminController extends Controller
 {
@@ -99,5 +100,99 @@ class AdminController extends Controller
             DB::rollback();
             return to_route('admin.crearAdmin')->with('errorAgregarAdmin','Error al ingresar administrador. Intente otra vez.');
         }
+    }
+
+    public function index(){
+        $administradoresActivos = DB::table('administrador')->where('estadoEliminacion','=',1)->orderBy('apellidos','asc')->get();
+        $administradoresInactivos = DB::table('administrador')->where('estadoEliminacion','=',0)->orderBy('apellidos','asc')->get();
+        return view('admin.index',compact('administradoresActivos','administradoresInactivos'));
+    }
+
+    public function show(string $id){
+        $administrador = DB::table('administrador')
+                        ->where('DUI','=',$id)->get();
+        return view('admin.show', compact('administrador'));
+    }
+
+    public function getAdmin(string $id)
+	{
+		$administrador = Administrador::find($id);
+		return $administrador;
+	}
+
+    public function delete(Request $request){
+        try{
+			$id = $request->input('id');
+            DB::table('administrador')->where('DUI', $id)->update(['estadoeliminacion' => 0]);
+			return to_route('admin.indexAdministradores')->with('exitoEliminacion','El administrador ha sido eliminado exitosamente.');
+		}catch(Exception $e){
+			return to_route('admin.indexAdministradores')->with('errorEliminacion','Ha ocurrido un error al eliminar el administrador.');
+		}
+    }
+
+    public function update(Request $request){
+        $id = $request->input('dui');
+        //validaciones para los campos del formulario
+        $validator = Validator::make($request->all(), [
+            'nombre' => ['required','string'],
+            'apellido' => ['required', 'string'],              
+            'correo' => ['required', 'email'],            
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->with('errorModificar','Ha ocurrido un error al actualizar la información.');
+        }
+        //intenta actualizar la información del estudiante
+        try{
+            DB::table('administrador')->where('DUI','=',$id)->update(
+                [
+                    'nombres' => $request->nombre,
+                    'apellidos' => $request->apellido,
+                    'correo' => $request->correo,
+                ]
+            );
+            return to_route('admin.showAdministrador',$id)->with('exitoModificar','La información del administrador ha sido actualizada.');            
+        } catch(QueryException $e){
+            return to_route('admin.showAdministrador',$id)->with('errorModificar','Ha ocurrido un error al actualizar la información.');
+        }
+    }
+
+    public function updateFoto(Request $request){
+        $id = $request->input('id');
+        $estudiante = Administrador::find($id);
+        $fotoEliminar = $estudiante->foto;
+
+        //validaciones para los campos del formulario
+        $validator = Validator::make($request->all(), [
+            'foto'=> ['required','image']            
+        ]);
+        if($validator->fails()){
+            return redirect()->back()->with('errorModificarFoto','Ha ocurrido un error al actualizar la foto.');
+        }
+        //intenta actualizar la foto del estudiante
+        try{
+            $fileName = time().".".$request->file('foto')->extension();
+            $request->file('foto')->move(public_path("img/fotosE"),$fileName);
+            DB::table('estudiante')->where('NIE','=',$id)->update(
+                [
+                    'foto' => $fileName,
+                ]
+            );
+            //elimina la foto anterior
+            unlink(public_path("img/fotosA/".$fotoEliminar));
+            return to_route('admin.showAdministrador',$id)->with('exitoModificarFoto','La foto del administrador ha sido actualizada.');            
+        } catch(QueryException $e){
+            return to_route('admin.showAdministrador',$id)->with('errorModificarFoto','Ha ocurrido un error al actualizar la foto.');
+        }
+    }
+
+    public function restore(Request $request){
+        try{
+			$id = $request->input('idR');
+            DB::table('administrador')->where('DUI', $id)->update(['estadoeliminacion' => 1]);
+			return to_route('admin.indexAdministradores')->with('exitoReactivar','El estudiante se ha reactivado exitosamente.');
+		}catch(Exception $e){
+			return to_route('admin.indexAdministradores')->with('errorReactivar','Ha ocurrido un error al reactivar el estudiante.');
+		}
     }
 }

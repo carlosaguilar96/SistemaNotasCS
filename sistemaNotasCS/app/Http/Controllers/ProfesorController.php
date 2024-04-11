@@ -106,5 +106,90 @@ class ProfesorController extends Controller
             return to_route('admin.crearProfesor')->with('errorAgregarProfesor','Error al ingresar profesor. Intente otra vez.');
         }
     }
+
+    public function index(){
+        $profesoresActivos = DB::table('profesor')->where('estadoEliminacion','=',1)->orderBy('apellidos','asc')->get();
+        $profesoresInactivos = DB::table('profesor')->where('estadoEliminacion','=',0)->orderBy('apellidos','asc')->get();        
+
+        return view('profesor.index',compact('profesoresActivos','profesoresInactivos'));
+
+    }
+
+    public function show(string $id){
+        $profesor = DB::table('profesor')
+                        ->where('DUI','=',$id)->get();
+        
+        $informacion = DB::table('detalleprofesormateria')
+                        ->join('materia', 'materia.idMateria','=','detalleprofesormateria.idMateria')
+                        ->join('profesor','profesor.DUI','=','detalleprofesormateria.idProfesor')
+                        ->where('DUI','=',$id)
+                        ->get();
+        
+        $materiasDisponibles = DB::table('materia')
+                                ->whereNotExists(function($subquery) use($id){
+                                    $subquery
+                                    ->select('idMateria')
+                                    ->from('detalleprofesormateria')
+                                    ->whereColumn('materia.idMateria','detalleprofesormateria.idMateria')
+                                    ->where('idProfesor','=',$id);
+                                })->get();        
+
+        return view('profesor.show', compact('profesor', 'informacion', 'materiasDisponibles'));
+    }
+
+    public function getProfesor(string $id)
+	{
+		$profesor = Profesor::find($id);
+		return $profesor;
+	}
+
+    public function getProfesorMateria(int $id)
+	{
+		$detalle = DB::table('detalleprofesormateria')
+                        ->join('materia','detalleprofesormateria.idMateria','=','materia.idMateria')
+                        ->where('idDetalle','=',$id)
+                        ->get();
+        return $detalle[0];
+	} 
+
+    public function agregarDetallePM(Request $request){
+        $validator = Validator::make($request->all(), [
+            'materias' => ['required'],
+        ]);
+        //Validaciones extra para elementos select
+        $validator->after(function($validator) use($request){
+            if($request->input('materias')==0){
+                $validator->errors()->add('materia','No se ha seleccionado materia');
+            }
+        });
+
+        if($validator->fails()){
+            return to_route('admin.showProfesor',$request->input('idProfesor'))->with('errorAgregarMateria','No se ha seleccionado materia para agregar a profesor');
+        }
+
+        DB::beginTransaction();
+        try{
+            $detalle = new DetalleProfesorMateria();
+            $detalle->idProfesor = $request->input('idProfesor');
+            $detalle->idMateria = $request->input('materias');
+            $detalle->save();
+            DB::commit();
+            return to_route('admin.showProfesor', $request->input('idProfesor'))->with('exitoAgregarMateria','La materia ha sido agregada correctamente');
+        }
+        catch(Exception $e){
+            DB::rollBack();
+            return to_route('admin.showProfesor',$request->input('idProfesor'))->with('errorAgregarMateria','La materia no ha sido agregada correctamente');
+        }
+    }
+
+    public function deleteMateria(Request $request){
+        try{
+			$id = $request->input('idA');
+            DB::table('detalleProfesorMateria')->where('idMateria', $id)->delete();
+			return to_route('admin.showProfesor')->with('exitoEliminacion','La materia ha sido eliminada exitosamente.');
+		}catch(Exception $e){
+			return to_route('admin.showProfesor')->with('errorEliminacion','Ha ocurrido un error al eliminar la materia.');
+		}
+    }
     
 }
