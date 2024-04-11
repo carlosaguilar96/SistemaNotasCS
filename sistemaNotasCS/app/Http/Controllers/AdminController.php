@@ -15,7 +15,12 @@ class AdminController extends Controller
 {
     //función para mostrar la vista de inicio del sitio administrador
     public function inicio(){
-        return view('sitioAdmin.inicio');
+        if(session()->has('administrador')){
+            $admin= session()->get('administrador');
+            return view('sitioAdmin.inicio',compact('admin'));
+        } else{
+            //mostrar error 403
+        }
     }
 
     //función para mostrar la vista de gestión de usuarios

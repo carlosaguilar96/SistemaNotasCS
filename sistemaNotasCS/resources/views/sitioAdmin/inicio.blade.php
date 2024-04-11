@@ -2,9 +2,9 @@
     <div class="row text-center">
         <div class="col-lg-4">
           <div class="card text-center mb-3" style="width: 100%;">
-            <img height="200" width="200" src="http://127.0.0.1:8000/img/foto.png" class="img mx-auto d-block p-4 bg-warning mt-3" alt="...">
+            <img height="200" width="200" src="{{asset('img/fotosA/'.$admin[0]->foto)}}" class="img mx-auto d-block p-4 bg-warning mt-3" alt="...">
             <div class="card-body">
-              <h4 class="card-title" style="font-weight:bold">Nombre del usuario</h4>
+              <h4 class="card-title" style="font-weight:bold">{{$admin[0]->nombres}} {{$admin[0]->apellidos}}</h4>
               <p class="card-text" style="font-style:italic">Administrador</p>
               <a href="#" class="btn btn-warning text-center mt-2">Ver información</a>
             </div>

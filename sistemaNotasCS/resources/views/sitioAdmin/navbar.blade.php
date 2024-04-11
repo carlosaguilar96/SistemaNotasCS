@@ -58,7 +58,7 @@
                             <a class="nav-link" aria-current="page" href="#">CAMBIAR CONTRASEÑA</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">CERRAR SESIÓN</a>
+                            <a class="nav-link" aria-current="page" href="{{route('logout')}}">CERRAR SESIÓN</a>
                         </li>
                     </ul>
                 </div>

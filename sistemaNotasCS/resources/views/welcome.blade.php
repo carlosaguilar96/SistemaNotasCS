@@ -19,7 +19,7 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    <form method="POST" action="{{route('admin.login')}}">
+                    <form method="POST" action="{{route('login')}}">
                         @csrf
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user"></i></span>

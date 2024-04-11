@@ -20,13 +20,16 @@ use App\Models\Profesor;
 |
 */
 //Ruta para mostrar login e inicio de sitio
-Route::get('/', function () {
-    return view('welcome');
-})->name('login');
+Route::get('/',[LoginController::class, 'welcome'])->name('welcome');
+//Ruta para guardar primer administrador
+Route::post('/primerAdmin',[LoginController::class, 'guardarPrimerAdmin'])->name('primerAdmin');
+//Ruta para realizar login
+Route::post('/inicio',[LoginController::class, 'login'])->name('login');
+//Ruta para realizar logout
+Route::get('/salir',[LoginController::class, 'logout'])->name('logout');
 
 //Rutas relacionadas al sitio del administrador
 Route::prefix('admin')->group(function(){
-    Route::post('/inicio',[LoginController::class, 'login'])->name('admin.login');
     //Rutas relacionadas al AdminController
     //Ruta para mostrar vista de inicio sitio admin
     Route::get('/inicio',[AdminController::class,'inicio'])->name('admin.inicio');
