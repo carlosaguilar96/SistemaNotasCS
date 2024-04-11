@@ -27,35 +27,15 @@
               <div class="card" style="width: 100%; height:200">
                 <h6 class="card-header bg-warning">Gestión año escolar</h6>
                 <div class="card-body">
-                  <p class="card-text" style="font-size:70pt"><i class="fa-regular fa-calendar-days"></i></p>
-                </div>
-              </div>
-              </a>
-            </div>
-            <div class="col-md-4 col-6 mb-3">
-              <a class="link-body-emphasis link-underline link-underline-opacity-0" href="#">
-              <div class="card" style="width: 100%; height:200">
-                <h6 class="card-header bg-warning">Gestión secciones</h6>
-                <div class="card-body">
-                  <p class="card-text" style="font-size:70pt"><i class="fa-solid fa-chalkboard-user"></i></p>
-                </div>
-              </div>
-              </a>
-            </div>
-            <div class="col-md-4 col-6 mb-3">
-              <a class="link-body-emphasis link-underline link-underline-opacity-0" href="#">
-              <div class="card" style="width: 100%; height:200">
-                <h6 class="card-header bg-warning">Gestión grados</h6>
-                <div class="card-body">
                   <p class="card-text" style="font-size:70pt"><i class="fa-solid fa-school"></i></p>
                 </div>
               </div>
               </a>
             </div>
             <div class="col-md-4 col-6 mb-3">
-              <a class="link-body-emphasis link-underline link-underline-opacity-0" href="#">
+              <a class="link-body-emphasis link-underline link-underline-opacity-0" href="{{route('admin.gestionGrados')}}">
               <div class="card" style="width: 100%; height:200">
-                <h6 class="card-header bg-warning">Gestión materias</h6>
+                <h6 class="card-header bg-warning">Gestión grados</h6>
                 <div class="card-body">
                   <p class="card-text" style="font-size:70pt"><i class="fa-solid fa-book"></i></p>
                 </div>

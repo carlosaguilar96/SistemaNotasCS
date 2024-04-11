@@ -23,6 +23,11 @@ class AdminController extends Controller
         return view('sitioAdmin.gestionUsuarios');
     }
 
+    //función para mostrar la vista de gestión de grados
+    public function gestionGrados(){
+        return view('sitioAdmin.gestionGrados');
+    }
+
     //función para mostrar la vista de creación de administradores
     public function creacionAdmin(){
         return view('admin.crear');

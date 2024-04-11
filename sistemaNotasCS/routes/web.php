@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\GradoController;
+use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\ProfesorController;
 use App\Models\Profesor;
 
@@ -30,6 +32,8 @@ Route::prefix('admin')->group(function(){
     Route::get('/inicio',[AdminController::class,'inicio'])->name('admin.inicio');
     //Ruta para mostrar vista de gestión de usuarios
     Route::get('/gestionUsuarios',[AdminController::class,'gestionUsuarios'])->name('admin.gestionUsuarios');
+    //Ruta para mostrar vista de gestión de grados
+    Route::get('/gestionGrados',[AdminController::class,'gestionGrados'])->name('admin.gestionGrados');
 
     //Rutas relacionadas a Gestión de Estudiantes
     //Ruta para mostrar vista para crear estudiante
@@ -86,4 +90,26 @@ Route::prefix('admin')->group(function(){
     Route::put('/actualizarAdministradorFoto',[AdminController::class,'updateFoto'])->name('admin.updateAdminFoto');
     //Ruta para restaurar administrador
     Route::put('/restaurarAdministrador',[AdminController::class,'restore'])->name('admin.restoreAdmin');
+
+    //Rutas relacionadas a Gestión de Planes Académicos
+    //Ruta para mostrar información de grado
+    Route::get('/mostrarGrado/{id}',[GradoController::class,'show'])->name('admin.showGrado');
+    //Ruta para obtener información de detallegradomateria
+    Route::get('/getDetalleGM/{id}',[GradoController::class,'getDetalleGM'])->name('admin.getDetalleGM');
+    //Ruta para eliminar materia de plan académico
+    Route::delete('/eliminarDetalleGM',[GradoController::class,'eliminarDetalleGM'])->name('admin.deleteDetalleGM');
+    //Ruta para agregar materia al plan académico
+    Route::post('/agregarDetalleGM',[GradoController::class,'agregarDetalleGM'])->name('admin.addDetalleGM');
+    //Ruta para mostrar materias
+    Route::get('/indexMaterias',[MateriaController::class,'index'])->name('admin.indexMaterias');
+    //Ruta para guardar materia en BD
+    Route::post('/guardarMateria',[MateriaController::class,'store'])->name('admin.storeMateria');
+    //Ruta para obtener información de materia
+    Route::get('/getMateria/{id}',[MateriaController::class,'getMateria'])->name('admin.getMateria');
+    //Ruta para actualizar información de materia
+    Route::put('/actualizarMateria',[MateriaController::class,'update'])->name('admin.updateMateria');
+    //Ruta para eliminar materia
+    Route::delete('/eliminarMateria',[MateriaController::class,'delete'])->name('admin.deleteMateria');
+    //Ruta para reactivar materia
+    Route::put('/reactivarMateria',[MateriaController::class,'restore'])->name('admin.restoreMateria');
 });

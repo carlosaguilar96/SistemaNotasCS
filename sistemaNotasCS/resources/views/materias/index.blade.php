@@ -15,8 +15,8 @@
 
         <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
         <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+        <script src="{{asset('js/materia/showModals.js')}}"></script>
 
-        <script src="{{asset('js/estudiante/showModals.js')}}"></script>
     </head>
     <body>
         <script>
@@ -39,64 +39,108 @@
                 </div>                
             </nav>
         </div>
-        <div class="container" style="width:100%; margin-top:100pt;">
-            @if (session('exitoEliminacion'))
+        <div class="container" style="width:100%; margin-top:100pt">
+            @if (session('errorAgregarMateria'))
             <script>
                 Swal.fire({
-                    title: "Estudiante eliminado",
-                    text: "{{ session('exitoEliminacion') }}",
-                    icon: "success",
-                    button: "OK",
-                    confirmButtonColor: "#B84C4C", 
-                });       
-            </script>
-            @endif
-            @if (session('errorEliminacion'))
-            <script>
-                Swal.fire({
-                    title: "Estudiante no eliminado",
-                    text: "{{ session('errorEliminacion') }}",
+                    title: "Materia no agregada",
+                    text: "{{ session('errorAgregarMateria') }}",
                     icon: "error",
                     button: "OK",
                     confirmButtonColor: "#B84C4C", 
                 });       
             </script>
             @endif
-            @if (session('exitoReactivar'))
+            @if (session('exitoAgregarMateria'))
             <script>
                 Swal.fire({
-                    title: "Estudiante reactivado",
-                    text: "{{ session('exitoReactivar') }}",
+                    title: "Materia agregada",
+                    text: "{{ session('exitoAgregarMateria') }}",
                     icon: "success",
                     button: "OK",
                     confirmButtonColor: "#B84C4C", 
                 });       
             </script>
             @endif
-            @if (session('errorReactivar'))
+            @if (session('errorModificarMateria'))
             <script>
                 Swal.fire({
-                    title: "Estudiante no reactivado",
-                    text: "{{ session('errorReactivar') }}",
+                    title: "Materia no modificada",
+                    text: "{{ session('errorModificarMateria') }}",
                     icon: "error",
                     button: "OK",
                     confirmButtonColor: "#B84C4C", 
                 });       
             </script>
             @endif
-            <div class="row">
-                <p class="text-center" style="font-size:16pt; font-weight:bold; color:black">Gestión de estudiantes</p>
-                <p class="text-center" style="font-size:12pt; color:black">Listado de estudiantes activos e inactivos con opciones para ver información y eliminar o reactivar estudiante</p>
+            @if (session('exitoModificarMateria'))
+            <script>
+                Swal.fire({
+                    title: "Materia modificada",
+                    text: "{{ session('exitoModificarMateria') }}",
+                    icon: "success",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C", 
+                });       
+            </script>
+            @endif
+            @if (session('errorEliminarMateria'))
+            <script>
+                Swal.fire({
+                    title: "Materia no eliminada",
+                    text: "{{ session('errorEliminarMateria') }}",
+                    icon: "error",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C", 
+                });       
+            </script>
+            @endif
+            @if (session('exitoEliminarMateria'))
+            <script>
+                Swal.fire({
+                    title: "Materia eliminada",
+                    text: "{{ session('exitoEliminarMateria') }}",
+                    icon: "success",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C", 
+                });       
+            </script>
+            @endif
+            @if (session('errorRestoreMateria'))
+            <script>
+                Swal.fire({
+                    title: "Materia no reactivada",
+                    text: "{{ session('errorRestoreMateria') }}",
+                    icon: "error",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C", 
+                });       
+            </script>
+            @endif
+            @if (session('exitoRestoreMateria'))
+            <script>
+                Swal.fire({
+                    title: "Materia reactivada",
+                    text: "{{ session('exitoRestoreMateria') }}",
+                    icon: "success",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C", 
+                });       
+            </script>
+            @endif
+            <div class="row text-center">
+                <p class="text-center" style="font-size:16pt; font-weight:bold; color:black">Gestión de materias</p>
+                <p class="text-center" style="font-size:12pt; color:black">Listado de materias impartidas por la institución, con opciones de agregar, editar y eliminar materia</p>
                 <div class="col-12">
-                    <div class="card text-center">
+                    <div class="card mb-3 text-center" style="max-width: 100%;">
                         <div class="card-header">
                             <ul class="nav nav-tabs card-header-tabs">
                                 <ul class="nav nav-tabs card-header-tabs" id="myTab">
                                     <li class="nav-item mb-2">
-                                        <a href="#activos" class="nav-link active link-body-emphasis link-underline link-underline-opacity-0" data-bs-toggle="tab">Estudiantes Activos</a>
+                                        <a href="#activos" class="nav-link active link-body-emphasis link-underline link-underline-opacity-0" data-bs-toggle="tab">Materias</a>
                                     </li>
                                     <li class="nav-item mb-2">
-                                        <a href="#inactivos" class="nav-link link-body-emphasis link-underline link-underline-opacity-0" data-bs-toggle="tab">Estudiantes Inactivos</a>
+                                        <a href="#inactivos" class="nav-link link-body-emphasis link-underline link-underline-opacity-0" data-bs-toggle="tab">Materias eliminadas</a>
                                     </li>
                                 </ul>
                             </ul>
@@ -104,25 +148,31 @@
                         <div class="card-body">
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="activos">
-                                    <p class="card-title text-center" style="font-size:14pt; font-weight:bold; color:black">Estudiantes activos</p>
+                                    <p class="card-title text-center" style="font-size:14pt; font-weight:bold; color:black">Materias</p>
                                     <table class="table table-bordered data-table" style="width:100%">
                                         <thead>
                                             <tr class="table-secondary">
-                                                <th scope="col">Usuario</th>
-                                                <th scope="col">Apellidos, Nombres</th>
+                                                <th scope="col">Materia</th>
                                                 <th scope="col">Opciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($estudiantesActivos as $estudiante)
+                                            @foreach ($materias as $materia)
                                             <tr>
-                                                <td>{{$estudiante->carnet}}</td>
-                                                <td>{{$estudiante->apellidos.', '.$estudiante->nombres}}</td>
+                                                <td>{{$materia->nombreMateria}}</td>
                                                 <td>
                                                     <div class="row">
                                                         <div class="col-6 mx-0 px-0">
-                                                            <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="{{route('admin.showEstudiante',$estudiante->NIE)}}"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
-                                                        </div>
+                                                            <button 
+                                                                type="button" 
+                                                                class="btn btn-primary icon-button"
+                                                                data-bs-toggle="tooltip" 
+                                                                data-bs-placement="bottom" 
+                                                                data-bs-title="Editar"
+                                                                onclick="updateMateria({{$materia->idMateria}})">
+                                                                <i class="fa-solid fa-pen-to-square"></i>
+                                                            </button>
+                                                        </div>	
                                                         <div class="col-6 mx-0 px-0">
                                                             <button 
                                                                 type="button" 
@@ -130,7 +180,7 @@
                                                                 data-bs-toggle="tooltip" 
                                                                 data-bs-placement="bottom" 
                                                                 data-bs-title="Eliminar"
-                                                                onclick="eliminarEstudiante({{$estudiante->NIE}})">
+                                                                onclick="eliminarMateria({{$materia->idMateria}})">
                                                                 <i class="fa-solid fa-trash"></i>
                                                             </button>
                                                         </div>	
@@ -140,40 +190,34 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    <button type="button" class="btn btn-warning my-3" onclick="agregarMateria()" style="width:auto">Agregar Materia</button>
                                 </div>
                                 <div class="tab-pane fade" id="inactivos">
-                                    <p class="card-title text-center" style="font-size:14pt; font-weight:bold; color:black">Estudiantes inactivos</p>
+                                    <p class="card-title text-center" style="font-size:14pt; font-weight:bold; color:black">Materias Eliminadas</p>
                                     <table class="table table-bordered data-table" style="width:100%">
                                         <thead>
                                             <tr class="table-secondary">
-                                                <th scope="col">Usuario</th>
-                                                <th scope="col">Apellidos, Nombres</th>
+                                                <th scope="col">Materia</th>
                                                 <th scope="col">Opciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($estudiantesInactivos as $estudiante)
+                                            @foreach ($materiasEliminadas as $materia)
                                             <tr>
-                                                <td>{{$estudiante->carnet}}</td>
-                                                <td>{{$estudiante->apellidos.', '.$estudiante->nombres}}</td>
+                                                <td>{{$materia->nombreMateria}}</td>
                                                 <td>
                                                     <div class="row">
-                                                        <div class="col-6 mx-0 px-0">
-                                                            <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="{{route('admin.showEstudiante',$estudiante->NIE)}}"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
-                                                        </div>
-                                                        @if($estudiante->estadoFinalizacion==0)
-                                                        <div class="col-6 mx-0 px-0">
+                                                        <div class="col-12 mx-0 px-0">
                                                             <button 
                                                                 type="button" 
                                                                 class="btn btn-success icon-button"
                                                                 data-bs-toggle="tooltip" 
                                                                 data-bs-placement="bottom" 
                                                                 data-bs-title="Reactivar"
-                                                                onclick="reactivarEstudiante({{$estudiante->NIE}})">
+                                                                onclick="restoreMateria({{$materia->idMateria}})">
                                                                 <i class="fa-solid fa-trash-can-arrow-up"></i>
                                                             </button>
-                                                        </div>	
-                                                        @endif
+                                                        </div>
                                                     </div>		
                                                 </td>
                                             </tr>
@@ -181,29 +225,86 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div>    
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Modal para eliminar estudiante -->
-        <div class="modal fade" id="eliminarEstudiante" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+        <!-- Modal para agregar materia -->
+        <div class="modal fade" id="agregarMateria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar estudiante</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar materia</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="POST" action="{{route('admin.deleteEstudiante')}}">
+                    <form method="POST" action="{{route('admin.storeMateria')}}">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12 mb-4">
+                                    <label for="materia" class="form-label">Nombre</label>
+                                    <input  class="form-control" type="text" name="materia" id="materia" placeholder="Ingrese el nombre de la materia">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button class="btn btn-warning" type="submit">Agregar Materia</button>
+                          </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal para actualizar materia -->
+        <div class="modal fade" id="updateMateria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar materia</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" action="{{route('admin.updateMateria')}}">
+                        @csrf
+                        @method('PUT')
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12 mb-4" hidden>
+                                    <label for="idU" class="form-label">id</label>
+                                    <input  class="form-control" type="text" name="idU" id="idU" placeholder="Ingrese el id">
+                                </div>
+                                <div class="col-lg-12 mb-4">
+                                    <label for="nombreU" class="form-label">Nombre</label>
+                                    <input  class="form-control" type="text" name="nombreU" id="nombreU" placeholder="Ingrese el nombre de la materia">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button class="btn btn-warning" type="submit">Actualizar Materia</button>
+                          </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal para eliminar materia -->
+        <div class="modal fade" id="eliminarMateria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar materia</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" action="{{route('admin.deleteMateria')}}">
                         @csrf
                         @method('DELETE')
                         <div class="modal-body">
                             <p id="textoConfirmarEliminar"></p>
                             <div class="row">
                                 <div class="col-lg-6 mb-4" hidden>
-                                    <label for="id" class="form-label">NIE</label>
-                                    <input type="text" class="form-control" name="id" id="id" placeholder="Número de identificación del estudiante" value="{{ old('nie') }}">
+                                    <label for="idE" class="form-label">id materia</label>
+                                    <input type="text" class="form-control" name="idE" id="idE" placeholder="id materia eliminar">
                                 </div>
                             </div>
                         </div>
@@ -215,23 +316,23 @@
                 </div>
             </div>
         </div>
-        <!-- Modal para reactivar estudiante -->
-        <div class="modal fade" id="reactivarEstudiante" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+        <!-- Modal para reactivar materia -->
+        <div class="modal fade" id="reactivarMateria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Reactivar estudiante</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Reactivar materia</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="POST" action="{{route('admin.restoreEstudiante')}}">
+                    <form method="POST" action="{{route('admin.restoreMateria')}}">
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
                             <p id="textoConfirmarReactivar"></p>
                             <div class="row">
                                 <div class="col-lg-6 mb-4" hidden>
-                                    <label for="idR" class="form-label">NIE</label>
-                                    <input type="text" class="form-control" name="idR" id="idR" placeholder="Número de identificación del estudiante" value="{{ old('nie') }}">
+                                    <label for="idR" class="form-label">id materia</label>
+                                    <input type="text" class="form-control" name="idR" id="idR" placeholder="id materia eliminar">
                                 </div>
                             </div>
                         </div>
