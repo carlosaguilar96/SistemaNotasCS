@@ -100,7 +100,7 @@
                                 <p class="card-title text-center" style="font-size:14pt; font-weight:bold; color:black">Profesores activos</p>
                                 <table class="table table-bordered data-table" style="width:100%">
                                     <thead>
-                                        <tr>
+                                        <tr class="table-secondary">
                                             <th scope="col">Usuario</th>
                                             <th scope="col">Apellidos, Nombres</th>
                                             <th scope="col">Opciones</th>
@@ -132,7 +132,7 @@
                                 <p class="card-title text-center" style="font-size:14pt; font-weight:bold; color:black">Profesores inactivos</p>
                                 <table class="table table-bordered data-table" style="width:100%">
                                     <thead>
-                                        <tr>
+                                        <tr class="table-secondary">
                                             <th scope="col">Usuario</th>
                                             <th scope="col">Apellidos, Nombres</th>
                                             <th scope="col">Opciones</th>

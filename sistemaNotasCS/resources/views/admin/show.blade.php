@@ -75,19 +75,19 @@
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="row g-0">
                         <div class="col-md-4" style="align-items: center;display: flex;justify-content: center;">
-                            <img src="{{asset('img/fotosA/'.$administrador[0]->foto)}}" style="height: 200px; width:200px" class="img-fluid rounded-start" alt="Foto del administrador">
+                            <img src="{{asset('img/fotosA/'.$administrador[0]->foto)}}" style="height: 200px; width:200px" class="img-fluid rounded-start my-4" alt="Foto del administrador">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title"><b>{{$administrador[0]->nombres.' '.$administrador[0]->apellidos}}</b></h5>
                                 <p class="card-text"><b>{{$administrador[0]->carnet}}</b></p>
                                 <div class="row">
-                                    <div class="col-lg-6 mb-2">
+                                    <div class="col-lg-6 mb-4">
                                         <p class="card-text text-start">
                                             <b>DUI:</b> {{$administrador[0]->DUI}}
                                         </p>
                                     </div>
-                                    <div class="col-lg-6 mb-2">
+                                    <div class="col-lg-6 mb-4">
                                         <p class="card-text text-start">
                                             <b>Correo:</b> {{$administrador[0]->correo}}
                                         </p>
@@ -115,7 +115,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal para actualizar información de estudiante -->
+    <!-- Modal para actualizar información de administrador -->
     <div class="modal fade" id="modalDatos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -154,7 +154,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal para actualizar foto de estudiante -->
+    <!-- Modal para actualizar foto de administrador -->
     <div class="modal fade" id="modalFotoAdmin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">

@@ -26,6 +26,19 @@
 </head>
 
 <body>
+    <script>
+        $(document).ready(function() {
+            $('.data-table').DataTable({
+                searching: false,
+                paging: false,
+                info: false,
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/2.0.3/i18n/es-ES.json'
+                },
+                pagingType: 'simple_numbers'
+            });
+        });
+    </script>
     @include('sitioAdmin.navbar')
     <div class="container" style="width:100%; margin-top:100pt">
         @if (session('exitoModificar'))
@@ -86,7 +99,7 @@
         @if (session('exitoAgregarMateria'))
         <script>
             Swal.fire({
-                title: "Materia agregada de forma exitosa",
+                title: "Materia agregada",
                 text: "{{ session('exitoAgregarMateria') }}",
                 icon: "success",
                 button: "OK",
@@ -97,9 +110,9 @@
         @if (session('exitoEliminacion'))
         <script>
             Swal.fire({
-                title: "Materia eliminada de forma exitosa",
+                title: "Materia eliminada",
                 text: "{{ session('exitoEliminacion') }}",
-                icon: "error",
+                icon: "success",
                 button: "OK",
                 confirmButtonColor: "#B84C4C",
             });
@@ -124,19 +137,19 @@
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="row g-0">
                         <div class="col-md-4" style="align-items: center;display: flex;justify-content: center;">
-                            <img src="{{asset('img/fotosP/'.$profesor[0]->foto)}}" style="height: 200px; width:200px" class="img-fluid rounded-start" alt="Foto del profesor">
+                            <img src="{{asset('img/fotosP/'.$profesor[0]->foto)}}" style="height: 200px; width:200px" class="img-fluid rounded-start my-4" alt="Foto del profesor">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title"><b>{{$profesor[0]->nombres.' '.$profesor[0]->apellidos}}</b></h5>
                                 <p class="card-text"><b>{{$profesor[0]->carnet}}</b></p>
                                 <div class="row">
-                                    <div class="col-lg-6 mb-2">
+                                    <div class="col-lg-6 mb-4">
                                         <p class="card-text text-start">
                                             <b>DUI:</b> {{$profesor[0]->DUI}}
                                         </p>
                                     </div>
-                                    <div class="col-lg-6 mb-2">
+                                    <div class="col-lg-6 mb-4">
                                         <p class="card-text text-start">
                                             <b>Correo:</b> {{$profesor[0]->correo}}
                                         </p>
@@ -159,235 +172,183 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <!-- Modal para actualizar información de estudiante -->
-            <div class="modal fade" id="modalDatosProfesor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar información del profesor</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        @if($profesor[0]->estadoeliminacion==1)
+                        <div style="background-color:#CFCBCB; height: 1px; border-radius: 2rem"></div>
+                        <div class="col-md-12">
+                            <p class="text-center mt-4" style="font-size:16pt; font-weight:bold; color:black">Materias</p>
+                            <p class="text-center" style="font-size:12pt; color:black">Listado de materias que imparte el profesor</p>
+                            <table class="table table-bordered data-table mb-4" style="width:95%">
+                                <thead>
+                                    <tr class="table-secondary">
+                                        <th scope="col">Nombre Materia</th>
+                                        <th scope="col">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($informacion as $materias)
+                                    <tr>
+                                        <td>{{$materias->nombreMateria}}</td>
+                                        <td>
+                                            <div class="d-grid col-2 mx-auto">
+                                                <button type="button" class="btn btn-danger icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Eliminar" onclick="eliminarMateria({{$materias->idDetalle}})">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                        <form method="POST" action="{{route('admin.updateProfesor')}}">
-                            @csrf
-                            @method('PUT')
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-lg-6 mb-4" hidden>
-                                        <label for="nie" class="form-label">DUI</label>
-                                        <input type="text" class="form-control" name="dui" id="dui" placeholder="Número de identificación del profesor" value="{{ old('dui') }}">
-                                    </div>
-                                    <div class="col-lg-6 mb-4">
-                                        <label for="nombre" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del profesor" value="{{ old('nombre') }}">
-                                    </div>
-                                    <div class="col-lg-6 mb-4">
-                                        <label for="apellido" class="form-label">Apellidos</label>
-                                        <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellidos del profesor" value="{{ old('apellido') }}">
-                                    </div>
-                                    <div class="col-lg-6 mb-4">
-                                        <label for="correo" class="form-label">Correo</label>
-                                        <input type="text" class="form-control" name="correo" id="correo" placeholder="Correo del profesor" value="{{ old('correo') }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button class="btn btn-warning" type="submit">Actualizar Datos</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal para actualizar foto de estudiante -->
-            <div class="modal fade" id="modalFotoProfesor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar foto de perfil</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="d-grid gap-2 col-lg-4 col-md-6 col-8 mx-auto">
+                            <button type="button" class="btn btn-warning btn-lg mb-4" onclick="agregarMaterias()">
+                                <i class="fa-solid fa-square-plus"> Agregar materia</i>
+                            </button>
                         </div>
-                        <form method="POST" action="{{route('admin.updateProfesorFoto')}}" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-lg-6 mb-4" hidden>
-                                        <label for="id" class="form-label">DUI</label>
-                                        <input type="text" class="form-control" name="id" id="id" placeholder="Número de identificación del profesor" value="{{ old('dui') }}">
-                                    </div>
-                                    <div class="col-12 mb-4">
-                                        <label for="foto" class="form-label">Foto</label>
-                                        <input class="form-control" type="file" id="foto" name="foto">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
-                                <button class="btn btn-warning" type="submit">Actualizar foto</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal para agregar materias -->
-            <div class="modal fade" id="modalAddMateria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar materia</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form method="POST" action="{{route('admin.agregarMateria')}}" enctype="multipart/form-data">
-                            @csrf
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-lg-6 mb-4" hidden>
-                                        <input type="text" class="form-control" name="idProfesor" id="idProfesor" placeholder="Número de identificación del profesor" value="{{$profesor[0]->DUI}}">
-                                    </div>
-                                    <label for="materias" class="form-label">Materias disponibles</label>
-                                    <select class="form-select" aria-label="Default select example" name="materias" id="materias">
-                                        <option value="0">Seleccionar materia</option>
-                                        @foreach($materiasDisponibles as $materia)
-                                        <option value="{{$materia->idMateria}}">{{$materia->nombreMateria}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
-                                <button class="btn btn-warning" type="submit">Agregar materia</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal para eliminar materia -->
-            <div class="modal fade" id="eliminarMateria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar materia</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form method="POST" action="{{route('admin.deleteMateriaProfesor')}}">
-                            @csrf
-                            @method('DELETE')
-                            <div class="modal-body">
-                                <p id="textoConfirmarEliminar"></p>
-                                <div class="row">
-                                    <div class="col-lg-6 mb-4" hidden>
-                                        <label for="id" class="form-label">materia</label>
-                                        <input type="text" class="form-control" name="dui" id="dui" value="{{$profesor[0]->DUI}}" placeholder="Número de identificación del profesor">
-                                    </div>
-                                    <div class="col-lg-6 mb-4" hidden>
-                                        <label for="id" class="form-label">materia</label>
-                                        <input type="text" class="form-control" name="id" id="id" placeholder="Número de identificación del profesor">
-                                    </div>
-                                    <div class="col-lg-6 mb-4" hidden>
-                                        <label for="id" class="form-label">detalle</label>
-                                        <input type="text" class="form-control" name="idA" id="idA" placeholder="Número de identificación del profesor">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
-                                <button class="btn btn-danger" type="submit">Eliminar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            @if($profesor[0]->estadoeliminacion==1)
-            <script>
-                $(document).ready(function() {
-                    $('.data-table').DataTable({
-                        searching: false,
-                        paging: false,
-                        info: false,
-                        language: {
-                            url: 'https://cdn.datatables.net/plug-ins/2.0.3/i18n/es-ES.json'
-                        },
-                        pagingType: 'simple_numbers'
-                    });
-                });
-            </script>
-            <div class="row">
-                <p class="text-center" style="font-size:16pt; font-weight:bold; color:black">Materias</p>
-                <p class="text-center" style="font-size:12pt; color:black">Listado de materias que imparte el profesor</p>
-                <div class="container">
-                    <div class="card-body">
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active" id="materias">
-                                <table class="table table-bordered data-table" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Nombre Materia</th>
-                                            <th scope="col">Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($informacion as $materias)
-                                        <tr>
-                                            <td>{{$materias->nombreMateria}}</td>
-                                            <td>
-                                                <div class="d-grid col-2 mx-auto">
-                                                    <button type="button" class="btn btn-danger icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Eliminar" onclick="eliminarMateria({{$materias->idDetalle}})">
-                                                        <i class="fa-solid fa-trash"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container p-5">
-        <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" class="btn btn-warning btn-lg" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Agregar Materia" onclick="agregarMaterias()">
-                <i class="fa-solid fa-square-plus"> Agregar materia</i>
-            </button>
-        </div>
-        <div class="modal fade" id="reactivarEstudiante" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Reactivar profesor</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form method="POST" action="{{route('admin.restoreEstudiante')}}">
-                        @csrf
-                        @method('PUT')
-                        <div class="modal-body">
-                            <p id="textoConfirmarReactivar"></p>
-                            <div class="row">
-                                <div class="col-lg-6 mb-4" hidden>
-                                    <label for="idR" class="form-label">DUI</label>
-                                    <input type="text" class="form-control" name="idR" id="idR" placeholder="Número de identificación del profesor" value="{{ old('nie') }}">
-                                </div>
+    <!-- Modal para actualizar información de profesor -->
+    <div class="modal fade" id="modalDatosProfesor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar información del profesor</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" action="{{route('admin.updateProfesor')}}">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-6 mb-4" hidden>
+                                <label for="nie" class="form-label">DUI</label>
+                                <input type="text" class="form-control" name="dui" id="dui" placeholder="Número de identificación del profesor" value="{{ old('dui') }}">
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del profesor" value="{{ old('nombre') }}">
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <label for="apellido" class="form-label">Apellidos</label>
+                                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellidos del profesor" value="{{ old('apellido') }}">
+                            </div>
+                            <div class="col-lg-6 mb-4">
+                                <label for="correo" class="form-label">Correo</label>
+                                <input type="text" class="form-control" name="correo" id="correo" placeholder="Correo del profesor" value="{{ old('correo') }}">
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
-                            <button class="btn btn-success" type="submit">Reactivar</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button class="btn btn-warning" type="submit">Actualizar Datos</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    @endif
+    <!-- Modal para actualizar foto de profesor -->
+    <div class="modal fade" id="modalFotoProfesor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar foto de perfil</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" action="{{route('admin.updateProfesorFoto')}}" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-6 mb-4" hidden>
+                                <label for="id" class="form-label">DUI</label>
+                                <input type="text" class="form-control" name="id" id="id" placeholder="Número de identificación del profesor" value="{{ old('dui') }}">
+                            </div>
+                            <div class="col-12 mb-4">
+                                <label for="foto" class="form-label">Foto</label>
+                                <input class="form-control" type="file" id="foto" name="foto">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
+                        <button class="btn btn-warning" type="submit">Actualizar foto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal para agregar materias -->
+    <div class="modal fade" id="modalAddMateria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar materia</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" action="{{route('admin.agregarMateria')}}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-6 mb-4" hidden>
+                                <input type="text" class="form-control" name="idProfesor" id="idProfesor" placeholder="Número de identificación del profesor" value="{{$profesor[0]->DUI}}">
+                            </div>
+                            <label for="materias" class="form-label">Materias disponibles</label>
+                            <select class="form-select" aria-label="Default select example" name="materias" id="materias">
+                                <option value="0">Seleccionar materia</option>
+                                @foreach($materiasDisponibles as $materia)
+                                <option value="{{$materia->idMateria}}">{{$materia->nombreMateria}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
+                        <button class="btn btn-warning" type="submit">Agregar materia</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal para eliminar materia -->
+    <div class="modal fade" id="eliminarMateria" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar materia</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" action="{{route('admin.deleteMateriaProfesor')}}">
+                    @csrf
+                    @method('DELETE')
+                    <div class="modal-body">
+                        <p id="textoConfirmarEliminar"></p>
+                        <div class="row">
+                            <div class="col-lg-6 mb-4" hidden>
+                                <label for="id" class="form-label">materia</label>
+                                <input type="text" class="form-control" name="dui" id="dui" value="{{$profesor[0]->DUI}}" placeholder="Número de identificación del profesor">
+                            </div>
+                            <div class="col-lg-6 mb-4" hidden>
+                                <label for="id" class="form-label">materia</label>
+                                <input type="text" class="form-control" name="id" id="id" placeholder="Número de identificación del profesor">
+                            </div>
+                            <div class="col-lg-6 mb-4" hidden>
+                                <label for="id" class="form-label">detalle</label>
+                                <input type="text" class="form-control" name="idA" id="idA" placeholder="Número de identificación del profesor">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
+                        <button class="btn btn-danger" type="submit">Eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div id="divFooter" style="margin-top: 40pt">
         <nav id="navFooter" class="navbar navbar-expand-lg border-bottom border-body pt-4">
             <div class="container-fluid mx-auto d-block">

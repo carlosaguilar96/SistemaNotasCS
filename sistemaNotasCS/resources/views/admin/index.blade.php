@@ -38,7 +38,7 @@
             Swal.fire({
                 title: "Administrador eliminado",
                 text: "{{ session('exitoEliminacion') }}",
-                icon: "error",
+                icon: "success",
                 button: "OK",
                 confirmButtonColor: "#B84C4C",
             });
@@ -100,7 +100,7 @@
                                 <p class="card-title text-center" style="font-size:14pt; font-weight:bold; color:black">Administradores activos</p>
                                 <table class="table table-bordered data-table" style="width:100%">
                                     <thead>
-                                        <tr>
+                                        <tr class="table-secondary">
                                             <th scope="col">Usuario</th>
                                             <th scope="col">Apellidos, Nombres</th>
                                             <th scope="col">Opciones</th>
@@ -129,10 +129,10 @@
                                 </table>
                             </div>
                             <div class="tab-pane fade" id="inactivos">
-                                <p class="card-title text-center" style="font-size:14pt; font-weight:bold; color:black">Estudiantes inactivos</p>
+                                <p class="card-title text-center" style="font-size:14pt; font-weight:bold; color:black">Administradores inactivos</p>
                                 <table class="table table-bordered data-table" style="width:100%">
                                     <thead>
-                                        <tr>
+                                        <tr class="table-secondary">
                                             <th scope="col">Usuario</th>
                                             <th scope="col">Apellidos, Nombres</th>
                                             <th scope="col">Opciones</th>
@@ -146,7 +146,7 @@
                                             <td>
                                                 <div class="row">
                                                     <div class="col-6 mx-0 px-0">
-                                                        <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="{{route('admin.showAdministrador', $administrador->DUI)}}"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
+                                                        <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="{{route('admin.showAdministrador',$administrador->DUI)}}"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
                                                     </div>
                                                     <div class="col-6 mx-0 px-0">
                                                         <button type="button" class="btn btn-success icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Reactivar" onclick="reactivarAdministrador('{{$administrador->DUI}}')">

@@ -242,7 +242,7 @@ class ProfesorController extends Controller
             );
             //elimina la foto anterior
             unlink(public_path("img/fotosP/".$fotoEliminar));
-            return to_route('admin.showProfesor',$id)->with('exitoModificarFoto','La foto del administrador ha sido actualizada.');            
+            return to_route('admin.showProfesor',$id)->with('exitoModificarFoto','La foto del profesor ha sido actualizada.');            
         } catch(QueryException $e){
             return to_route('admin.showProfesor',$id)->with('errorModificarFoto','Ha ocurrido un error al actualizar la foto.');
         }
