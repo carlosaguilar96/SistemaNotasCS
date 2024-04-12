@@ -27,8 +27,13 @@ Route::post('/primerAdmin',[LoginController::class, 'guardarPrimerAdmin'])->name
 Route::post('/inicio',[LoginController::class, 'login'])->name('login');
 //Ruta para realizar logout
 Route::get('/salir',[LoginController::class, 'logout'])->name('logout');
+//Ruta para el error 403
 
-//Rutas relacionadas al sitio del administrador
+//Route::middleware(['customAuth'])->group(function () {
+    //Rutas relacionadas al sitio del administrador
+
+//});
+
 Route::prefix('admin')->group(function(){
     //Rutas relacionadas al AdminController
     //Ruta para mostrar vista de inicio sitio admin

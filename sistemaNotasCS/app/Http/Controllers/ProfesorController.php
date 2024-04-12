@@ -16,6 +16,11 @@ class ProfesorController extends Controller
 {
     //función para mostrar la vista para crear un profesor
     public function crearProfesor(){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         //se seleccionan de la bd las materias que el docente puede impartir
         $materias = DB::table('materia')->orderBy('nombreMateria','asc')->get();
         return view('profesor.crear',compact('materias'));
@@ -23,6 +28,11 @@ class ProfesorController extends Controller
 
     //funcion para insertar un profesor a la bd
     public function storeProfesor(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         //validaciones para los campos del formulario
         $validator = Validator::make($request->all(), [
             'dui' => ['required','min:10','unique:profesor'],
@@ -109,6 +119,11 @@ class ProfesorController extends Controller
     }
 
     public function index(){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $profesoresActivos = DB::table('profesor')->where('estadoEliminacion','=',1)->orderBy('apellidos','asc')->get();
         $profesoresInactivos = DB::table('profesor')->where('estadoEliminacion','=',0)->orderBy('apellidos','asc')->get();        
 
@@ -117,6 +132,11 @@ class ProfesorController extends Controller
     }
 
     public function show(string $id){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $profesor = DB::table('profesor')
                         ->where('DUI','=',$id)->get();
         
@@ -137,14 +157,22 @@ class ProfesorController extends Controller
         return view('profesor.show', compact('profesor', 'informacion', 'materiasDisponibles'));
     }
 
-    public function getProfesor(string $id)
-	{
+    public function getProfesor(string $id){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
 		$profesor = Profesor::find($id);
 		return $profesor;
 	}
 
-    public function getProfesorMateria(int $id)
-	{
+    public function getProfesorMateria(int $id){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
 		$detalle = DB::table('detalleprofesormateria')
                         ->join('materia','detalleprofesormateria.idMateria','=','materia.idMateria')
                         ->where('idDetalle','=',$id)
@@ -153,6 +181,11 @@ class ProfesorController extends Controller
 	} 
 
     public function agregarDetallePM(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $validator = Validator::make($request->all(), [
             'materias' => ['required'],
         ]);
@@ -183,6 +216,11 @@ class ProfesorController extends Controller
     }
 
     public function deleteMateria(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         try{
 			$id = $request->input('idA');
             DB::table('detalleProfesorMateria')->where('idDetalle', $id)->delete();
@@ -193,6 +231,11 @@ class ProfesorController extends Controller
     }
 
     public function update(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $id = $request->input('dui');
         //validaciones para los campos del formulario
         $validator = Validator::make($request->all(), [
@@ -220,6 +263,11 @@ class ProfesorController extends Controller
     }
 
     public function updateFoto(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $id = $request->input('id');
         $profesor = Profesor::find($id);
         $fotoEliminar = $profesor->foto;
@@ -249,6 +297,11 @@ class ProfesorController extends Controller
     }
 
     public function delete(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         try{
 			$id = $request->input('id');
             DB::table('profesor')->where('DUI', $id)->update(['estadoeliminacion' => 0]);
@@ -259,6 +312,11 @@ class ProfesorController extends Controller
     }
 
     public function restore(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+        
         try{
 			$id = $request->input('idR');
             DB::table('profesor')->where('DUI', $id)->update(['estadoeliminacion' => 1]);

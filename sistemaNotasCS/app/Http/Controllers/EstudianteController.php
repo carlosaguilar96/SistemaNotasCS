@@ -17,6 +17,11 @@ class EstudianteController extends Controller
 {
     //función para mostrar la vista para crear un estudiante
     public function crearEstudiante(){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         //se seleccionan de la bd los grados que ofrece el colegio para mostrar en el select
         $grados = DB::table('grado')->JOIN('etapa','grado.idEtapa','=','etapa.idEtapa')->get();
         return view('estudiante.crear',compact('grados'));
@@ -24,6 +29,11 @@ class EstudianteController extends Controller
 
     //funcion para insertar un estudiante a la bd
     public function storeEstudiante(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         //validaciones para los campos del formulario
         $validator = Validator::make($request->all(), [
             'nie' => ['required','min:8','unique:estudiante'],
@@ -115,6 +125,11 @@ class EstudianteController extends Controller
 
     //función para mostrar la vista para gestión de estudiantes
     public function index(){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $estudiantesActivos = DB::table('estudiante')->where('estadoEliminacion','=',1)->orderBy('apellidos','asc')->get();
         $estudiantesInactivos = DB::table('estudiante')->where('estadoEliminacion','=',0)->orderBy('apellidos','asc')->get();
         return view('estudiante.index',compact('estudiantesActivos','estudiantesInactivos'));
@@ -122,6 +137,11 @@ class EstudianteController extends Controller
 
     //función para mostrar información de un estudiante
     public function show(int $id){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $grados = DB::table('grado')->JOIN('etapa','grado.idEtapa','=','etapa.idEtapa')->get();
         $estudiante = DB::table('estudiante')
                         ->where('NIE','=',$id)->get();
@@ -143,11 +163,21 @@ class EstudianteController extends Controller
 
     public function getStudent(int $id)
 	{
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
 		$estudiante = Estudiantes::find($id);
 		return $estudiante;
 	}
 
     public function update(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $id = $request->input('nie');
         //validaciones para los campos del formulario
         $validator = Validator::make($request->all(), [
@@ -184,6 +214,11 @@ class EstudianteController extends Controller
     }
 
     public function updateFoto(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $id = $request->input('id');
         $estudiante = Estudiantes::find($id);
         $fotoEliminar = $estudiante->foto;
@@ -213,6 +248,11 @@ class EstudianteController extends Controller
     }
 
     public function delete(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         try{
 			$id = $request->input('id');
             DB::table('estudiante')->where('NIE', $id)->update(['estadoeliminacion' => 0]);
@@ -223,6 +263,11 @@ class EstudianteController extends Controller
     }
 
     public function restore(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         try{
 			$id = $request->input('idR');
             DB::table('estudiante')->where('NIE', $id)->update(['estadoeliminacion' => 1]);

@@ -13,6 +13,11 @@ class MateriaController extends Controller
 {
     //función para mostrar vista con listado de materias
     public function index(){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $materias = DB::table('materia')->where('estadoeliminacion','=',0)->get();
         $materiasEliminadas = DB::table('materia')->where('estadoeliminacion','=',1)->get();
         return view('materias.index',compact('materias','materiasEliminadas'));
@@ -20,6 +25,11 @@ class MateriaController extends Controller
 
     //función para almacenar una materia en bd
     public function store(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $validator = Validator::make($request->all(), [
             'materia' => ['required'],
         ]);
@@ -44,12 +54,22 @@ class MateriaController extends Controller
 
     //función para obtener información de materia
     public function getMateria(int $id){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $materia = Materia::find($id);
 		return $materia;
     }
 
     //función para actualizar información de materia
     public function update(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $validator = Validator::make($request->all(), [
             'nombreU' => ['required'],
         ]);
@@ -72,6 +92,11 @@ class MateriaController extends Controller
 
     //función para eliminar materia
     public function delete(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         try{
             DB::table('materia')->where('idMateria','=',$request->input('idE'))->update(
                 [
@@ -87,6 +112,11 @@ class MateriaController extends Controller
 
     //función para reactivar materia
     public function restore(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+        
         try{
             DB::table('materia')->where('idMateria','=',$request->input('idR'))->update(
                 [

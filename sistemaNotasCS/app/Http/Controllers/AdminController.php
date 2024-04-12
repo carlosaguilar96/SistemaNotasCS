@@ -13,33 +13,46 @@ use Illuminate\Database\QueryException;
 
 class AdminController extends Controller
 {
+
     //función para mostrar la vista de inicio del sitio administrador
     public function inicio(){
         if(session()->has('administrador')){
             $admin= session()->get('administrador');
             return view('sitioAdmin.inicio',compact('admin'));
         } else{
-            return view('errors.403');
+            abort('403');
         }
     }
 
     //función para mostrar la vista de gestión de usuarios
     public function gestionUsuarios(){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
         return view('sitioAdmin.gestionUsuarios');
     }
 
     //función para mostrar la vista de gestión de grados
     public function gestionGrados(){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
         return view('sitioAdmin.gestionGrados');
     }
 
     //función para mostrar la vista de creación de administradores
     public function creacionAdmin(){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
         return view('admin.crear');
     }
 
     //funcion para insertar un profesor a la bd
     public function storeAdmin(Request $request){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
         //validaciones para los campos del formulario
         $validator = Validator::make($request->all(), [
             'dui' => ['required','min:10','unique:administrador'],
@@ -113,12 +126,18 @@ class AdminController extends Controller
     }
 
     public function index(){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
         $administradoresActivos = DB::table('administrador')->where('estadoEliminacion','=',1)->orderBy('apellidos','asc')->get();
         $administradoresInactivos = DB::table('administrador')->where('estadoEliminacion','=',0)->orderBy('apellidos','asc')->get();
         return view('admin.index',compact('administradoresActivos','administradoresInactivos'));
     }
 
     public function show(string $id){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
         $administrador = DB::table('administrador')
                         ->where('DUI','=',$id)->get();
         return view('admin.show', compact('administrador'));
@@ -126,11 +145,17 @@ class AdminController extends Controller
 
     public function getAdmin(string $id)
 	{
+        if(!session()->has('administrador')){
+            abort('403');
+        }
 		$administrador = Administrador::find($id);
 		return $administrador;
 	}
 
     public function delete(Request $request){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
         try{
 			$id = $request->input('id');
             DB::table('administrador')->where('DUI', $id)->update(['estadoeliminacion' => 0]);
@@ -141,6 +166,9 @@ class AdminController extends Controller
     }
 
     public function update(Request $request){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
         $id = $request->input('dui');
         //validaciones para los campos del formulario
         $validator = Validator::make($request->all(), [
@@ -168,6 +196,9 @@ class AdminController extends Controller
     }
 
     public function restore(Request $request){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
         try{
 			$id = $request->input('idR');
             DB::table('administrador')->where('DUI', $id)->update(['estadoeliminacion' => 1]);
@@ -178,6 +209,9 @@ class AdminController extends Controller
     }
 
     public function updateFoto(Request $request){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
         $id = $request->input('id');
         $profesor = Administrador::find($id);
         $fotoEliminar = $profesor->foto;

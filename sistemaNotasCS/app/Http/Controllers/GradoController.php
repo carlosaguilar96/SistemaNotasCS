@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Validator;
 class GradoController extends Controller
 {
     public function show(int $id){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $informacion = DB::table('grado')
                         ->join('etapa','grado.idEtapa','=','etapa.idEtapa')
                         ->where('idGrado','=',$id)->get();
@@ -27,6 +32,11 @@ class GradoController extends Controller
     }
 
     public function getDetalleGM(int $id){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         $detalle = DB::table('detallegradomateria')->join('materia','detallegradomateria.idMateria','=','materia.idMateria')
                     ->join('grado','detallegradomateria.idGrado','=','grado.idGrado')
                     ->join('etapa','grado.idEtapa','=','etapa.idEtapa')->where('idDetalle','=',$id)->get();
@@ -34,6 +44,11 @@ class GradoController extends Controller
     }
 
     public function eliminarDetalleGM(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
         try{
             DB::table('detallegradomateria')->where('idDetalle','=',$request->id)->delete();
             return to_route('admin.showGrado',$request->idGrado)->with('ExitoEliminarMateria','La materia ha sido eliminada correctamente.');
@@ -44,6 +59,11 @@ class GradoController extends Controller
     }
 
     public function agregarDetalleGM(Request $request){
+        //Validar que el inicio se mostrará al administrador solamente
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+        
         $validator = Validator::make($request->all(), [
             'materias' => ['required'],
         ]);

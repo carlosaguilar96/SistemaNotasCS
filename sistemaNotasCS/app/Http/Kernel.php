@@ -43,6 +43,10 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        'customAuth' => [
+            // custom middleware para agrupar rutas según rol de usuario
+            \App\Http\Middleware\customAuth::class,
+        ]
     ];
 
     /**
