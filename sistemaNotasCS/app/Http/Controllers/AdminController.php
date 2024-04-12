@@ -19,7 +19,7 @@ class AdminController extends Controller
             $admin= session()->get('administrador');
             return view('sitioAdmin.inicio',compact('admin'));
         } else{
-            //mostrar error 403
+            return view('errors.403');
         }
     }
 
