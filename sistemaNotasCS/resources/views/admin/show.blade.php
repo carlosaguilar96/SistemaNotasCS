@@ -92,6 +92,13 @@
                                             <b>Correo:</b> {{$administrador[0]->correo}}
                                         </p>
                                     </div>
+                                    @if($administrador[0]->estadoeliminacion==0)
+                                    <div class="col-lg-6 mb-2">
+                                        <p class="card-text text-start mt-4">
+                                            <b><strong>Administrador inactivo</strong></b>
+                                        </p>
+                                    </div>
+                                    @endif
                                     @if($administrador[0]->estadoeliminacion==1)
                                     <div class="col-sm-6 col-12 mb-2">
                                         <button type="button" class="btn btn-warning" onclick="actualizarDatosModal('{{$administrador[0]->DUI}}')" style="width:75%">Actualizar información</button>

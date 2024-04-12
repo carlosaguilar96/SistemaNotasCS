@@ -87,7 +87,7 @@ const eliminarEstudiante = (id) => {
             
         success : function(data) {
             const {NIE, nombres, apellidos} = data;
-            $('#id').val(NIE);
+            $('#id').val(id);
             $('#textoConfirmarEliminar').text('¿Está seguro que desea eliminar al estudiante '+nombres+' '+apellidos+'?');
             
             $('#eliminarEstudiante').modal('show');                        
@@ -116,8 +116,8 @@ const reactivarEstudiante = (id) => {
         dataType : 'json',
             
         success : function(data) {
-            const {NIE, nombres, apellidos} = data;
-            $('#idR').val(NIE);
+            const {DUI, nombres, apellidos} = data;
+            $('#idR').val(id);
             $('#textoConfirmarReactivar').text('¿Está seguro que desea reactivar al estudiante '+nombres+' '+apellidos+'?');
             
             $('#reactivarEstudiante').modal('show');                        

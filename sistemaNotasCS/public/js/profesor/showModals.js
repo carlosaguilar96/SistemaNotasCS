@@ -94,20 +94,20 @@ const actualizarFotoModal = (id) => {
     });
 }
 
-const eliminarAdministrador = (id) => {
+const eliminarProfesor = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionAdministrador/${id}`,            
+        url : `http://127.0.0.1:8000/admin/obtenerInformacionProfesor/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
         success : function(data) {
             const {DUI, nombres, apellidos} = data;
             $('#id').val(id);
-            $('#textoConfirmarEliminar').text('¿Está seguro que desea eliminar al administrador '+nombres+' '+apellidos+'?');
+            $('#textoConfirmarEliminar').text('¿Está seguro que desea eliminar al profesor '+nombres+' '+apellidos+'?');
             
-            $('#eliminarAdministrador').modal('show');                        
+            $('#eliminarProfesor').modal('show');                        
         },
     
         // código a ejecutar si la petición falla;
@@ -124,20 +124,20 @@ const eliminarAdministrador = (id) => {
     });
 }
 
-const reactivarAdministrador = (id) => {
+const reactivarProfesor = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionAdministrador/${id}`,            
+        url : `http://127.0.0.1:8000/admin/obtenerInformacionProfesor/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
         success : function(data) {
             const {DUI, nombres, apellidos} = data;
             $('#idR').val(id);
-            $('#textoConfirmarReactivar').text('¿Está seguro que desea reactivar al administrador '+nombres+' '+apellidos+'?');
+            $('#textoConfirmarReactivar').text('¿Está seguro que desea reactivar al profesor '+nombres+' '+apellidos+'?');
             
-            $('#reactivarAdmin').modal('show');                        
+            $('#reactivarProfesor').modal('show');                        
         },
     
         // código a ejecutar si la petición falla;

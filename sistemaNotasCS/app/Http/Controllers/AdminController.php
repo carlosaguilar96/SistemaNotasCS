@@ -171,9 +171,9 @@ class AdminController extends Controller
         try{
 			$id = $request->input('idR');
             DB::table('administrador')->where('DUI', $id)->update(['estadoeliminacion' => 1]);
-			return to_route('admin.indexAdministradores')->with('exitoReactivar','El estudiante se ha reactivado exitosamente.');
+			return to_route('admin.indexAdministradores')->with('exitoReactivar','El administrador se ha reactivado exitosamente.');
 		}catch(Exception $e){
-			return to_route('admin.indexAdministradores')->with('errorReactivar','Ha ocurrido un error al reactivar el estudiante.');
+			return to_route('admin.indexAdministradores')->with('errorReactivar','Ha ocurrido un error al reactivar el administrador.');
 		}
     }
 

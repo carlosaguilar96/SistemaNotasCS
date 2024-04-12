@@ -146,7 +146,7 @@
                                             <td>
                                                 <div class="row">
                                                     <div class="col-6 mx-0 px-0">
-                                                        <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="{{route('admin.showAdministrador', '$administrador->DUI')}}"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
+                                                        <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="{{route('admin.showAdministrador', $administrador->DUI)}}"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
                                                     </div>
                                                     <div class="col-6 mx-0 px-0">
                                                         <button type="button" class="btn btn-success icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Reactivar" onclick="reactivarAdministrador('{{$administrador->DUI}}')">
@@ -166,7 +166,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal para eliminar estudiante -->
+    <!-- Modal para eliminar administrador -->
     <div class="modal fade" id="eliminarAdministrador" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -194,7 +194,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal para reactivar estudiante -->
+    <!-- Modal para reactivar administrador -->
     <div class="modal fade" id="reactivarAdmin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">

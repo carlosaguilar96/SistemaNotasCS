@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
 
-    <script src="{{asset('js/estudiante/showModals.js')}}"></script>
+    <script src="{{asset('js/profesor/showModals.js')}}"></script>
 </head>
 
 <body>
@@ -117,7 +117,7 @@
                                                         <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="{{route('admin.showProfesor',$profesor->DUI)}}"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
                                                     </div>
                                                     <div class="col-6 mx-0 px-0">
-                                                        <button type="button" class="btn btn-danger icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Eliminar" onclick="">
+                                                        <button type="button" class="btn btn-danger icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Eliminar" onclick="eliminarProfesor('{{$profesor->DUI}}')">
                                                             <i class="fa-solid fa-trash"></i>
                                                         </button>
                                                     </div>
@@ -129,7 +129,7 @@
                                 </table>
                             </div>
                             <div class="tab-pane fade" id="inactivos">
-                                <p class="card-title text-center" style="font-size:14pt; font-weight:bold; color:black">Estudiantes inactivos</p>
+                                <p class="card-title text-center" style="font-size:14pt; font-weight:bold; color:black">Profesores inactivos</p>
                                 <table class="table table-bordered data-table" style="width:100%">
                                     <thead>
                                         <tr>
@@ -149,7 +149,7 @@
                                                         <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="{{route('admin.showProfesor', $profesor->DUI)}}"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
                                                     </div>
                                                     <div class="col-6 mx-0 px-0">
-                                                        <button type="button" class="btn btn-success icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Reactivar" onclick="">
+                                                        <button type="button" class="btn btn-success icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Reactivar" onclick="reactivarProfesor('{{$profesor->DUI}}')">
                                                             <i class="fa-solid fa-trash-can-arrow-up"></i>
                                                         </button>
                                                     </div>
@@ -166,15 +166,15 @@
             </div>
         </div>
     </div>
-    <!-- Modal para eliminar estudiante -->
-    <div class="modal fade" id="eliminarEstudiante" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+    <!-- Modal para eliminar profesor -->
+    <div class="modal fade" id="eliminarProfesor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar profesor</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="{{route('admin.deleteEstudiante')}}">
+                <form method="POST" action="{{route('admin.deleteProfesor')}}">
                     @csrf
                     @method('DELETE')
                     <div class="modal-body">
@@ -182,7 +182,7 @@
                         <div class="row">
                             <div class="col-lg-6 mb-4" hidden>
                                 <label for="id" class="form-label">DUI</label>
-                                <input type="text" class="form-control" name="id" id="id" placeholder="Número de identificación del profesor" value="{{ old('nie') }}">
+                                <input type="text" class="form-control" name="id" id="id" placeholder="Número de identificación del profesor" value="{{ old('id') }}">
                             </div>
                         </div>
                     </div>
@@ -195,14 +195,14 @@
         </div>
     </div>
     <!-- Modal para reactivar estudiante -->
-    <div class="modal fade" id="reactivarEstudiante" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+    <div class="modal fade" id="reactivarProfesor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Reactivar profesor</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="{{route('admin.restoreEstudiante')}}">
+                <form method="POST" action="{{route('admin.restoreProfesor')}}">
                     @csrf
                     @method('PUT')
                     <div class="modal-body">
@@ -210,7 +210,7 @@
                         <div class="row">
                             <div class="col-lg-6 mb-4" hidden>
                                 <label for="idR" class="form-label">DUI</label>
-                                <input type="text" class="form-control" name="idR" id="idR" placeholder="Número de identificación del profesor" value="{{ old('nie') }}">
+                                <input type="text" class="form-control" name="idR" id="idR" placeholder="Número de identificación del profesor" value="{{ old('dui') }}">
                             </div>
                         </div>
                     </div>

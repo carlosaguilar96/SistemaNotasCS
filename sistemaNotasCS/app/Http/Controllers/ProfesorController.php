@@ -247,5 +247,25 @@ class ProfesorController extends Controller
             return to_route('admin.showProfesor',$id)->with('errorModificarFoto','Ha ocurrido un error al actualizar la foto.');
         }
     }
+
+    public function delete(Request $request){
+        try{
+			$id = $request->input('id');
+            DB::table('profesor')->where('DUI', $id)->update(['estadoeliminacion' => 0]);
+			return to_route('admin.indexProfesores')->with('exitoEliminacion','El profesor ha sido eliminado exitosamente.');
+		}catch(Exception $e){
+			return to_route('admin.indexProfesores')->with('errorEliminacion','Ha ocurrido un error al eliminar el profesor.');
+		}
+    }
+
+    public function restore(Request $request){
+        try{
+			$id = $request->input('idR');
+            DB::table('profesor')->where('DUI', $id)->update(['estadoeliminacion' => 1]);
+			return to_route('admin.indexProfesores')->with('exitoReactivar','El profesor se ha reactivado exitosamente.');
+		}catch(Exception $e){
+			return to_route('admin.indexProfesores')->with('errorReactivar','Ha ocurrido un error al reactivar el profesor.');
+		}
+    }
     
 }

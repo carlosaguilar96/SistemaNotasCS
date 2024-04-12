@@ -77,6 +77,10 @@ Route::prefix('admin')->group(function(){
     //Ruta para actualizar información del profesor
     Route::put('/actualizarProfesor',[ProfesorController::class, 'update'])->name('admin.updateProfesor');
     Route::put('/actualizarProfesorFoto',[ProfesorController::class,'updateFoto'])->name('admin.updateProfesorFoto');
+    //Ruta para borrar profesor
+    Route::delete('/eliminarProfesor',[ProfesorController::class,'delete'])->name('admin.deleteProfesor');
+    //Ruta para restaurar profesor
+    Route::put('/restaurarProfesor',[ProfesorController::class,'restore'])->name('admin.restoreProfesor');
 
     //Rutas relacionadas a Gestión de Administradores
     //Ruta para mostrar vista para crear administrador

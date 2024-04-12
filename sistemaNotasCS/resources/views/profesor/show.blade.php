@@ -141,6 +141,13 @@
                                             <b>Correo:</b> {{$profesor[0]->correo}}
                                         </p>
                                     </div>
+                                    @if($profesor[0]->estadoeliminacion==0)
+                                    <div class="col-lg-6 mb-2">
+                                        <p class="card-text text-start mt-4">
+                                            <b><strong>Profesor inactivo</strong></b>
+                                        </p>
+                                    </div>
+                                    @endif
                                     @if($profesor[0]->estadoeliminacion==1)
                                     <div class="col-sm-6 col-12 mb-2">
                                         <button type="button" class="btn btn-warning" onclick="actualizarDatosModal('{{$profesor[0]->DUI}}')" style="width:75%">Actualizar información</button>
@@ -296,6 +303,7 @@
                     </div>
                 </div>
             </div>
+            @if($profesor[0]->estadoeliminacion==1)
             <script>
                 $(document).ready(function() {
                     $('.data-table').DataTable({
@@ -379,6 +387,7 @@
             </div>
         </div>
     </div>
+    @endif
     <div id="divFooter" style="margin-top: 40pt">
         <nav id="navFooter" class="navbar navbar-expand-lg border-bottom border-body pt-4">
             <div class="container-fluid mx-auto d-block">
