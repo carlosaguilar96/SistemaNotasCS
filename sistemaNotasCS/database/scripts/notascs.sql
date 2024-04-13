@@ -172,198 +172,73 @@ INSERT INTO `detallegradomateria` (`idGrado`,`idMateria`) VALUES
 
 CREATE TABLE `añoEscolar` (
   `idAño` int PRIMARY KEY AUTO_INCREMENT,
-  `nombre` int NOT NULL,
+  `nombreAño` int NOT NULL,
   `estadoFinalizacion` int NOT NULL
 );
 
+CREATE TABLE `periodos` (
+  `idPeriodo` int PRIMARY KEY AUTO_INCREMENT,
+  `nombrePeriodo` varchar(100) NOT NULL,
+  `estado` int NOT NULL
+);
 
+INSERT INTO `periodos` (`nombrePeriodo`,`estado`) VALUES
+('Periodo I',0),
+('Periodo II',0),
+('Periodo III',0),
+('Periodo IV',0);
 
+CREATE TABLE `secciones` (
+  `idSeccion` int PRIMARY KEY AUTO_INCREMENT,
+  `nombreSeccion` varchar(100) NOT NULL,
+  `encargado` varchar(10) NOT NULL,
+  `idGrado` int NOT NULL,
+  `idAño` int NOT NULL,
+  `estadoeliminacion` int NOT NULL,
+  FOREIGN KEY(`encargado`) REFERENCES `profesor`(`DUI`),
+  FOREIGN KEY(`idGrado`) REFERENCES `grado`(`idGrado`),
+  FOREIGN KEY(`idAño`) REFERENCES `añoEscolar`(`idAño`)
+);
 
-/*-- --------------------------------------------------------
+CREATE TABLE `detalleSeccionMateriaProfesor` (
+  `idDetalle` int PRIMARY KEY AUTO_INCREMENT,
+  `idProfesor` varchar(100) NOT NULL,
+  `idSeccion` int NOT NULL,
+  `idMateria` int NOT NULL,
+  FOREIGN KEY(`idProfesor`) REFERENCES `profesor`(`DUI`),
+  FOREIGN KEY(`idSeccion`) REFERENCES `secciones`(`idSeccion`),
+  FOREIGN KEY(`idMateria`) REFERENCES `materia`(`idMateria`)
+);
 
---
--- Table structure for table `mes`
---
+CREATE TABLE `detalleSeccionEstudiante` (
+  `idDetalle` int PRIMARY KEY AUTO_INCREMENT,
+  `idEstudiante` int NOT NULL,
+  `idSeccion` int NOT NULL,
+  FOREIGN KEY(`idEstudiante`) REFERENCES `estudiante`(`NIE`),
+  FOREIGN KEY(`idSeccion`) REFERENCES `secciones`(`idSeccion`)
+);
 
-CREATE TABLE `mes` (
-  `idMes` int(10) NOT NULL,
-  `mes` int(11) NOT NULL,
-  `idPeriodo` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `detalleSeccionMateria` (
+  `idDetalle` int PRIMARY KEY AUTO_INCREMENT,
+  `idSeccion` int NOT NULL,
+  `idMateria` int NOT NULL,
+  FOREIGN KEY(`idSeccion`) REFERENCES `secciones`(`idSeccion`),
+  FOREIGN KEY(`idMateria`) REFERENCES `materia`(`idMateria`)
+);
 
--- --------------------------------------------------------
+CREATE TABLE `Evaluacion` (
+  `idEvaluacion` int PRIMARY KEY AUTO_INCREMENT,
+  `nombreEvaluacion` varchar(100) NOT NULL,
+  `idDetalle` int NOT NULL,
+  `porcentaje` int NOT NULL,
+  FOREIGN KEY(`idDetalle`) REFERENCES `detalleSeccionMateria`(`idDetalle`)
+);
 
---
--- Table structure for table `notas`
---
-
-CREATE TABLE `notas` (
-  `idNotas` int(10) NOT NULL,
-  `actividad1` decimal(10,1) NOT NULL,
-  `actividad2` decimal(10,1) NOT NULL,
-  `actividad3` decimal(10,1) NOT NULL,
-  `actividad4` decimal(10,1) NOT NULL,
-  `actividad5` decimal(10,1) NOT NULL,
-  `laboratorio` decimal(10,1) NOT NULL,
-  `pruebaObjetiva` decimal(10,1) NOT NULL,
-  `promedioMensual` decimal(10,1) NOT NULL,
-  `promedioAnual` decimal(10,1) NOT NULL,
-  `notaExtraoridinaria` decimal(10,1) NOT NULL,
-  `idMes` int(10) NOT NULL,
-  `idMateria` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `periodo`
---
-
-CREATE TABLE `periodo` (
-  `idPeriodo` int(10) NOT NULL,
-  `periodo` int(2) NOT NULL,
-  `idCiclo` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `profesor`
---
-
-
-
--- --------------------------------------------------------
-
---
--- Table structure for table `seccion`
---
-
-CREATE TABLE `seccion` (
-  `idSeccion` varchar(6) NOT NULL,
-  `nombre` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
--- Indexes for dumped tables
---
-
---
--- Indexes for table `administrador`
---
-ALTER TABLE `administrador`
-  ADD PRIMARY KEY (`DUI`);
-
---
--- Indexes for table `añoacademico`
---
-ALTER TABLE `añoacademico`
-  ADD PRIMARY KEY (`idAño`);
-
---
--- Indexes for table `ciclo`
---
-ALTER TABLE `ciclo`
-  ADD PRIMARY KEY (`idCiclo`);
-
---
--- Indexes for table `estudiante`
---
-ALTER TABLE `estudiante`
-  ADD PRIMARY KEY (`NIE`),
-  ADD KEY `fk_estudiante_seccion` (`idSeccion`);
-
---
--- Indexes for table `materia`
---
-ALTER TABLE `materia`
-  ADD PRIMARY KEY (`idMateria`),
-  ADD KEY `fk_materia_seccion` (`idSeccion`);
-
---
--- Indexes for table `mes`
---
-ALTER TABLE `mes`
-  ADD PRIMARY KEY (`idMes`),
-  ADD KEY `fk_mes_periodo` (`idPeriodo`);
-
---
--- Indexes for table `notas`
---
-ALTER TABLE `notas`
-  ADD PRIMARY KEY (`idNotas`),
-  ADD KEY `fk_notas_mes` (`idMes`),
-  ADD KEY `fk_notas_materia` (`idMateria`);
-
---
--- Indexes for table `periodo`
---
-ALTER TABLE `periodo`
-  ADD PRIMARY KEY (`idPeriodo`),
-  ADD KEY `fk_periodo_ciclo` (`idCiclo`);
-
---
--- Indexes for table `profesor`
---
-ALTER TABLE `profesor`
-  ADD PRIMARY KEY (`DUI`),
-  ADD KEY `fk_profesor_seccion` (`idSeccion`);
-
---
--- Indexes for table `seccion`
---
-ALTER TABLE `seccion`
-  ADD PRIMARY KEY (`idSeccion`);
-
---
--- Indexes for table `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`idUsuario`);
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `estudiante`
---
-ALTER TABLE `estudiante`
-  ADD CONSTRAINT `fk_estudiante_seccion` FOREIGN KEY (`idSeccion`) REFERENCES `seccion` (`idSeccion`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `materia`
---
-ALTER TABLE `materia`
-  ADD CONSTRAINT `fk_materia_seccion` FOREIGN KEY (`idSeccion`) REFERENCES `seccion` (`idSeccion`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `mes`
---
-ALTER TABLE `mes`
-  ADD CONSTRAINT `fk_mes_periodo` FOREIGN KEY (`idPeriodo`) REFERENCES `periodo` (`idPeriodo`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `notas`
---
-ALTER TABLE `notas`
-  ADD CONSTRAINT `fk_notas_materia` FOREIGN KEY (`idMateria`) REFERENCES `materia` (`idMateria`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_notas_mes` FOREIGN KEY (`idMes`) REFERENCES `mes` (`idMes`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `periodo`
---
-ALTER TABLE `periodo`
-  ADD CONSTRAINT `fk_periodo_ciclo` FOREIGN KEY (`idCiclo`) REFERENCES `ciclo` (`idCiclo`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `profesor`
---
-ALTER TABLE `profesor`
-  ADD CONSTRAINT `fk_profesor_seccion` FOREIGN KEY (`idSeccion`) REFERENCES `seccion` (`idSeccion`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;*/
+CREATE TABLE `Nota` (
+  `idNota` int PRIMARY KEY AUTO_INCREMENT,
+  `idEstudiante` int NOT NULL,
+  `idEvaluacion` int NOT NULL,
+  `nota` float NOT NULL,
+  FOREIGN KEY(`idEstudiante`) REFERENCES `estudiante`(`NIE`),
+  FOREIGN KEY(`idEvaluacion`) REFERENCES `Evaluacion`(`idEvaluacion`)
+);
