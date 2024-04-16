@@ -152,7 +152,7 @@ class AdminController extends Controller
         $user = session()->get('administrador');
         return view('sitioAdmin.showPerfil',compact('user'));
     }
-    
+
     public function getAdmin(string $id)
 	{
         if(!session()->has('administrador')){
@@ -254,7 +254,7 @@ class AdminController extends Controller
         if(!session()->has('administrador')){
             abort('403');
         }
-        return view('admin.cambiarContraseña');
+        return view('sitioAdmin.cambiarContraseña');
     }
 
     public function getUser(int $id)
@@ -273,16 +273,16 @@ class AdminController extends Controller
         }
 
         $request->validate([
-            'actualPass' => ['required'],
-            'newPass' => ['required','confirmed', 'min:10'],
+            'ContraseñaActual' => ['required'],
+            'NuevaContraseña' => ['required','confirmed', 'min:10'],
         ]);
 
         $info = session()->get('administrador');
         $user = DB::table('usuarios')->where('usuario','=',$info[0]->carnet)->get();
         
-        $passwordActual = $request->input('actualPass');
-        $passwordNueva = $request->input('newPass');
-        $passwordNueva1 = $request->input('newPass1');
+        $passwordActual = $request->input('ContraseñaActual');
+        $passwordNueva = $request->input('NuevaContraseña');
+        $passwordNueva1 = $request->input('NuevaContraseña_confirmation');
 
         if($user[0]->contraseña == Hash('SHA256',$passwordActual)){
             $contra = Hash('SHA256',$passwordNueva);

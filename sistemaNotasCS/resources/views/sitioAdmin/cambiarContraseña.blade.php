@@ -47,15 +47,15 @@
 
                         <div class="col-12 mb-3 mt-3">
                             <label for="dui" class="form-label">Contraseña actual</label>
-                            <input type="text" class="form-control" name="actualPass" id="actualPass" placeholder="Escriba su contraseña actual" value="{{ old('actualPass') }}">
+                            <input type="password" class="form-control" name="ContraseñaActual" id="ContraseñaActual" placeholder="Escriba su contraseña actual" value="{{ old('actualPass') }}">
                         </div>
                         <div class="col-12 mb-3">
                             <label for="carnet" class="form-label">Contraseña nueva</label>
-                            <input type="text" class="form-control" name="newPass" id="newPass" placeholder="Escriba su nueva contraseña" value="{{ old('newPass') }}">
+                            <input type="password" class="form-control" name="NuevaContraseña" id="NuevaContraseña" placeholder="Escriba su nueva contraseña" value="{{ old('newPass') }}">
                         </div>
                         <div class="col-12 mb-3">
                             <label for="nombre" class="form-label">Contraseña nueva</label>
-                            <input type="text" class="form-control" id="newPass1" name="newPass_confirmation" placeholder="Escriba su nueva contraseña nuevamente" value="{{ old('newPass1') }}">
+                            <input type="password" class="form-control" id="NuevaContraseña_confirmation" name="NuevaContraseña_confirmation" placeholder="Escriba su nueva contraseña nuevamente" value="{{ old('newPass1') }}">
                         </div>
                         <div class="col-12 mt-lg-0 mt-4">
                             <button class="btn btn-warning mt-2 mx-auto d-block " style="width:auto;" type="submit">Cambiar contraseña</button>
