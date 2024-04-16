@@ -6,7 +6,7 @@
             <div class="card-body">
               <h4 class="card-title" style="font-weight:bold">{{$admin[0]->nombres}} {{$admin[0]->apellidos}}</h4>
               <p class="card-text" style="font-style:italic">Administrador</p>
-              <a href="#" class="btn btn-warning text-center mt-2">Ver información</a>
+              <a href="{{route('sitioAdmin.showPerfil')}}" class="btn btn-warning text-center mt-2">Ver información</a>
             </div>
           </div>
         </div>

@@ -19,7 +19,7 @@
                             <a class="nav-link" aria-current="page" href="{{route('admin.inicio')}}">INICIO</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">MI PERFIL</a>
+                            <a class="nav-link" aria-current="page" href="{{route('sitioAdmin.showPerfil')}}">MI PERFIL</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -55,7 +55,7 @@
                             <a class="nav-link" aria-current="page" href="{{route('admin.indexMaterias')}}">MATERIAS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">CAMBIAR CONTRASEÑA</a>
+                            <a class="nav-link" aria-current="page" href="{{route('admin.cambiarContraseña')}}">CAMBIAR CONTRASEÑA</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="{{route('logout')}}">CERRAR SESIÓN</a>

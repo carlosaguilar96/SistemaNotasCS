@@ -27,12 +27,9 @@ Route::post('/primerAdmin',[LoginController::class, 'guardarPrimerAdmin'])->name
 Route::post('/inicio',[LoginController::class, 'login'])->name('login');
 //Ruta para realizar logout
 Route::get('/salir',[LoginController::class, 'logout'])->name('logout');
-//Ruta para el error 403
+//ruta para mostrar perfil de administradores 
+Route::get('/mostrarPerfil/',[AdminController::class,'showPerfil'])->name('sitioAdmin.showPerfil');
 
-//Route::middleware(['customAuth'])->group(function () {
-    //Rutas relacionadas al sitio del administrador
-
-//});
 
 Route::prefix('admin')->group(function(){
     //Rutas relacionadas al AdminController
@@ -94,7 +91,7 @@ Route::prefix('admin')->group(function(){
     Route::post('/guardarAdministrador',[AdminController::class,'storeAdmin'])->name('admin.guardarAdmin');
     //Ruta para mostrar vista index
     Route::get('/indexAdministrador',[AdminController::class,'index'])->name('admin.indexAdministradores');
-    //ruta para mostrar administradores
+    //ruta para mostrar administradores showPerfil
     Route::get('/mostrarAdministrador/{DUI}',[AdminController::class,'show'])->name('admin.showAdministrador');
     //Ruta para obtener información del administrador
     Route::get('/obtenerInformacionAdministrador/{id}',[AdminController::class,'getAdmin'])->name('admin.getAdministrador');
@@ -105,6 +102,10 @@ Route::prefix('admin')->group(function(){
     Route::put('/actualizarAdministradorFoto',[AdminController::class,'updateFoto'])->name('admin.updateAdminFoto');
     //Ruta para restaurar administrador
     Route::put('/restaurarAdministrador',[AdminController::class,'restore'])->name('admin.restoreAdmin');
+    //Ruta para cambiar la contraseña del administrador
+    Route::put('/cambiarContraseñaAdmin',[AdminController::class, 'cambiarContraseñaAdmin'])->name('admin.cambiarContraseñaAdmin');
+    //Ruta para mostrar la vista del administrador
+    Route::get('/cambiarContraseñaAdministrador',[AdminController::class,'cambiarContraseña'])->name('admin.cambiarContraseña');
 
     //Rutas relacionadas a Gestión de Planes Académicos
     //Ruta para mostrar información de grado

@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Administrador;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Credenciales;
 use Exception;
 use Illuminate\Database\QueryException;
+use PhpParser\Node\Stmt\Return_;
 
 class AdminController extends Controller
 {
@@ -143,6 +145,14 @@ class AdminController extends Controller
         return view('admin.show', compact('administrador'));
     }
 
+    public function showPerfil(){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+        $user = session()->get('administrador');
+        return view('sitioAdmin.showPerfil',compact('user'));
+    }
+    
     public function getAdmin(string $id)
 	{
         if(!session()->has('administrador')){
@@ -237,6 +247,53 @@ class AdminController extends Controller
             return to_route('admin.showAdministrador',$id)->with('exitoModificarFoto','La foto del administrador ha sido actualizada.');            
         } catch(QueryException $e){
             return to_route('admin.showAdministrador',$id)->with('errorModificarFoto','Ha ocurrido un error al actualizar la foto.');
+        }
+    }
+
+    public function cambiarContraseña(){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+        return view('admin.cambiarContraseña');
+    }
+
+    public function getUser(int $id)
+	{
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+		$usuario = Usuario::find($id);
+		return $usuario;
+	}
+
+    public function cambiarContraseñaAdmin(Request $request){
+
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+
+        $request->validate([
+            'actualPass' => ['required'],
+            'newPass' => ['required','confirmed', 'min:10'],
+        ]);
+
+        $info = session()->get('administrador');
+        $user = DB::table('usuarios')->where('usuario','=',$info[0]->carnet)->get();
+        
+        $passwordActual = $request->input('actualPass');
+        $passwordNueva = $request->input('newPass');
+        $passwordNueva1 = $request->input('newPass1');
+
+        if($user[0]->contraseña == Hash('SHA256',$passwordActual)){
+            $contra = Hash('SHA256',$passwordNueva);
+            try{
+                DB::table('usuarios')->where('usuario','=',$info[0]->carnet)->update(['contraseña'=>$contra]);
+                return to_route('admin.cambiarContraseña')->with('exitoCambiar','La contraseña del usuario ha sido cambiada con éxito');
+            }catch(Exception $e){
+                return to_route('admin.cambiarContraseña')->with('errorCambiar','La contraseña del usuario no sido cambiada con éxito');
+            }
+        }else{
+            return to_route('admin.cambiarContraseña')->with('errorCambiar','La contraseña del usuario no sido cambiada con éxito');
         }
     }
 }
