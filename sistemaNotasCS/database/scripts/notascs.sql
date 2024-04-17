@@ -222,8 +222,10 @@ CREATE TABLE `detalleSeccionMateria` (
   `idDetalle` int PRIMARY KEY AUTO_INCREMENT,
   `idSeccion` int NOT NULL,
   `idMateria` int NOT NULL,
+  `idProfesor` varchar(100),
   FOREIGN KEY(`idSeccion`) REFERENCES `secciones`(`idSeccion`),
-  FOREIGN KEY(`idMateria`) REFERENCES `materia`(`idMateria`)
+  FOREIGN KEY(`idMateria`) REFERENCES `materia`(`idMateria`),
+  FOREIGN KEY(`idProfesor`) REFERENCES `profesor`(`DUI`)
 );
 
 CREATE TABLE `Evaluacion` (

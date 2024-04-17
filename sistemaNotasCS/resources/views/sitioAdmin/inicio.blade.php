@@ -23,7 +23,7 @@
               </a>
             </div>
             <div class="col-md-4 col-6 mb-3">
-              <a class="link-body-emphasis link-underline link-underline-opacity-0" href="#">
+              <a class="link-body-emphasis link-underline link-underline-opacity-0" href="{{route('admin.gestionAño')}}">
               <div class="card" style="width: 100%; height:200">
                 <h6 class="card-header bg-warning">Gestión año escolar</h6>
                 <div class="card-body">

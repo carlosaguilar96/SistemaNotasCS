@@ -42,6 +42,16 @@ class AdminController extends Controller
         return view('sitioAdmin.gestionGrados');
     }
 
+    //función para mostrar la vista de gestión de año
+    public function gestionAño(){
+        if(!session()->has('administrador')){
+            abort('403');
+        }
+        $año = DB::table('añoescolar')->where('estadoFinalizacion','=',0)->get();
+        $periodo = DB::table('periodos')->where('estado','=',1)->get();
+        return view('sitioAdmin.gestionAño',compact('año','periodo'));
+    }
+
     //función para mostrar la vista de creación de administradores
     public function creacionAdmin(){
         if(!session()->has('administrador')){

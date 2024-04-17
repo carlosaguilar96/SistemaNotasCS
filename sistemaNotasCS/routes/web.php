@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AñoController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\GradoController;
 use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\ProfesorController;
+use App\Http\Controllers\SeccionController;
 use App\Models\Profesor;
 
 /*
@@ -27,18 +29,24 @@ Route::post('/primerAdmin',[LoginController::class, 'guardarPrimerAdmin'])->name
 Route::post('/inicio',[LoginController::class, 'login'])->name('login');
 //Ruta para realizar logout
 Route::get('/salir',[LoginController::class, 'logout'])->name('logout');
-//ruta para mostrar perfil de administradores 
-Route::get('/mostrarPerfil/',[AdminController::class,'showPerfil'])->name('sitioAdmin.showPerfil');
 
 
 Route::prefix('admin')->group(function(){
     //Rutas relacionadas al AdminController
     //Ruta para mostrar vista de inicio sitio admin
     Route::get('/inicio',[AdminController::class,'inicio'])->name('admin.inicio');
+    //ruta para mostrar perfil de administradores 
+    Route::get('/mostrarPerfil',[AdminController::class,'showPerfil'])->name('sitioAdmin.showPerfil');
     //Ruta para mostrar vista de gestión de usuarios
     Route::get('/gestionUsuarios',[AdminController::class,'gestionUsuarios'])->name('admin.gestionUsuarios');
     //Ruta para mostrar vista de gestión de grados
     Route::get('/gestionGrados',[AdminController::class,'gestionGrados'])->name('admin.gestionGrados');
+    //Ruta para mostrar vista de gestión de grados
+    Route::get('/gestionAño',[AdminController::class,'gestionAño'])->name('admin.gestionAño');
+    //Ruta para cambiar la contraseña del administrador
+    Route::put('/cambiarContraseñaAdmin',[AdminController::class, 'cambiarContraseñaAdmin'])->name('admin.cambiarContraseñaAdmin');
+    //Ruta para mostrar la vista del administrador
+    Route::get('/cambiarContraseñaAdministrador',[AdminController::class,'cambiarContraseña'])->name('admin.cambiarContraseña');
 
     //Rutas relacionadas a Gestión de Estudiantes
     //Ruta para mostrar vista para crear estudiante
@@ -102,10 +110,6 @@ Route::prefix('admin')->group(function(){
     Route::put('/actualizarAdministradorFoto',[AdminController::class,'updateFoto'])->name('admin.updateAdminFoto');
     //Ruta para restaurar administrador
     Route::put('/restaurarAdministrador',[AdminController::class,'restore'])->name('admin.restoreAdmin');
-    //Ruta para cambiar la contraseña del administrador
-    Route::put('/cambiarContraseñaAdmin',[AdminController::class, 'cambiarContraseñaAdmin'])->name('admin.cambiarContraseñaAdmin');
-    //Ruta para mostrar la vista del administrador
-    Route::get('/cambiarContraseñaAdministrador',[AdminController::class,'cambiarContraseña'])->name('admin.cambiarContraseña');
 
     //Rutas relacionadas a Gestión de Planes Académicos
     //Ruta para mostrar información de grado
@@ -128,4 +132,22 @@ Route::prefix('admin')->group(function(){
     Route::delete('/eliminarMateria',[MateriaController::class,'delete'])->name('admin.deleteMateria');
     //Ruta para reactivar materia
     Route::put('/reactivarMateria',[MateriaController::class,'restore'])->name('admin.restoreMateria');
+
+    //Rutas relacionadas a Gestión de Año Escolar
+    //Ruta para iniciar un nuevo año escolar
+    Route::post('/iniciarAño',[AñoController::class,'store'])->name('admin.iniciarAño');
+    //Ruta para mostrar index de secciones
+    Route::get('/indexSecciones/{id}',[SeccionController::class,'index'])->name('admin.indexSecciones');
+    //Ruta para obtener periodo activo
+    Route::get('/getPeriodoActivo',[AñoController:: class,'getPeriodoActivo'])->name('admin.getPeriodoActivo');
+    //Ruta para guardar sección
+    Route::post('/storeSeccion',[SeccionController::class,'store'])->name('admin.storeSeccion');
+    //Ruta para mostrar sección
+    Route::get('/mostrarSeccion/{id}',[SeccionController::class,'show'])->name('admin.mostrarSeccion');
+    //Ruta para agregar estudiantes a la sección
+    Route::post('/agregarEstudiantesSeccion',[SeccionController::class,'addEstudiantes'])->name('admin.addEstudiantes');
+    //Ruta para obtener profesores
+    Route::get('/getProfesoresPorMateria/{id}',[SeccionController::class,'getProfesoresPorMateria'])->name('admin.getProfesoresPorMateria');
+    //Ruta para asignar profesor
+    Route::put('/asignarProfesor',[SeccionController::class,'asignarProfesor'])->name('admin.asignarProfesor');
 });
