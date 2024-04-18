@@ -132,7 +132,18 @@ class LoginController extends Controller
                         }else{
                             return redirect()->back()->with('error','Acceso denegado');
                         }
-                    }else{
+                    } else if($nivel == 1){//Profesor
+                        $profesorCarnet = $user[0]->usuario;
+                        $profesor = DB::table('profesor')->where('carnet','=',$profesorCarnet)->get();
+                        if($profesor[0]->estadoeliminacion == 1){
+                            //Si no está eliminado, se crean variables de sesión con la información del usuario
+                            $request->session()->put('user',$user); 
+                            session()->put('profesor',$profesor);
+                            return to_route('profesor.inicio');
+                        }else{
+                            return redirect()->back()->with('error','Acceso denegado');
+                        }
+                    } else{
                         return redirect()->back()->with('error','Acceso denegado');
                     }
                 }else{
@@ -154,6 +165,18 @@ class LoginController extends Controller
         }
         if(session()->has('administrador')){
             session()->forget('administrador');            
+        }
+        if(session()->has('profesor')){
+            session()->forget('profesor');            
+        }
+        if(session()->has('ArregloGrupos')){
+            session()->forget('ArregloGrupos');            
+        }
+        if(session()->has('SeccionEncargado')){
+            session()->forget('SeccionEncargado');            
+        }
+        if(session()->has('SeccionEncargadoID')){
+            session()->forget('SeccionEncargadoID');            
         }
         
         return to_route('welcome');

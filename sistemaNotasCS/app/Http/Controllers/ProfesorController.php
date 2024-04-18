@@ -326,4 +326,40 @@ class ProfesorController extends Controller
 		}
     }
     
+    //función para mostrar la vista de inicio del sitio profesor
+    public function inicio(){
+        if(session()->has('profesor')){
+            $profesor= session()->get('profesor');
+            //formando un array con los grupos que el profesor tiene en el año actual
+            //agregando a la sesión si es encargado de una sección
+            $año = DB::table('añoescolar')->where('estadoFinalizacion','=',0)->get();
+            if(!empty($año[0])){
+                $grupos = DB::table('detalleseccionmateria')
+                    ->join('secciones','detalleseccionmateria.idSeccion','=','secciones.idSeccion')
+                    ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                    ->where('idAño','=',$año[0]->idAño)
+                    ->where('idProfesor','=',$profesor[0]->DUI)
+                    ->get();
+                if(count($grupos)>0){
+                    $ArregloGrupos = [];
+                    foreach($grupos as $grupo)
+                    {
+                        $ArregloGrupos[] = $grupo->idDetalle;
+                    }
+                    session()->put('grupos',$grupos);
+                    session()->put('ArregloGrupos',$ArregloGrupos);
+                }
+                $seccionEncargado = DB::table('secciones')
+                                    ->where('idAño','=',$año[0]->idAño)
+                                    ->where('encargado','=',$profesor[0]->DUI)->get();
+                if(count($seccionEncargado)==1){
+                    session()->put('SeccionEncargado',$seccionEncargado);
+                    session()->put('SeccionEncargadoID',$seccionEncargado[0]->idSeccion);
+                }
+            }
+            return view('sitioProfesor.inicio',compact('profesor'));
+        } else{
+            abort('403');
+        }
+    }
 }

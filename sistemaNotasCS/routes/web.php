@@ -30,7 +30,7 @@ Route::post('/inicio',[LoginController::class, 'login'])->name('login');
 //Ruta para realizar logout
 Route::get('/salir',[LoginController::class, 'logout'])->name('logout');
 
-
+//Rutas para el sitio administrador
 Route::prefix('admin')->group(function(){
     //Rutas relacionadas al AdminController
     //Ruta para mostrar vista de inicio sitio admin
@@ -150,4 +150,11 @@ Route::prefix('admin')->group(function(){
     Route::get('/getProfesoresPorMateria/{id}',[SeccionController::class,'getProfesoresPorMateria'])->name('admin.getProfesoresPorMateria');
     //Ruta para asignar profesor
     Route::put('/asignarProfesor',[SeccionController::class,'asignarProfesor'])->name('admin.asignarProfesor');
+});
+
+//Rutas para el sitio profesor
+Route::prefix('profesor')->group(function(){
+    //Rutas relacionadas al ProfesorController
+    //Ruta para mostrar vista de inicio sitio profesor
+    Route::get('/inicio',[ProfesorController::class,'inicio'])->name('profesor.inicio');
 });

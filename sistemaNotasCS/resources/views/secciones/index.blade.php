@@ -85,20 +85,9 @@
                                             <td>{{$seccion->nombreSeccion}}</td>
                                             <td>
                                                 <div class="row">
-                                                    <div class="col-6 mx-0 px-0">
+                                                    <div class="col-12 mx-0 px-0">
                                                         <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="{{route('admin.mostrarSeccion',$seccion->idSeccion)}}"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
                                                     </div>
-                                                    <div class="col-6 mx-0 px-0">
-                                                        <button 
-                                                            type="button" 
-                                                            class="btn btn-danger icon-button"
-                                                            data-bs-toggle="tooltip" 
-                                                            data-bs-placement="bottom" 
-                                                            data-bs-title="Eliminar"
-                                                            onclick="">
-                                                            <i class="fa-solid fa-trash"></i>
-                                                        </button>
-                                                    </div>	
                                                 </div>		
                                             </td>
                                         </tr>
