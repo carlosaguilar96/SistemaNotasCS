@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AñoController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\GradoController;
+use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\SeccionController;
@@ -157,4 +158,8 @@ Route::prefix('profesor')->group(function(){
     //Rutas relacionadas al ProfesorController
     //Ruta para mostrar vista de inicio sitio profesor
     Route::get('/inicio',[ProfesorController::class,'inicio'])->name('profesor.inicio');
+
+    //Rutas relacionadas a la gestión de grupos
+    //Ruta para mostrar un grupo
+    Route::get('/mostrarGrupo/{id}',[GrupoController::class,'show'])->name('profesor.showGrupo');
 });

@@ -1,7 +1,7 @@
 <div id="divHeader">
     <nav id="navHeader" class="navbar border-bottom border-body">         
         <div class="container-fluid" style="height:50pt;">
-            <a class="navbar-brand " href="{{route('admin.inicio')}}" style="margin-top:3px">
+            <a class="navbar-brand " href="{{route('profesor.inicio')}}" style="margin-top:3px">
                 <img class="img mb-2" width="50" src="http://127.0.0.1:8000/img/logo.png" alt="">
                 <p>Colegio Salarrué</p>
             </a>
@@ -29,7 +29,7 @@
                         @if (session()->has('grupos'))
                             @foreach(session()->get('grupos') as $grupo)
                                 <li class="nav-item">
-                                    <a class="nav-link" aria-current="page" href="#" style="text-transform:uppercase">{{$grupo->nombreMateria}} - {{$grupo->nombreSeccion}}</a>
+                                    <a class="nav-link" aria-current="page" href="{{route('profesor.showGrupo',$grupo->idDetalle)}}" style="text-transform:uppercase">{{$grupo->nombreMateria}} - {{$grupo->nombreSeccion}}</a>
                                 </li>
                             @endforeach
                         @endif
