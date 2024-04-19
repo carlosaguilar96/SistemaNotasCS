@@ -233,7 +233,9 @@ CREATE TABLE `Evaluacion` (
   `nombreEvaluacion` varchar(100) NOT NULL,
   `idDetalle` int NOT NULL,
   `porcentaje` int NOT NULL,
-  FOREIGN KEY(`idDetalle`) REFERENCES `detalleSeccionMateria`(`idDetalle`)
+  `idPeriodo` int NOT NULL,
+  FOREIGN KEY(`idDetalle`) REFERENCES `detalleSeccionMateria`(`idDetalle`),
+  FOREIGN KEY(`idPeriodo`) REFERENCES `periodos`(`idPeriodo`)
 );
 
 CREATE TABLE `Nota` (
