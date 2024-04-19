@@ -228,21 +228,28 @@ CREATE TABLE `detalleSeccionMateria` (
   FOREIGN KEY(`idProfesor`) REFERENCES `profesor`(`DUI`)
 );
 
-CREATE TABLE `Evaluacion` (
+CREATE TABLE `evaluacion` (
   `idEvaluacion` int PRIMARY KEY AUTO_INCREMENT,
   `nombreEvaluacion` varchar(100) NOT NULL,
-  `idDetalle` int NOT NULL,
-  `porcentaje` int NOT NULL,
-  `idPeriodo` int NOT NULL,
-  FOREIGN KEY(`idDetalle`) REFERENCES `detalleSeccionMateria`(`idDetalle`),
-  FOREIGN KEY(`idPeriodo`) REFERENCES `periodos`(`idPeriodo`)
+  `porcentaje` int NOT NULL
 );
+
+INSERT INTO `evaluacion` (`nombreEvaluacion`,`porcentaje`) VALUES
+('Actividad 1',15),
+('Actividad 2',15),
+('Actividad 3',20),
+('Laboratorio',20),
+('Examen',30);
 
 CREATE TABLE `Nota` (
   `idNota` int PRIMARY KEY AUTO_INCREMENT,
-  `idEstudiante` int NOT NULL,
+  `idDetalleEstudiante` int NOT NULL,
+  `idDetalleMateria` int NOT NULL,
   `idEvaluacion` int NOT NULL,
+  `idPeriodo` int NOT NULL,
   `nota` float NOT NULL,
-  FOREIGN KEY(`idEstudiante`) REFERENCES `estudiante`(`NIE`),
-  FOREIGN KEY(`idEvaluacion`) REFERENCES `Evaluacion`(`idEvaluacion`)
+  FOREIGN KEY(`idDetalleEstudiante`) REFERENCES `detalleseccionestudiante`(`idDetalle`),
+  FOREIGN KEY(`idDetalleMateria`) REFERENCES `detalleseccionmateria`(`idDetalle`),
+  FOREIGN KEY(`idEvaluacion`) REFERENCES `evaluacion`(`idEvaluacion`),
+  FOREIGN KEY(`idPeriodo`) REFERENCES `periodos`(`idPeriodo`)
 );
