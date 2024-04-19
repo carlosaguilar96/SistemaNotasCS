@@ -34,7 +34,7 @@
                             @endforeach
                         @endif
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">CAMBIAR CONTRASEÑA</a>
+                            <a class="nav-link" aria-current="page" href="{{route('profesor.cambiarContraseñaProfe')}}">CAMBIAR CONTRASEÑA</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="{{route('logout')}}">CERRAR SESIÓN</a>

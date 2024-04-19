@@ -162,4 +162,9 @@ Route::prefix('profesor')->group(function(){
     //Rutas relacionadas a la gestión de grupos
     //Ruta para mostrar un grupo
     Route::get('/mostrarGrupo/{id}',[GrupoController::class,'show'])->name('profesor.showGrupo');
+
+    //Ruta para cambiar la contraseña del profesor
+    Route::get('/cambiarContraseñaProfe',[ProfesorController::class, 'cambiarContraseñaProfe'])->name('profesor.cambiarContraseñaProfe');
+    //Ruta para mostrar la vista del profesor
+    Route::put('/cambiarContraseñaProfesor',[ProfesorController::class, 'cambiarContraseñaProfesor'])->name('profesor.cambiarContraseñaProfesor');
 });

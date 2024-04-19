@@ -362,4 +362,42 @@ class ProfesorController extends Controller
             abort('403');
         }
     }
+
+    public function cambiarContraseñaProfe(){
+        if(!session()->has('profesor')){
+            abort('403');
+        }
+        return view('sitioProfesor.cambiarContraseña');
+    }
+
+    public function cambiarContraseñaProfesor(Request $request){
+
+        if(!session()->has('profesor')){
+            abort('403');
+        }
+
+        $request->validate([
+            'ContraseñaActual' => ['required'],
+            'NuevaContraseña' => ['required','confirmed', 'min:10'],
+        ]);
+
+        $info = session()->get('profesor');
+        $user = DB::table('usuarios')->where('usuario','=',$info[0]->carnet)->get();
+        
+        $passwordActual = $request->input('ContraseñaActual');
+        $passwordNueva = $request->input('NuevaContraseña');
+        $passwordNueva1 = $request->input('NuevaContraseña_confirmation');
+
+        if($user[0]->contraseña == Hash('SHA256',$passwordActual)){
+            $contra = Hash('SHA256',$passwordNueva);
+            try{
+                DB::table('usuarios')->where('usuario','=',$info[0]->carnet)->update(['contraseña'=>$contra]);
+                return to_route('profesor.cambiarContraseñaProfe')->with('exitoCambiar','La contraseña del usuario ha sido cambiada con éxito');
+            }catch(Exception $e){
+                return to_route('profesor.cambiarContraseñaProfe')->with('errorCambiar','La contraseña del usuario no sido cambiada con éxito');
+            }
+        }else{
+            return to_route('profesor.cambiarContraseñaProfe')->with('errorCambiar','La contraseña del usuario no sido cambiada con éxito');
+        }
+    }
 }
