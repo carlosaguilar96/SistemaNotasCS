@@ -33,8 +33,23 @@ class GrupoController extends Controller
                                     ->join('estudiante','detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                     ->where('idSeccion','=',$grupo[0]->idSeccion)
                                     ->where('sexo','=',2)->count();
+                $verificarEvaluacion1 = DB::table('nota')->where('idEvaluacion','=',1)
+                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
+                                                         ->count();
+                $verificarEvaluacion2 = DB::table('nota')->where('idEvaluacion','=',2)
+                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
+                                                         ->count();
+                $verificarEvaluacion3 = DB::table('nota')->where('idEvaluacion','=',3)
+                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
+                                                         ->count();
+                $verificarEvaluacion4 = DB::table('nota')->where('idEvaluacion','=',4)
+                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
+                                                         ->count();
+                $verificarEvaluacion5 = DB::table('nota')->where('idEvaluacion','=',5)
+                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
+                                                         ->count();
                                     
-                return view('grupos.show',compact('grupo','año','periodo','totalEstudiantes','totalEstudiantesM','totalEstudiantesF'));
+                return view('grupos.show',compact('grupo','año','periodo','totalEstudiantes','totalEstudiantesM','totalEstudiantesF','verificarEvaluacion1','verificarEvaluacion2','verificarEvaluacion3','verificarEvaluacion4','verificarEvaluacion5'));
             } else{
                 abort('403');
             }

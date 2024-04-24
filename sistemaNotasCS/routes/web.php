@@ -167,4 +167,14 @@ Route::prefix('profesor')->group(function(){
     Route::get('/cambiarContraseñaProfe',[ProfesorController::class, 'cambiarContraseñaProfe'])->name('profesor.cambiarContraseñaProfe');
     //Ruta para mostrar la vista del profesor
     Route::put('/cambiarContraseñaProfesor',[ProfesorController::class, 'cambiarContraseñaProfesor'])->name('profesor.cambiarContraseñaProfesor');
+    //Ruta para agregar notas por evaluación
+    Route::get('/agregarNotas/{evaluacion}/{grupo}',[ProfesorController::class, 'agregarNotas'])->name('profesor.agregarNotas');
+    //Ruta para agregar notas por evaluación
+    Route::get('/mostrarNotas/{evaluacion}/{grupo}',[ProfesorController::class, 'mostrarNotas'])->name('profesor.mostrarNotas');
+    //Ruta para agregar notas por evaluación
+    Route::post('/insertarNotas',[ProfesorController::class, 'insertarNotas'])->name('profesor.insertarNotas');
+    //Ruta para actualizar nota de estudiantes
+    Route::put('/actualizarNotas',[ProfesorController::class,'updateNotas'])->name('profesor.updateNotas');
+    //Ruta para obtener las notas de los estudiantes
+    Route::get('/obtenerNotas/{id}',[ProfesorController::class, 'getNota'])->name('profesor.getNotas');
 });

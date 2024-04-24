@@ -153,3 +153,64 @@ const reactivarProfesor = (id) => {
         },       
     });
 }
+
+const actualizarNota11 = (evaluacion, grupo) => {
+
+    $.ajax({
+        // la URL para la petición
+        url : `http://127.0.0.1:8000//mostrarNotas/${evaluacion}/${grupo}`,            
+        type : 'GET',        
+        dataType : 'json',
+            
+        success : function(data) {
+            const {nota, nombres, apellidos, evaluacion, grupo} = data;
+            $('#grupo').val(grupo);
+            $('#textoConfirmarReactivar').text('¿Está seguro que desea modificar la contraseña al estudiante '+nombres+' '+apellidos+'?');
+            
+            $('#modalNotas').modal('show');                        
+        },
+    
+        // código a ejecutar si la petición falla;
+        // son pasados como argumentos a la función
+        // el objeto de la petición en crudo y código de estatus de la petición
+        error : function(xhr, status) {
+            swal({
+                title: "Error",
+                text: "Ha ocurrido un error al mostrar los datos, pongase en contacto con el administrador",
+                icon: "error",
+                button: "OK",
+            })
+        },       
+    });
+}
+
+const actualizarNota = (id) => {
+
+    $.ajax({
+        // la URL para la petición
+        url : `http://127.0.0.1:8000/profesor/obtenerNotas/${id}`,            
+        type : 'GET',        
+        dataType : 'json',
+            
+        success : function(data) {
+            const {nota, idNota} = data;
+            $('#notaA').val(idNota);
+            $('#notaActual').text(nota);
+            $('#textoConfirmarReactivar').text('¿Está seguro que desea modificar la contraseña al estudiante?');
+            
+            $('#modalNotas').modal('show');                        
+        },
+    
+        // código a ejecutar si la petición falla;
+        // son pasados como argumentos a la función
+        // el objeto de la petición en crudo y código de estatus de la petición
+        error : function(xhr, status) {
+            swal({
+                title: "Error",
+                text: "Ha ocurrido un error al mostrar los datos, pongase en contacto con el administrador",
+                icon: "error",
+                button: "OK",
+            })
+        },       
+    });
+}
