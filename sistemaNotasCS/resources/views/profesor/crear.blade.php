@@ -13,7 +13,7 @@
 
         <script src="https://unpkg.com/imask"></script>
         <script src="{{ asset('js/profesor/validarFormCrear.js') }}"></script>
-        <link rel="stylesheet" href="{{asset('fa/css/all.css')}}" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/e359753675.js" crossorigin="anonymous"></script>
 
     </head>
     <body>

@@ -18,7 +18,7 @@ class AñoController extends Controller
         $año->save();
         DB::commit();
         DB::table('periodos')->where('idPeriodo','=',1)->update(['estado' => 1]);
-        return to_route('admin.gestionAño')->with('AñoIniciado','El Año '.$año->nombreAño.' ha sido iniciado\n El periodo I ha comenzado');
+        return to_route('admin.gestionAño')->with('AñoIniciado','El Año '.$año->nombreAño.' ha sido iniciado.');
     }
 
     //Función para obtener periodo activo
@@ -29,24 +29,6 @@ class AñoController extends Controller
 
     //Función para terminar periodo
     public function terminarPeriodo(){
-        $periodo = $this->getPeriodoActivo();
-        if($periodo->idPeriodo==1){
-            DB::table('periodos')->where('idPeriodo','=',2)->update(['estado' => 1]);
-            DB::table('periodos')->where('idPeriodo','=',1)->update(['estado' => 0]);
-            return to_route('admin.gestionAño')->with('PeriodoFinalizado','El Periodo I ha sido finalizado\n El periodo II ha comenzado');
-        } else if($periodo->idPeriodo==2){
-            DB::table('periodos')->where('idPeriodo','=',3)->update(['estado' => 1]);
-            DB::table('periodos')->where('idPeriodo','=',2)->update(['estado' => 0]);
-            return to_route('admin.gestionAño')->with('PeriodoFinalizado','El Periodo II ha sido finalizado\n El periodo III ha comenzado');
-        } else if($periodo->idPeriodo==3){
-            DB::table('periodos')->where('idPeriodo','=',4)->update(['estado' => 1]);
-            DB::table('periodos')->where('idPeriodo','=',3)->update(['estado' => 0]);
-            return to_route('admin.gestionAño')->with('PeriodoFinalizado','El Periodo III ha sido finalizado\n El periodo IV ha comenzado');
-        } else if($periodo->idPeriodo==4){
-            DB::table('periodos')->where('idPeriodo','=',4)->update(['estado' => 0]);
-            return to_route('admin.gestionAño')->with('PeriodoFinalizado','El Periodo IV ha sido finalizado\n Ahora puede finalizar año');
-        } else{
-            return to_route('admin.gestionAño')->with('PeriodoNoFinalizado','No hay ciclo por finalizar');
-        }
+
     }
 }
