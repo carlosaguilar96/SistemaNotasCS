@@ -9,7 +9,7 @@
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link href="{{ asset('css/styles.css') }}" type="text/css" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/e359753675.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{{asset('fa/css/all.css')}}" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="{{asset('js/gestionAño/showModals.js')}}"></script>
@@ -24,6 +24,28 @@
                     title: "Año Iniciado",
                     text: "{{ session('AñoIniciado') }}",
                     icon: "success",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C",
+                });
+            </script>
+            @endif
+            @if (session('PeriodoFinalizado'))
+            <script>
+                Swal.fire({
+                    title: "Periodo finalizado",
+                    text: "{{ session('PeriodoFinalizado') }}",
+                    icon: "success",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C",
+                });
+            </script>
+            @endif
+            @if (session('PeriodoNoFinalizado'))
+            <script>
+                Swal.fire({
+                    title: "Periodo no finalizado",
+                    text: "{{ session('PeriodoNoFinalizado') }}",
+                    icon: "error",
                     button: "OK",
                     confirmButtonColor: "#B84C4C",
                 });
@@ -140,16 +162,10 @@
                 @method('DELETE')
                 <div class="modal-body">
                     <p id="textoConfirmarEliminar"></p>
-                    <div class="row">
-                        <div class="col-lg-6 mb-4" hidden>
-                            <label for="id" class="form-label">NIE</label>
-                            <input type="text" class="form-control" name="id" id="id" placeholder="Número de identificación del estudiante" value="{{ old('nie') }}">
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
-                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                    <button class="btn btn-danger" type="submit">Terminar</button>
                   </div>
             </form>
         </div>
