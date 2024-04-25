@@ -33,7 +33,7 @@ Route::get('/salir',[LoginController::class, 'logout'])->name('logout');
 
 //Rutas para el sitio administrador
 Route::prefix('admin')->group(function(){
-    //Rutas relacionadas al AdminController
+    //Rutas relacionadas al sitio administrador
     //Ruta para mostrar vista de inicio sitio admin
     Route::get('/inicio',[AdminController::class,'inicio'])->name('admin.inicio');
     //ruta para mostrar perfil de administradores 
@@ -46,7 +46,7 @@ Route::prefix('admin')->group(function(){
     Route::get('/gestionAño',[AdminController::class,'gestionAño'])->name('admin.gestionAño');
     //Ruta para cambiar la contraseña del administrador
     Route::put('/cambiarContraseñaAdmin',[AdminController::class, 'cambiarContraseñaAdmin'])->name('admin.cambiarContraseñaAdmin');
-    //Ruta para mostrar la vista del administrador
+    //Ruta para mostrar la vista de cambiar contraseña administrador
     Route::get('/cambiarContraseñaAdministrador',[AdminController::class,'cambiarContraseña'])->name('admin.cambiarContraseña');
 
     //Rutas relacionadas a Gestión de Estudiantes
@@ -155,26 +155,25 @@ Route::prefix('admin')->group(function(){
 
 //Rutas para el sitio profesor
 Route::prefix('profesor')->group(function(){
-    //Rutas relacionadas al ProfesorController
+    //Rutas relacionadas al sitio profesor
     //Ruta para mostrar vista de inicio sitio profesor
     Route::get('/inicio',[ProfesorController::class,'inicio'])->name('profesor.inicio');
+    //Ruta para cambiar la contraseña del profesor
+    Route::get('/cambiarContraseñaProfe',[ProfesorController::class, 'cambiarContraseñaProfe'])->name('profesor.cambiarContraseñaProfe');
+    //Ruta para mostrar la vista de cambiar contraseña profesor
+    Route::put('/cambiarContraseñaProfesor',[ProfesorController::class, 'cambiarContraseñaProfesor'])->name('profesor.cambiarContraseñaProfesor');
 
     //Rutas relacionadas a la gestión de grupos
     //Ruta para mostrar un grupo
     Route::get('/mostrarGrupo/{id}',[GrupoController::class,'show'])->name('profesor.showGrupo');
-
-    //Ruta para cambiar la contraseña del profesor
-    Route::get('/cambiarContraseñaProfe',[ProfesorController::class, 'cambiarContraseñaProfe'])->name('profesor.cambiarContraseñaProfe');
-    //Ruta para mostrar la vista del profesor
-    Route::put('/cambiarContraseñaProfesor',[ProfesorController::class, 'cambiarContraseñaProfesor'])->name('profesor.cambiarContraseñaProfesor');
-    //Ruta para agregar notas por evaluación
-    Route::get('/agregarNotas/{evaluacion}/{grupo}',[ProfesorController::class, 'agregarNotas'])->name('profesor.agregarNotas');
-    //Ruta para agregar notas por evaluación
-    Route::get('/mostrarNotas/{evaluacion}/{grupo}',[ProfesorController::class, 'mostrarNotas'])->name('profesor.mostrarNotas');
-    //Ruta para agregar notas por evaluación
-    Route::post('/insertarNotas',[ProfesorController::class, 'insertarNotas'])->name('profesor.insertarNotas');
-    //Ruta para actualizar nota de estudiantes
-    Route::put('/actualizarNotas',[ProfesorController::class,'updateNotas'])->name('profesor.updateNotas');
-    //Ruta para obtener las notas de los estudiantes
-    Route::get('/obtenerNotas/{id}',[ProfesorController::class, 'getNota'])->name('profesor.getNotas');
+    //Ruta para mostrar formulario para agregar notas
+    Route::get('/agregarNotas/{evaluacion}/{grupo}',[GrupoController::class, 'agregarNotas'])->name('profesor.agregarNotas');
+    //Ruta para agregar notas a BD
+    Route::post('/insertarNotas',[GrupoController::class, 'insertarNotas'])->name('profesor.insertarNotas');
+    //Ruta para mostrar notas
+    Route::get('/mostrarNotas/{evaluacion}/{grupo}',[GrupoController::class, 'mostrarNotas'])->name('profesor.mostrarNotas');
+    //Ruta para actualizar nota
+    Route::put('/actualizarNotas',[GrupoController::class,'updateNotas'])->name('profesor.updateNotas');
+    //Ruta para obtener información de nota
+    Route::get('/obtenerNotas/{id}',[GrupoController::class, 'getNota'])->name('profesor.getNotas');
 });
