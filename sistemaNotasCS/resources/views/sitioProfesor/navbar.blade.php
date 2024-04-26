@@ -19,7 +19,7 @@
                             <a class="nav-link" aria-current="page" href="{{route('profesor.inicio')}}">INICIO</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">MI PERFIL</a>
+                            <a class="nav-link" aria-current="page" href="{{route('profesor.showPerfil')}}">MI PERFIL</a>
                         </li>
                         @if (session()->has('SeccionEncargado'))
                         <li class="nav-item">

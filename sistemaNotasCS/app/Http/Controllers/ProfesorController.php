@@ -413,4 +413,37 @@ class ProfesorController extends Controller
             return to_route('profesor.cambiarContraseñaProfe')->with('errorCambiar', 'La contraseña del usuario no sido cambiada con éxito');
         }
     }
+
+    public function showPerfil()
+    {
+        if (!session()->has('profesor')) {
+            abort('403');
+        } else {
+            $user = session()->get('profesor');
+            $año = DB::table('añoescolar')->where('estadoFinalizacion', '=', 0)->get();
+            $id = $user[0]->DUI;
+            
+            $materias = DB::table('materia')
+                ->whereExists(function ($subquery) use ($id) {
+                    $subquery
+                        ->select('idMateria')
+                        ->from('detalleprofesormateria')
+                        ->whereColumn('materia.idMateria', 'detalleprofesormateria.idMateria')
+                        ->where('idProfesor', '=', $id);
+                })->get();
+
+            if (!empty($año[0])) {
+                $grupos = DB::table('detalleseccionmateria')
+                    ->join('secciones', 'detalleseccionmateria.idSeccion', '=', 'secciones.idSeccion')
+                    ->join('materia', 'detalleseccionmateria.idMateria', '=', 'materia.idMateria')
+                    ->where('idAño', '=', $año[0]->idAño)
+                    ->where('idProfesor', '=', $user[0]->DUI)
+                    ->get();
+                $seccionEncargado = DB::table('secciones')
+                    ->where('idAño', '=', $año[0]->idAño)
+                    ->where('encargado', '=', $user[0]->DUI)->get();
+            }
+        }
+        return view('sitioProfesor.showPerfil', compact('user', 'materias', 'grupos', 'seccionEncargado'));
+    }
 }
