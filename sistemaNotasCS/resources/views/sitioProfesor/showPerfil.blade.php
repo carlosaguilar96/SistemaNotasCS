@@ -83,7 +83,9 @@
                                     </div>
                                     @if(empty($seccionEncargado[0]))
                                     <div class="col-sm-9">
-                                        <b><p class="text-muted mb-0">Sin sección asignada</p></b>
+                                        <b>
+                                            <p class="text-muted mb-0">Sin sección asignada</p>
+                                        </b>
                                     </div>
                                     @else
                                     <div class="col-sm-9">
@@ -138,7 +140,7 @@
                                             @foreach ($grupos as $group)
                                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                                 <i class="fa-solid fa-people-group fa-lg text-danger"></i>
-                                                <p class="mb-0">{{$group->nombreSeccion}}</p>
+                                                <p class="mb-0">{{$group->nombreMateria}} <b>-</b> {{$group->nombreSeccion}}</p>
                                             </li>
                                             @endforeach
                                             @endif
