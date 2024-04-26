@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="{{asset('fa/css/all.css')}}" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script src="{{asset('js/gestionAño/showModals.js')}}"></script>
 
     </head>
     <body>
@@ -64,7 +63,7 @@
             <h6 class="card-header bg-warning">Año</h6>
             <div class="card-body">
                 <p class="card-text" style="font-size:15pt"><b>{{$año[0]->nombreAño}}</b></p>
-                <p class="card-text" style="font-size:15pt"><b>{{$periodo[0]->nombrePeriodo}}</b></p>
+                <p class="card-text" style="font-size:15pt"><b>@if(isset($periodo[0])){{$periodo[0]->nombrePeriodo}}@else Periodos finalizados @endif</b></p>
             </div>
         </div>
     </div>
@@ -95,7 +94,7 @@
     </div>
     @if(count($periodo)!=0)
     <div class="col-lg-3 col-md-4 col-6 mb-3">
-        <a class="link-body-emphasis link-underline link-underline-opacity-0" href="#">
+        <a class="link-body-emphasis link-underline link-underline-opacity-0" type="button" data-bs-toggle="modal" data-bs-target="#terminarPeriodo">
             <div class="card" style="width: 100%; height:200">
                 <h6 class="card-header bg-warning">Finalizar periodo</h6>
                 <div class="card-body">
@@ -105,6 +104,7 @@
         </a>
     </div>
     @endif
+    @if(count($periodo)==0)
     <div class="col-lg-3 col-md-4 col-6 mb-3">
         <a class="link-body-emphasis link-underline link-underline-opacity-0" href="#">
             <div class="card" style="width: 100%; height:200">
@@ -115,6 +115,7 @@
             </div>
         </a>
     </div>
+    @endif
     @endif
     <div class="col-lg-3 col-md-4 col-6 mb-3">
         <a class="link-body-emphasis link-underline link-underline-opacity-0" href="#">
@@ -157,11 +158,11 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Terminar Periodo</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="{{route('admin.deleteEstudiante')}}">
+            <form method="POST" action="{{route('admin.terminarPeriodo')}}">
                 @csrf
-                @method('DELETE')
+                @method('PUT')
                 <div class="modal-body">
-                    <p id="textoConfirmarEliminar"></p>
+                    <p id="textoConfirmarEliminar">¿Está seguro que desea terminar el @if(isset($periodo[0])){{$periodo[0]->nombrePeriodo}}@endif? El periodo no podrá volver a iniciarse.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>

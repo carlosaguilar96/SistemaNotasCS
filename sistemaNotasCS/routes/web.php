@@ -151,6 +151,8 @@ Route::prefix('admin')->group(function(){
     Route::get('/getProfesoresPorMateria/{id}',[SeccionController::class,'getProfesoresPorMateria'])->name('admin.getProfesoresPorMateria');
     //Ruta para asignar profesor
     Route::put('/asignarProfesor',[SeccionController::class,'asignarProfesor'])->name('admin.asignarProfesor');
+    //Ruta para terminar periodo
+    Route::put('/terminarPeriodo',[AñoController::class,'terminarPeriodo'])->name('admin.terminarPeriodo');
 });
 
 //Rutas para el sitio profesor

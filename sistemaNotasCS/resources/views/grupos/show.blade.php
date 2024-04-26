@@ -90,7 +90,7 @@
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Periodo</h5>
-                        <h3><b>{{$periodo[0]->nombrePeriodo}}</b></h3>
+                        <h3><b>@if(isset($periodo[0])){{$periodo[0]->nombrePeriodo}}@else Periodos finalizados @endif</b></h3>
                     </div>
                 </div>
             </div>
@@ -118,6 +118,7 @@
                     </div>
                 </div>
             </div>
+            @if(isset($periodo[0]))
             <div class="col-lg-12">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
@@ -162,6 +163,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="col-lg-12">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
@@ -175,8 +177,8 @@
                                     <th colspan="7" class="text-center" style="border-right: 3px solid black;">Periodo II</th>
                                     <th colspan="7" class="text-center" style="border-right: 3px solid black;">Periodo III</th>
                                     <th colspan="7" class="text-center" style="border-right: 3px solid black;">Periodo IV</th>
-                                    <th rowspan="2" class="text-center">Nota Final</th>
-                                    <th rowspan="2" class="text-center">Concepto</th>
+                                    <th rowspan="2" class="text-center" @if(isset($periodo[0])) hidden @endif>Nota Final</th>
+                                    <th rowspan="2" class="text-center" @if(isset($periodo[0])) hidden @endif>Concepto</th>
                                 </tr>
                                 <tr class="table-secondary">
                                     @for($i=1;$i<=4;$i++)
@@ -191,7 +193,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $j = 0; ?>
+                                <?php $j = 0; $aprobados=0; $reprobados=0; ?>
                                 @foreach($estudiantes as $estudiante)
                                 <tr>
                                     <td class="table-secondary">{{ $j+1 }}</td>
@@ -252,17 +254,251 @@
                                                                  echo number_format($promedio4,1); 
                                                                  ?></b></td>
                                     <td class="@if($promedio4>=6) bg-success-subtle @else bg-danger-subtle @endif text-center" style="border-right: 3px solid black;"><b>@if($promedio4>=6) A @else R @endif</b></td>
-                                    <td class="text-center"><b>10</b></td>
-                                    <td class="text-center"><b>A</b></td>
+                                    <td class="bg-warning-subtle text-center" @if(isset($periodo[0])) hidden @endif><b><?php $promedioFinal = ($promedio1 + $promedio2 + $promedio3 + $promedio4)/4;
+                                                                                                    echo number_format($promedioFinal,1);
+                                                                                                     ?></b></td>
+                                    <td class="@if($promedioFinal>=6) bg-success-subtle @else bg-danger-subtle @endif text-center" @if(isset($periodo[0])) hidden @endif><b>@if($promedioFinal>=6) A @else R @endif</b></td>
                                 </tr>
-                                <?php $j++; ?>
+                                <?php if($promedioFinal>=6)$aprobados++; else $reprobados++; $j++; ?>
                                 @endforeach
                             </tbody>
-                            
                         </table>
                     </div>
                 </div>
             </div>
+            @if(isset($periodo[0]))
+                @if($periodo[0]->idPeriodo==2)
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Periodo 1</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Aprobados: <b>{{$aprobados1}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Reprobados: <b>{{$reprobados1}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                @if($periodo[0]->idPeriodo==3)
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Periodo 1</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Aprobados: <b>{{$aprobados1}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Reprobados: <b>{{$reprobados1}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Periodo 2</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Aprobados: <b>{{$aprobados2}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Reprobados: <b>{{$reprobados2}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                @if($periodo[0]->idPeriodo==4)
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Periodo 1</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Aprobados: <b>{{$aprobados1}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Reprobados: <b>{{$reprobados1}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Periodo 2</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Aprobados: <b>{{$aprobados2}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Reprobados: <b>{{$reprobados2}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Periodo 3</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Aprobados: <b>{{$aprobados3}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card mb-3" style="max-width: 100%;">
+                        <div class="card-body">
+                            <h5 class="card-title">Reprobados: <b>{{$reprobados3}}</b></h5>
+                        </div>
+                    </div>
+                </div>
+                @endif
+            @else
+            <div class="col-lg-6">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Aprobados: <b>{{$aprobados}}</b></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Reprobados: <b>{{$reprobados}}</b></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Periodo 1</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Aprobados: <b>{{$aprobados1}}</b></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Reprobados: <b>{{$reprobados1}}</b></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Periodo 2</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Aprobados: <b>{{$aprobados2}}</b></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Reprobados: <b>{{$reprobados2}}</b></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Periodo 3</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Aprobados: <b>{{$aprobados3}}</b></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Reprobados: <b>{{$reprobados3}}</b></h5>
+                    </div>
+                </div>
+            </div>  
+            <div class="col-lg-4">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Periodo 4</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Aprobados: <b>{{$aprobados4}}</b></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Reprobados: <b>{{$reprobados4}}</b></h5>
+                    </div>
+                </div>
+            </div>    
+            @endif
         </div>
     </div>
     <div id="divFooter" style="margin-top: 40pt">

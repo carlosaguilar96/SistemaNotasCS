@@ -178,6 +178,9 @@ class LoginController extends Controller
         if(session()->has('SeccionEncargadoID')){
             session()->forget('SeccionEncargadoID');            
         }
+        if(session()->has('grupos')){
+            session()->forget('grupos');
+        }
         
         return to_route('welcome');
     }

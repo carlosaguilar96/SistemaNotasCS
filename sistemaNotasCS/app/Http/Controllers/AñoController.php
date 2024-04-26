@@ -33,18 +33,18 @@ class AñoController extends Controller
         if($periodo->idPeriodo==1){
             DB::table('periodos')->where('idPeriodo','=',2)->update(['estado' => 1]);
             DB::table('periodos')->where('idPeriodo','=',1)->update(['estado' => 0]);
-            return to_route('admin.gestionAño')->with('PeriodoFinalizado','El Periodo I ha sido finalizado\n El periodo II ha comenzado');
+            return to_route('admin.gestionAño')->with('PeriodoFinalizado','El Periodo I ha sido finalizado. El periodo II ha comenzado');
         } else if($periodo->idPeriodo==2){
             DB::table('periodos')->where('idPeriodo','=',3)->update(['estado' => 1]);
             DB::table('periodos')->where('idPeriodo','=',2)->update(['estado' => 0]);
-            return to_route('admin.gestionAño')->with('PeriodoFinalizado','El Periodo II ha sido finalizado\n El periodo III ha comenzado');
+            return to_route('admin.gestionAño')->with('PeriodoFinalizado','El Periodo II ha sido finalizado. El periodo III ha comenzado');
         } else if($periodo->idPeriodo==3){
             DB::table('periodos')->where('idPeriodo','=',4)->update(['estado' => 1]);
             DB::table('periodos')->where('idPeriodo','=',3)->update(['estado' => 0]);
-            return to_route('admin.gestionAño')->with('PeriodoFinalizado','El Periodo III ha sido finalizado\n El periodo IV ha comenzado');
+            return to_route('admin.gestionAño')->with('PeriodoFinalizado','El Periodo III ha sido finalizado. El periodo IV ha comenzado');
         } else if($periodo->idPeriodo==4){
             DB::table('periodos')->where('idPeriodo','=',4)->update(['estado' => 0]);
-            return to_route('admin.gestionAño')->with('PeriodoFinalizado','El Periodo IV ha sido finalizado\n Ahora puede finalizar año');
+            return to_route('admin.gestionAño')->with('PeriodoFinalizado','El Periodo IV ha sido finalizado. Ahora puede finalizar año');
         } else{
             return to_route('admin.gestionAño')->with('PeriodoNoFinalizado','No hay ciclo por finalizar');
         }

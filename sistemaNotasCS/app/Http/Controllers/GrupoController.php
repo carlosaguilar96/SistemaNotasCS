@@ -35,26 +35,6 @@ class GrupoController extends Controller
                                     ->join('estudiante','detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                     ->where('idSeccion','=',$grupo[0]->idSeccion)
                                     ->where('sexo','=',2)->count();
-                $verificarEvaluacion1 = DB::table('nota')->where('idEvaluacion','=',1)
-                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
-                                                         ->where('idPeriodo','=',$periodo[0]->idPeriodo)
-                                                         ->count();
-                $verificarEvaluacion2 = DB::table('nota')->where('idEvaluacion','=',2)
-                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
-                                                         ->where('idPeriodo','=',$periodo[0]->idPeriodo)
-                                                         ->count();
-                $verificarEvaluacion3 = DB::table('nota')->where('idEvaluacion','=',3)
-                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
-                                                         ->where('idPeriodo','=',$periodo[0]->idPeriodo)
-                                                         ->count();
-                $verificarEvaluacion4 = DB::table('nota')->where('idEvaluacion','=',4)
-                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
-                                                         ->where('idPeriodo','=',$periodo[0]->idPeriodo)
-                                                         ->count();
-                $verificarEvaluacion5 = DB::table('nota')->where('idEvaluacion','=',5)
-                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
-                                                         ->where('idPeriodo','=',$periodo[0]->idPeriodo)
-                                                         ->count();
                 $estudiantes = DB::table('detalleseccionestudiante')
                             ->join('estudiante', 'detalleseccionestudiante.idEstudiante', '=', 'estudiante.NIE')
                             ->where('idSeccion', '=', $grupo[0]->idSeccion)
@@ -178,13 +158,74 @@ class GrupoController extends Controller
                                ->where('idEvaluacion','=',5)
                                ->where('idDetalleMateria','=',$id)
                                ->where('idPeriodo','=',4)
-                               ->orderBy('apellidos','asc')->get();                                                                                                                
-                                    
+                               ->orderBy('apellidos','asc')->get();
+                               $notas1 = DB::table('nota')->SELECT(DB::raw('ROUND(SUM(porcentajeGanado), 1) as promedio'))
+                               ->WHERE('idPeriodo','=',1)->WHERE('idDetalleMateria','=',$grupo[0]->idDetalle)
+                               ->groupBy('idDetalleEstudiante')->get();
+               $aprobados1 = 0;
+               foreach($notas1 as $nota){
+                   if($nota->promedio>=6) $aprobados1++;
+               }
+               $reprobados1 = count($notas1) - $aprobados1;
+               $notas2 = DB::table('nota')->SELECT(DB::raw('ROUND(SUM(porcentajeGanado), 1) as promedio'))
+                               ->WHERE('idPeriodo','=',2)->WHERE('idDetalleMateria','=',$grupo[0]->idDetalle)
+                               ->groupBy('idDetalleEstudiante')->get();
+               $aprobados2 = 0;
+               foreach($notas2 as $nota){
+                   if($nota->promedio>=6) $aprobados2++;
+               }
+               $reprobados2 = count($notas2) - $aprobados2;
+               $notas3 = DB::table('nota')->SELECT(DB::raw('ROUND(SUM(porcentajeGanado), 1) as promedio'))
+                               ->WHERE('idPeriodo','=',3)->WHERE('idDetalleMateria','=',$grupo[0]->idDetalle)
+                               ->groupBy('idDetalleEstudiante')->get();
+               $aprobados3 = 0;
+               foreach($notas3 as $nota){
+                   if($nota->promedio>=6) $aprobados3++;
+               }
+               $reprobados3 = count($notas3) - $aprobados3;
+               $notas4 = DB::table('nota')->SELECT(DB::raw('ROUND(SUM(porcentajeGanado), 1) as promedio'))
+                               ->WHERE('idPeriodo','=',4)->WHERE('idDetalleMateria','=',$grupo[0]->idDetalle)
+                               ->groupBy('idDetalleEstudiante')->get();
+               $aprobados4 = 0;
+               foreach($notas4 as $nota){
+                   if($nota->promedio>=6) $aprobados4++;
+               }
+               $reprobados4 = count($notas4) - $aprobados4;
+                if(isset($periodo[0])){
+                $verificarEvaluacion1 = DB::table('nota')->where('idEvaluacion','=',1)
+                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
+                                                         ->where('idPeriodo','=',$periodo[0]->idPeriodo)
+                                                         ->count();
+                $verificarEvaluacion2 = DB::table('nota')->where('idEvaluacion','=',2)
+                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
+                                                         ->where('idPeriodo','=',$periodo[0]->idPeriodo)
+                                                         ->count();
+                $verificarEvaluacion3 = DB::table('nota')->where('idEvaluacion','=',3)
+                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
+                                                         ->where('idPeriodo','=',$periodo[0]->idPeriodo)
+                                                         ->count();
+                $verificarEvaluacion4 = DB::table('nota')->where('idEvaluacion','=',4)
+                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
+                                                         ->where('idPeriodo','=',$periodo[0]->idPeriodo)
+                                                         ->count();
+                $verificarEvaluacion5 = DB::table('nota')->where('idEvaluacion','=',5)
+                                                         ->where('idDetalleMateria','=',$grupo[0]->idDetalle)
+                                                         ->where('idPeriodo','=',$periodo[0]->idPeriodo)
+                                                         ->count();
                 return view('grupos.show',compact('grupo','año','periodo','totalEstudiantes','totalEstudiantesM',
                 'totalEstudiantesF','verificarEvaluacion1','verificarEvaluacion2','verificarEvaluacion3',
                 'verificarEvaluacion4','verificarEvaluacion5','estudiantes','notas11', 'notas12', 'notas13', 'notas14', 'notas15',
                 'notas21', 'notas22', 'notas23', 'notas24', 'notas25', 'notas31', 'notas32', 'notas33', 'notas34', 'notas35',
-                'notas41', 'notas42', 'notas43', 'notas44', 'notas45'));
+                'notas41', 'notas42', 'notas43', 'notas44', 'notas45','aprobados1','reprobados1','aprobados2','reprobados2',
+                'aprobados3','reprobados3','aprobados4','reprobados4'));
+                } else{
+                    
+                    return view('grupos.show',compact('grupo','año','periodo','totalEstudiantes','totalEstudiantesM',
+                'totalEstudiantesF','estudiantes','notas11', 'notas12', 'notas13', 'notas14', 'notas15',
+                'notas21', 'notas22', 'notas23', 'notas24', 'notas25', 'notas31', 'notas32', 'notas33', 'notas34', 'notas35',
+                'notas41', 'notas42', 'notas43', 'notas44', 'notas45','aprobados1','reprobados1','aprobados2','reprobados2',
+                'aprobados3','reprobados3','aprobados4','reprobados4'));
+                }
             } else{
                 abort('403');
             }
