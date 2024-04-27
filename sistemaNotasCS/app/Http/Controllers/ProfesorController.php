@@ -442,8 +442,9 @@ class ProfesorController extends Controller
                 $seccionEncargado = DB::table('secciones')
                     ->where('idAño', '=', $año[0]->idAño)
                     ->where('encargado', '=', $user[0]->DUI)->get();
-            }
+                return view('sitioProfesor.showPerfil', compact('user', 'materias', 'grupos', 'seccionEncargado'));
+            } else return view('sitioProfesor.showPerfil', compact('user', 'materias'));
         }
-        return view('sitioProfesor.showPerfil', compact('user', 'materias', 'grupos', 'seccionEncargado'));
+        
     }
 }

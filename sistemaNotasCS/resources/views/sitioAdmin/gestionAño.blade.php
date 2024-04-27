@@ -28,6 +28,17 @@
                 });
             </script>
             @endif
+            @if (session('AñoFinalizado'))
+            <script>
+                Swal.fire({
+                    title: "Año Finalizado",
+                    text: "{{ session('AñoFinalizado') }}",
+                    icon: "success",
+                    button: "OK",
+                    confirmButtonColor: "#B84C4C",
+                });
+            </script>
+            @endif
             @if (session('PeriodoFinalizado'))
             <script>
                 Swal.fire({
@@ -106,7 +117,7 @@
     @endif
     @if(count($periodo)==0)
     <div class="col-lg-3 col-md-4 col-6 mb-3">
-        <a class="link-body-emphasis link-underline link-underline-opacity-0" href="#">
+        <a class="link-body-emphasis link-underline link-underline-opacity-0" type="button" data-bs-toggle="modal" data-bs-target="#terminarAño">
             <div class="card" style="width: 100%; height:200">
                 <h6 class="card-header bg-warning">Finalizar año</h6>
                 <div class="card-body">
@@ -163,6 +174,28 @@
                 @method('PUT')
                 <div class="modal-body">
                     <p id="textoConfirmarEliminar">¿Está seguro que desea terminar el @if(isset($periodo[0])){{$periodo[0]->nombrePeriodo}}@endif? El periodo no podrá volver a iniciarse.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
+                    <button class="btn btn-danger" type="submit">Terminar</button>
+                  </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal para terminar periodo -->
+<div class="modal fade" id="terminarAño" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:5000">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Terminar Año</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{route('admin.terminarAño')}}">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <p id="textoConfirmarEliminar">¿Está seguro que desea terminar el año @if(isset($año[0])){{$año[0]->nombreAño}}@endif? El año no podrá volver a iniciarse.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>

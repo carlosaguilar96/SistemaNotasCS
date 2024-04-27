@@ -27,6 +27,12 @@ class AñoController extends Controller
         return $periodo[0];
     }
 
+    //Función para obtener a{o} activo
+    public function getAñoActivo(){
+        $año = DB::table('añoescolar')->where('estadoFinalizacion','=',0)->get();
+        return $año[0];
+    }
+
     //Función para terminar periodo
     public function terminarPeriodo(){
         $periodo = $this->getPeriodoActivo();
@@ -48,5 +54,12 @@ class AñoController extends Controller
         } else{
             return to_route('admin.gestionAño')->with('PeriodoNoFinalizado','No hay ciclo por finalizar');
         }
+    }
+
+    //Función para terminar año
+    public function terminarAño(){
+        $año = $this->getAñoActivo();
+        DB::table('añoescolar')->where('idAño','=',$año->idAño)->update(['estadoFinalizacion'=>1]);
+        return to_route('admin.gestionAño')->with('AñoFinalizado','El año ha sido finalizado');
     }
 }
