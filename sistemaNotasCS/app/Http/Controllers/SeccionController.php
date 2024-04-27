@@ -345,7 +345,8 @@ class SeccionController extends Controller
                             ->orderBy('apellidos','asc')->get();
                 $materias = DB::table('detallegradomateria')->join('materia','detallegradomateria.idMateria','=','materia.idMateria')
                             ->where('detallegradomateria.idGrado','=',$seccion[0]->idGrado)->orderBy('materia.nombreMateria','asc')->get();
-                $notas=[];
+                if(count($estudiantes)!=0 && count($materias)!=0){
+                    $notas=[];
                 foreach($estudiantes as $estudiante){
                     $notas1[] = $estudiante->NIE;
                     $i=0;
@@ -447,6 +448,12 @@ class SeccionController extends Controller
                                 ->orderBy('apellidos','asc')->get();                              
                 return view('secciones.showCuadroNotas',compact('seccion','año','periodo','totalEstudiantes','totalEstudiantesM',
                             'totalEstudiantesF','materias','estudiantes','notas1','notas2','notas3','notas4','promedios','promedioFinal'));
+                } else{
+                    return view('secciones.showCuadroNotas',compact('seccion','año','periodo','totalEstudiantes','totalEstudiantesM',
+                            'totalEstudiantesF'));
+                }
+                
+            
         } else{
             abort('404');
         }

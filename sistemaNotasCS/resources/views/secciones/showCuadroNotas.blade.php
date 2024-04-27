@@ -104,6 +104,7 @@
                     </div>
                 </div>
             </div>
+            @if(isset($estudiantes))
             <div class="col-lg-12">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
@@ -167,6 +168,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             @endif
         </div>
     </div>
