@@ -153,6 +153,8 @@ Route::prefix('admin')->group(function(){
     Route::put('/asignarProfesor',[SeccionController::class,'asignarProfesor'])->name('admin.asignarProfesor');
     //Ruta para terminar periodo
     Route::put('/terminarPeriodo',[AñoController::class,'terminarPeriodo'])->name('admin.terminarPeriodo');
+    //Ruta para mostrar cuadro de notas de una sección
+    Route::get('/cuadroNotas/{id}',[SeccionController::class,'showCuadroNotas'])->name('admin.cuadroNotas');
 });
 
 //Rutas para el sitio profesor

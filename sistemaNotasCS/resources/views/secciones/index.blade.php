@@ -56,7 +56,7 @@
             @endif
         <div class="row">
             <p class="text-center" style="font-size:16pt; font-weight:bold; color:black">Gestión de secciones</p>
-            <p class="text-center" style="font-size:12pt; color:black">Listado de secciones con opciones para crear una nueva sección, agregar estudiantes a la sección</p>
+            <p class="text-center" style="font-size:12pt; color:black">Listado de secciones con opciones para crear una nueva sección, agregar estudiantes a la sección y ver cuadro de notas</p>
             <div class="col-12">
                 <div class="card text-center">
                     <div class="card-header">
@@ -85,8 +85,11 @@
                                             <td>{{$seccion->nombreSeccion}}</td>
                                             <td>
                                                 <div class="row">
-                                                    <div class="col-12 mx-0 px-0">
+                                                    <div class="col-6 mx-0 px-0">
                                                         <a type="button" class="btn btn-primary icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver información" href="{{route('admin.mostrarSeccion',$seccion->idSeccion)}}"><i class="fa-solid fa-eye my-1" style="color: white"></i></a>
+                                                    </div>
+                                                    <div class="col-6 mx-0 px-0">
+                                                        <a type="button" class="btn btn-success icon-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ver Cuadro de Notas" href="{{route('admin.cuadroNotas',$seccion->idSeccion)}}"><i class="fa-solid fa-list-check" style="color:white;"></i></a>
                                                     </div>
                                                 </div>		
                                             </td>
