@@ -157,6 +157,8 @@ Route::prefix('admin')->group(function(){
     Route::get('/cuadroNotas/{id}',[SeccionController::class,'showCuadroNotas'])->name('admin.cuadroNotas');
     //Ruta para terminar Año
     Route::put('/terminarAño',[AñoController::class,'terminarAño'])->name('admin.terminarAño');
+    //Ruta para mostrar historial de años
+    Route::get('/historialAños',[AñoController::class,'historialAños'])->name('admin.historialAños');
 });
 
 //Rutas para el sitio profesor

@@ -97,7 +97,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <button type="button" class="btn btn-warning my-3" onclick="agregarSeccion()" style="width:auto">Agregar Sección</button>
+                                @if($año->estadoFinalizacion==0)<button type="button" class="btn btn-warning my-3" onclick="agregarSeccion()" style="width:auto">Agregar Sección</button>@endif
                             </div>
                         </div>
                     </div>

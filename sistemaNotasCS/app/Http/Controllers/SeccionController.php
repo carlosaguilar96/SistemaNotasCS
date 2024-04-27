@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AñoEscolar;
 use App\Models\DetalleSeccionEstudiante;
 use App\Models\DetalleSeccionMateria;
 use App\Models\Seccion;
@@ -17,6 +18,7 @@ class SeccionController extends Controller
         if(!session()->has('administrador')){
             abort('403');
         }
+        $año = AñoEscolar::find($id);
         $secciones = DB::table('secciones')->where('idAño','=',$id)->get();
         $grados = DB::table('grado')->join('etapa','grado.idEtapa','=','etapa.idEtapa')->get();
         $encargados = DB::table('profesor')
@@ -27,7 +29,7 @@ class SeccionController extends Controller
                                     ->whereColumn('profesor.DUI','secciones.encargado')
                                     ->where('idAño','=',$id);
                                 })->get();
-        return view('secciones.index', compact('secciones','grados','encargados', 'id'));
+        return view('secciones.index', compact('secciones','grados','encargados', 'id','año'));
     }
 
     public function store(Request $request){
@@ -329,6 +331,7 @@ class SeccionController extends Controller
                     ->join('profesor','secciones.encargado','=','profesor.DUI')->where('idSeccion','=',$id)->get();
         if(!empty($seccion[0])){
                 $año = DB::table('añoescolar')->where('estadoFinalizacion','=',0)->get();
+                if(empty($año[0])) $año = DB::table('añoescolar')->where('idAño','=',$seccion[0]->idAño)->get();
                 $periodo = DB::table('periodos')->where('estado','=',1)->get();
                 $totalEstudiantes = DB::table('detalleseccionestudiante')->where('idSeccion','=',$seccion[0]->idSeccion)->count();
                 $totalEstudiantesM = DB::table('detalleseccionestudiante')

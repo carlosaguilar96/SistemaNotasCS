@@ -62,4 +62,10 @@ class AñoController extends Controller
         DB::table('añoescolar')->where('idAño','=',$año->idAño)->update(['estadoFinalizacion'=>1]);
         return to_route('admin.gestionAño')->with('AñoFinalizado','El año ha sido finalizado');
     }
+
+    //Función para mostrar historial de años
+    public function historialAños(){
+        $años=DB::table('añoescolar')->where('estadoFinalizacion','=',1)->get();
+        return view('años.index',compact('años'));
+    }
 }
