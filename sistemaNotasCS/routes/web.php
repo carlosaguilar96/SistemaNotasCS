@@ -166,6 +166,8 @@ Route::prefix('profesor')->group(function(){
     Route::put('/cambiarContraseñaProfesor',[ProfesorController::class, 'cambiarContraseñaProfesor'])->name('profesor.cambiarContraseñaProfesor');
     //Ruta para ver perfil del profesor
     Route::get('/verPerfil',[ProfesorController::class, 'showPerfil'])->name('profesor.showPerfil');
+    //Ruta para mostrar vista Mi Sección
+    Route::get('/miSeccion/{id}',[SeccionController::class,'miSeccion'])->name('profesor.miSeccion');
 
     //Rutas relacionadas a la gestión de grupos
     //Ruta para mostrar un grupo

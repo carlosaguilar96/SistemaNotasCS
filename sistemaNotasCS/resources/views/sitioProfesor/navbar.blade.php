@@ -23,7 +23,7 @@
                         </li>
                         @if (session()->has('SeccionEncargado'))
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">MI SECCIÓN</a>
+                            <a class="nav-link" aria-current="page" href="{{route('profesor.miSeccion',session()->get('SeccionEncargadoID'))}}">MI SECCIÓN</a>
                         </li>
                         @endif
                         @if (session()->has('grupos'))

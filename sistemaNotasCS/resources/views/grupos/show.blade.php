@@ -198,68 +198,38 @@
                                 <tr>
                                     <td class="table-secondary">{{ $j+1 }}</td>
                                     <td class="table-secondary" style="border-right: 3px solid black;">{{ $estudiante->apellidos }}, {{ $estudiante->nombres }}</td>
-                                    <td class="text-center">@if(isset($notas11[$j])){{$notas11[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas12[$j])){{$notas12[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas13[$j])){{$notas13[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas14[$j])){{$notas14[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas15[$j])){{$notas15[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="bg-warning-subtle text-center"><b><?php $promedio1 = 0.0;
-                                                                 if(isset($notas11[$j])) $promedio1 += $notas11[$j]->porcentajeGanado;
-                                                                 if(isset($notas12[$j])) $promedio1 += $notas12[$j]->porcentajeGanado;
-                                                                 if(isset($notas13[$j])) $promedio1 += $notas13[$j]->porcentajeGanado;
-                                                                 if(isset($notas14[$j])) $promedio1 += $notas14[$j]->porcentajeGanado;
-                                                                 if(isset($notas15[$j])) $promedio1 += $notas15[$j]->porcentajeGanado;
-                                                                 echo number_format($promedio1,1); 
-                                                                 ?></b></td>
-                                    <td class="@if($promedio1>=6) bg-success-subtle @else bg-danger-subtle @endif text-center" style="border-right: 3px solid black;"><b>@if($promedio1>=6) A @else R @endif</b></td>
-                                    <td class="text-center">@if(isset($notas21[$j])){{$notas21[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas22[$j])){{$notas22[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas23[$j])){{$notas23[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas24[$j])){{$notas24[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas25[$j])){{$notas25[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="bg-warning-subtle text-center"><b><?php $promedio2 = 0.0;
-                                                                 if(isset($notas21[$j])) $promedio2 += $notas21[$j]->porcentajeGanado;
-                                                                 if(isset($notas22[$j])) $promedio2 += $notas22[$j]->porcentajeGanado;
-                                                                 if(isset($notas23[$j])) $promedio2 += $notas23[$j]->porcentajeGanado;
-                                                                 if(isset($notas24[$j])) $promedio2 += $notas24[$j]->porcentajeGanado;
-                                                                 if(isset($notas25[$j])) $promedio2 += $notas25[$j]->porcentajeGanado;
-                                                                 echo number_format($promedio2,1); 
-                                                                 ?></b></td>
-                                    <td class="@if($promedio2>=6) bg-success-subtle @else bg-danger-subtle @endif text-center" style="border-right: 3px solid black;"><b>@if($promedio2>=6) A @else R @endif</b></td>
-                                    <td class="text-center">@if(isset($notas31[$j])){{$notas31[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas32[$j])){{$notas32[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas33[$j])){{$notas33[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas34[$j])){{$notas34[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas35[$j])){{$notas35[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="bg-warning-subtle text-center"><b><?php $promedio3 = 0.0;
-                                                                 if(isset($notas31[$j])) $promedio3 += $notas31[$j]->porcentajeGanado;
-                                                                 if(isset($notas32[$j])) $promedio3 += $notas32[$j]->porcentajeGanado;
-                                                                 if(isset($notas33[$j])) $promedio3 += $notas33[$j]->porcentajeGanado;
-                                                                 if(isset($notas34[$j])) $promedio3 += $notas34[$j]->porcentajeGanado;
-                                                                 if(isset($notas35[$j])) $promedio3 += $notas35[$j]->porcentajeGanado;
-                                                                 echo number_format($promedio3,1); 
-                                                                 ?></b></td>
-                                    <td class="@if($promedio3>=6) bg-success-subtle @else bg-danger-subtle @endif text-center" style="border-right: 3px solid black;"><b>@if($promedio3>=6) A @else R @endif</b></td>
-                                    <td class="text-center">@if(isset($notas41[$j])){{$notas41[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas42[$j])){{$notas42[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas43[$j])){{$notas43[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas44[$j])){{$notas44[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="text-center">@if(isset($notas45[$j])){{$notas45[$j]->nota}}@else 0.0 @endif</td>
-                                    <td class="bg-warning-subtle text-center"><b><?php $promedio4 = 0.0;
-                                                                 if(isset($notas41[$j])) $promedio4 += $notas41[$j]->porcentajeGanado;
-                                                                 if(isset($notas42[$j])) $promedio4 += $notas42[$j]->porcentajeGanado;
-                                                                 if(isset($notas43[$j])) $promedio4 += $notas43[$j]->porcentajeGanado;
-                                                                 if(isset($notas44[$j])) $promedio4 += $notas44[$j]->porcentajeGanado;
-                                                                 if(isset($notas45[$j])) $promedio4 += $notas45[$j]->porcentajeGanado;
-                                                                 echo number_format($promedio4,1); 
-                                                                 ?></b></td>
-                                    <td class="@if($promedio4>=6) bg-success-subtle @else bg-danger-subtle @endif text-center" style="border-right: 3px solid black;"><b>@if($promedio4>=6) A @else R @endif</b></td>
-                                    <td class="bg-warning-subtle text-center" @if(isset($periodo[0])) hidden @endif><b><?php $promedioFinal = ($promedio1 + $promedio2 + $promedio3 + $promedio4)/4;
-                                                                                                    echo number_format($promedioFinal,1);
-                                                                                                     ?></b></td>
-                                    <td class="@if($promedioFinal>=6) bg-success-subtle @else bg-danger-subtle @endif text-center" @if(isset($periodo[0])) hidden @endif><b>@if($promedioFinal>=6) A @else R @endif</b></td>
+                                    <td class="text-center">@if(isset($notas11[$j])){{number_format($notas11[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas12[$j])){{number_format($notas12[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas13[$j])){{number_format($notas13[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas14[$j])){{number_format($notas14[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas15[$j])){{number_format($notas15[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="bg-warning-subtle text-center"><b>@if(isset($promedios1[$j])){{number_format($promedios1[$j]->promedio,1)}}@else 0.0 @endif</b></td>
+                                    <td class="@if(isset($promedios1[$j])) @if(number_format($promedios1[$j]->promedio,1)>=6) bg-success-subtle @else bg-danger-subtle @endif @else bg-danger-subtle @endif text-center" style="border-right: 3px solid black;"><b>@if(isset($notas15[$j])) @if(number_format($promedios1[$j]->promedio,1)>=6) A @else R @endif @else R @endif</b></td>
+                                    <td class="text-center">@if(isset($notas21[$j])){{number_format($notas21[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas22[$j])){{number_format($notas22[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas23[$j])){{number_format($notas23[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas24[$j])){{number_format($notas24[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas25[$j])){{number_format($notas25[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="bg-warning-subtle text-center"><b> @if(isset($promedios2[$j])){{number_format($promedios2[$j]->promedio,1)}}@else 0.0 @endif</b></td>
+                                    <td class=" @if(isset($promedios2[$j])) @if(number_format($promedios2[$j]->promedio,1)>=6) bg-success-subtle @else bg-danger-subtle @endif @else bg-danger-subtle @endif text-center" style="border-right: 3px solid black;"><b> @if(isset($promedios2[$j])) @if(number_format($promedios2[$j]->promedio,1)>=6) A @else R @endif @else R @endif</b></td>
+                                    <td class="text-center">@if(isset($notas31[$j])){{number_format($notas31[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas32[$j])){{number_format($notas32[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas33[$j])){{number_format($notas33[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas34[$j])){{number_format($notas34[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas35[$j])){{number_format($notas35[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="bg-warning-subtle text-center"><b>@if(isset($promedios3[$j])){{number_format($promedios3[$j]->promedio,1)}}@else 0.0 @endif</b></td>
+                                    <td class="@if(isset($promedios3[$j])) @if(number_format($promedios3[$j]->promedio,1)>=6) bg-success-subtle @else bg-danger-subtle @endif @else bg-danger-subtle @endif text-center" style="border-right: 3px solid black;"><b>@if(isset($promedios3[$j])) @if(number_format($promedios3[$j]->promedio,1)>=6) A @else R @endif @else R @endif</b></td>
+                                    <td class="text-center">@if(isset($notas41[$j])){{number_format($notas41[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas42[$j])){{number_format($notas42[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas43[$j])){{number_format($notas43[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas44[$j])){{number_format($notas44[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="text-center">@if(isset($notas45[$j])){{number_format($notas45[$j]->nota,1)}}@else 0.0 @endif</td>
+                                    <td class="bg-warning-subtle text-center"><b>@if(isset($promedios4[$j])){{number_format($promedios4[$j]->promedio,1)}}@else 0.0 @endif</b></td>
+                                    <td class="@if(isset($promedios4[$j])) @if(number_format($promedios4[$j]->promedio,1)>=6) bg-success-subtle @else bg-danger-subtle @endif @else bg-danger-subtle @endif text-center" style="border-right: 3px solid black;"><b>@if(isset($promedios4[$j])) @if(number_format($promedios4[$j]->promedio,1)>=6) A @else R @endif @else R @endif</b></td>
+                                    <td class="bg-warning-subtle text-center" @if(isset($periodo[0])) hidden @endif><b>@if(isset($notaF[$j])){{number_format($notaF[$j]->promedio,1)}} @else 0.0 @endif</b></td>
+                                    <td class="@if(isset($notaF[$j])) @if(number_format($notaF[$j]->promedio,1)>=6) bg-success-subtle @else bg-danger-subtle @endif @else bg-danger-subtle @endif text-center" @if(isset($periodo[0])) hidden @endif><b>@if(isset($notaF[$j])) @if(number_format($notaF[$j]->promedio,1)>=6) A @else R @endif @else R @endif</b></td>
                                 </tr>
-                                <?php if($promedioFinal>=6)$aprobados++; else $reprobados++; $j++; ?>
+                                <?php if(isset($notaF[$j])){ if(number_format($notaF[$j]->promedio,1)>=6)$aprobados++; else $reprobados++; } $j++;?>
                                 @endforeach
                             </tbody>
                         </table>
@@ -268,21 +238,21 @@
             </div>
             @if(isset($periodo[0]))
                 @if($periodo[0]->idPeriodo==2)
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
-                            <h5 class="card-title">Periodo 1</h5>
+                            <h5 class="card-title"><b>Periodo 1</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-6">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Aprobados: <b>{{$aprobados1}}</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-6">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Reprobados: <b>{{$reprobados1}}</b></h5>
@@ -291,42 +261,42 @@
                 </div>
                 @endif
                 @if($periodo[0]->idPeriodo==3)
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
-                            <h5 class="card-title">Periodo 1</h5>
+                            <h5 class="card-title"><b>Periodo 1</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-6">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Aprobados: <b>{{$aprobados1}}</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-6">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Reprobados: <b>{{$reprobados1}}</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
-                            <h5 class="card-title">Periodo 2</h5>
+                            <h5 class="card-title"><b>Periodo 2</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-6">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Aprobados: <b>{{$aprobados2}}</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-6">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Reprobados: <b>{{$reprobados2}}</b></h5>
@@ -335,63 +305,63 @@
                 </div>
                 @endif
                 @if($periodo[0]->idPeriodo==4)
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
-                            <h5 class="card-title">Periodo 1</h5>
+                            <h5 class="card-title"><b>Periodo 1</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-6">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Aprobados: <b>{{$aprobados1}}</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-6">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Reprobados: <b>{{$reprobados1}}</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
-                            <h5 class="card-title">Periodo 2</h5>
+                            <h5 class="card-title"><b>Periodo 2</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-6">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Aprobados: <b>{{$aprobados2}}</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-6">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Reprobados: <b>{{$reprobados2}}</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
-                            <h5 class="card-title">Periodo 3</h5>
+                            <h5 class="card-title"><b>Periodo 3</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-6">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Aprobados: <b>{{$aprobados3}}</b></h5>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-md-4 col-6">
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title">Reprobados: <b>{{$reprobados3}}</b></h5>
@@ -400,98 +370,98 @@
                 </div>
                 @endif
             @else
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Aprobados: <b>{{$aprobados}}</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Reprobados: <b>{{$reprobados}}</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
-                        <h5 class="card-title">Periodo 1</h5>
+                        <h5 class="card-title"><b>Periodo 1</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4 col-6">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Aprobados: <b>{{$aprobados1}}</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4 col-6">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Reprobados: <b>{{$reprobados1}}</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
-                        <h5 class="card-title">Periodo 2</h5>
+                        <h5 class="card-title"><b>Periodo 2</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4 col-6">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Aprobados: <b>{{$aprobados2}}</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4 col-6">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Reprobados: <b>{{$reprobados2}}</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
-                        <h5 class="card-title">Periodo 3</h5>
+                        <h5 class="card-title"><b>Periodo 3</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4 col-6">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Aprobados: <b>{{$aprobados3}}</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4 col-6">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Reprobados: <b>{{$reprobados3}}</b></h5>
                     </div>
                 </div>
             </div>  
-            <div class="col-lg-4">
+            <div class="col-md-4">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
-                        <h5 class="card-title">Periodo 4</h5>
+                        <h5 class="card-title"><b>Periodo 4</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4 col-6">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Aprobados: <b>{{$aprobados4}}</b></h5>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-md-4 col-6">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Reprobados: <b>{{$reprobados4}}</b></h5>

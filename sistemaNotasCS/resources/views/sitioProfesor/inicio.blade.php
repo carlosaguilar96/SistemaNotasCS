@@ -14,7 +14,7 @@
           <div class="row" style="align-items: center;display: flex;justify-content: center;">
             @if (session()->has('SeccionEncargado'))
             <div class="col-md-4 col-6 mb-3">
-              <a class="link-body-emphasis link-underline link-underline-opacity-0" href="#">
+              <a class="link-body-emphasis link-underline link-underline-opacity-0" href="{{route('profesor.miSeccion',session()->get('SeccionEncargadoID'))}}">
               <div class="card" style="width: 100%; height:200">
                 <h6 class="card-header bg-warning">Mi sección</h6>
                 <div class="card-body">

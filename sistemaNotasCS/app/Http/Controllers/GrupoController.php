@@ -162,6 +162,50 @@ class GrupoController extends Controller
                                $notas1 = DB::table('nota')->SELECT(DB::raw('ROUND(SUM(porcentajeGanado), 1) as promedio'))
                                ->WHERE('idPeriodo','=',1)->WHERE('idDetalleMateria','=',$grupo[0]->idDetalle)
                                ->groupBy('idDetalleEstudiante')->get();
+                $promedios1 = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
+                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                                ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                                ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                                ->where('idPeriodo','=',1)
+                                ->where('idDetalleMateria','=',$id)
+                                ->select(DB::raw('SUM(porcentajeGanado) as promedio'))
+                                ->groupBy('idDetalleEstudiante','idPeriodo','idDetalleMateria')
+                                ->orderBy('apellidos','asc')->get();
+                $promedios2 = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
+                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                                ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                                ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                                ->where('idPeriodo','=',2)
+                                ->where('idDetalleMateria','=',$id)
+                                ->select(DB::raw('SUM(porcentajeGanado) as promedio'))
+                                ->groupBy('idDetalleEstudiante','idPeriodo','idDetalleMateria')
+                                ->orderBy('apellidos','asc')->get();
+                $promedios3 = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
+                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                                ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                                ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                                ->where('idPeriodo','=',3)
+                                ->where('idDetalleMateria','=',$id)
+                                ->select(DB::raw('SUM(porcentajeGanado) as promedio'))
+                                ->groupBy('idDetalleEstudiante','idPeriodo','idDetalleMateria')
+                                ->orderBy('apellidos','asc')->get();
+                $promedios4 = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
+                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                                ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                                ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                                ->where('idPeriodo','=',4)
+                                ->where('idDetalleMateria','=',$id)
+                                ->select(DB::raw('SUM(porcentajeGanado) as promedio'))
+                                ->groupBy('idDetalleEstudiante','idPeriodo','idDetalleMateria')
+                                ->orderBy('apellidos','asc')->get();
+                $notaF = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
+                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                                ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                                ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                                ->where('idDetalleMateria','=',$id)
+                                ->select(DB::raw('SUM(porcentajeGanado)/4 as promedio'))
+                                ->groupBy('idDetalleEstudiante','idDetalleMateria')
+                                ->orderBy('apellidos','asc')->get();                        
                $aprobados1 = 0;
                foreach($notas1 as $nota){
                    if($nota->promedio>=6) $aprobados1++;
@@ -217,14 +261,16 @@ class GrupoController extends Controller
                 'verificarEvaluacion4','verificarEvaluacion5','estudiantes','notas11', 'notas12', 'notas13', 'notas14', 'notas15',
                 'notas21', 'notas22', 'notas23', 'notas24', 'notas25', 'notas31', 'notas32', 'notas33', 'notas34', 'notas35',
                 'notas41', 'notas42', 'notas43', 'notas44', 'notas45','aprobados1','reprobados1','aprobados2','reprobados2',
-                'aprobados3','reprobados3','aprobados4','reprobados4'));
+                'aprobados3','reprobados3','aprobados4','reprobados4','promedios1','promedios2','promedios3','promedios4',
+                'notaF'));
                 } else{
                     
                     return view('grupos.show',compact('grupo','año','periodo','totalEstudiantes','totalEstudiantesM',
                 'totalEstudiantesF','estudiantes','notas11', 'notas12', 'notas13', 'notas14', 'notas15',
                 'notas21', 'notas22', 'notas23', 'notas24', 'notas25', 'notas31', 'notas32', 'notas33', 'notas34', 'notas35',
                 'notas41', 'notas42', 'notas43', 'notas44', 'notas45','aprobados1','reprobados1','aprobados2','reprobados2',
-                'aprobados3','reprobados3','aprobados4','reprobados4'));
+                'aprobados3','reprobados3','aprobados4','reprobados4','promedios1','promedios2','promedios3','promedios4',
+                'notaF'));
                 }
             } else{
                 abort('403');

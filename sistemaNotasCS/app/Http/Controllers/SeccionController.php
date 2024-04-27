@@ -185,4 +185,139 @@ class SeccionController extends Controller
             return to_route('admin.mostrarSeccion',$request->input('seccion2'))->with('errorAsignar','Error al asignar profesor');
         }
     }
+
+    public function miSeccion(int $id){
+        if(!session()->has('profesor')){
+            abort('403');
+        }
+        $seccion = DB::table('secciones')->where('idSeccion','=',$id)->get();
+        if(!empty($seccion[0])){
+            if($seccion[0]->idSeccion == session()->get('SeccionEncargadoID')){
+                $año = DB::table('añoescolar')->where('estadoFinalizacion','=',0)->get();
+                $periodo = DB::table('periodos')->where('estado','=',1)->get();
+                $totalEstudiantes = DB::table('detalleseccionestudiante')->where('idSeccion','=',$seccion[0]->idSeccion)->count();
+                $totalEstudiantesM = DB::table('detalleseccionestudiante')
+                                    ->join('estudiante','detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                                    ->where('idSeccion','=',$seccion[0]->idSeccion)
+                                    ->where('sexo','=',1)->count();
+                $totalEstudiantesF = DB::table('detalleseccionestudiante')
+                                    ->join('estudiante','detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                                    ->where('idSeccion','=',$seccion[0]->idSeccion)
+                                    ->where('sexo','=',2)->count();
+                $estudiantes = DB::table('detalleseccionestudiante')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante', '=', 'estudiante.NIE')
+                            ->where('idSeccion', '=', $seccion[0]->idSeccion)
+                            ->orderBy('apellidos','asc')->get();
+                $materias = DB::table('detallegradomateria')->join('materia','detallegradomateria.idMateria','=','materia.idMateria')
+                            ->where('detallegradomateria.idGrado','=',$seccion[0]->idGrado)->orderBy('materia.nombreMateria','asc')->get();
+                $notas=[];
+                foreach($estudiantes as $estudiante){
+                    $notas1[] = $estudiante->NIE;
+                    $i=0;
+                    foreach($materias as $materia){
+                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
+                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                                ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                                ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                                ->where('idPeriodo','=',1)
+                                ->where('materia.idMateria','=',$materia->idMateria)
+                                ->where('detalleseccionmateria.idSeccion','=',$seccion[0]->idSeccion)
+                                ->where('NIE','=',$estudiante->NIE)
+                                ->select(DB::raw('SUM(porcentajeGanado) as promedio'))
+                                ->groupBy('idDetalleEstudiante','idPeriodo','idDetalleMateria')
+                                ->orderBy('apellidos','asc')->get();
+                        if(isset($nota[0])) $notas1[$estudiante->NIE][$i] = $nota[0]->promedio;
+                        else $notas1[$estudiante->NIE][$i] = 0.0;
+                        $i++;
+                    }
+                    $notas2[] = $estudiante->NIE;
+                    $i=0;
+                    foreach($materias as $materia){
+                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
+                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                                ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                                ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                                ->where('idPeriodo','=',2)
+                                ->where('materia.idMateria','=',$materia->idMateria)
+                                ->where('detalleseccionmateria.idSeccion','=',$seccion[0]->idSeccion)
+                                ->where('NIE','=',$estudiante->NIE)
+                                ->select(DB::raw('SUM(porcentajeGanado) as promedio'))
+                                ->groupBy('idDetalleEstudiante','idPeriodo','idDetalleMateria')
+                                ->orderBy('apellidos','asc')->get();
+                        if(isset($nota[0])) $notas2[$estudiante->NIE][$i] = $nota[0]->promedio;
+                        else $notas2[$estudiante->NIE][$i] = 0.0;
+                        $i++;
+                    }
+                    $notas3[] = $estudiante->NIE;
+                    $i=0;
+                    foreach($materias as $materia){
+                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
+                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                                ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                                ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                                ->where('idPeriodo','=',3)
+                                ->where('materia.idMateria','=',$materia->idMateria)
+                                ->where('detalleseccionmateria.idSeccion','=',$seccion[0]->idSeccion)
+                                ->where('NIE','=',$estudiante->NIE)
+                                ->select(DB::raw('SUM(porcentajeGanado) as promedio'))
+                                ->groupBy('idDetalleEstudiante','idPeriodo','idDetalleMateria')
+                                ->orderBy('apellidos','asc')->get();
+                        if(isset($nota[0])) $notas3[$estudiante->NIE][$i] = $nota[0]->promedio;
+                        else $notas3[$estudiante->NIE][$i] = 0.0;
+                        $i++;
+                    }
+                    $notas4[] = $estudiante->NIE;
+                    $i=0;
+                    foreach($materias as $materia){
+                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
+                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                                ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                                ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                                ->where('idPeriodo','=',4)
+                                ->where('materia.idMateria','=',$materia->idMateria)
+                                ->where('detalleseccionmateria.idSeccion','=',$seccion[0]->idSeccion)
+                                ->where('NIE','=',$estudiante->NIE)
+                                ->select(DB::raw('SUM(porcentajeGanado) as promedio'))
+                                ->groupBy('idDetalleEstudiante','idPeriodo','idDetalleMateria')
+                                ->orderBy('apellidos','asc')->get();
+                        if(isset($nota[0])) $notas4[$estudiante->NIE][$i] = $nota[0]->promedio;
+                        else $notas4[$estudiante->NIE][$i] = 0.0;
+                        $i++;
+                    }
+                    $promedios[] = $estudiante->NIE;
+                    $i=0;
+                    foreach($materias as $materia){
+                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
+                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                                ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                                ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                                ->where('materia.idMateria','=',$materia->idMateria)
+                                ->where('detalleseccionmateria.idSeccion','=',$seccion[0]->idSeccion)
+                                ->where('NIE','=',$estudiante->NIE)
+                                ->select(DB::raw('SUM(porcentajeGanado)/4 as promedio'))
+                                ->groupBy('idDetalleEstudiante','idDetalleMateria')
+                                ->orderBy('apellidos','asc')->get();
+                        if(isset($nota[0])) $promedios[$estudiante->NIE][$i] = $nota[0]->promedio;
+                        else $promedios[$estudiante->NIE][$i] = 0.0;
+                        $i++;
+                    }      
+                }
+                $promedioFinal = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
+                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                                ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                                ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                                ->where('detalleseccionmateria.idSeccion','=',$seccion[0]->idSeccion)
+                                ->select(DB::raw('SUM(porcentajeGanado)/16 as promedio'))
+                                ->groupBy('idDetalleEstudiante')
+                                ->orderBy('apellidos','asc')->get();                              
+                return view('secciones.miSeccion',compact('seccion','año','periodo','totalEstudiantes','totalEstudiantesM',
+                            'totalEstudiantesF','materias','estudiantes','notas1','notas2','notas3','notas4','promedios','promedioFinal'));
+            }
+            else{
+                abort('403');
+            }
+        } else{
+            abort('404');
+        }
+    }
 }
