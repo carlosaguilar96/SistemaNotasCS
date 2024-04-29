@@ -257,6 +257,7 @@ class EstudianteController extends Controller
         try{
 			$id = $request->input('id');
             DB::table('estudiante')->where('NIE', $id)->update(['estadoeliminacion' => 0]);
+            DB::table('detallegradoestudiante')->where('idEstudiante','=',$id)->update(['estadoFinalizacion'=>1]);
 			return to_route('admin.indexEstudiantes')->with('exitoEliminacion','El estudiante ha sido eliminado exitosamente.');
 		}catch(Exception $e){
 			return to_route('admin.indexEstudiantes')->with('errorEliminacion','Ha ocurrido un error al eliminar el estudiante.');
