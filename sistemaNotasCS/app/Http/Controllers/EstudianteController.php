@@ -10,6 +10,7 @@ use App\Models\Usuario;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Credenciales;
+use App\Models\Seccion;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 
@@ -275,5 +276,320 @@ class EstudianteController extends Controller
 		}catch(Exception $e){
 			return to_route('admin.indexEstudiantes')->with('errorReactivar','Ha ocurrido un error al reactivar el estudiante.');
 		}
+    }
+
+    //función para mostrar la vista de inicio del sitio estudiante
+    public function inicio()
+    {
+        if (session()->has('estudiante')) {
+            $estudiante = session()->get('estudiante');
+            //formando un array con las secciones que el estudiante ha cursado
+            $secciones = DB::table('detalleseccionestudiante')
+                    ->join('secciones', 'detalleseccionestudiante.idSeccion', '=', 'secciones.idSeccion')
+                    ->join('añoescolar','secciones.idAño','=','añoescolar.idAño')
+                    ->where('idEstudiante', '=', $estudiante[0]->NIE)
+                    ->orderBy('detalleseccionestudiante.idDetalle')
+                    ->get();
+            if (count($secciones) > 0) {
+                $ArregloSecciones = [];
+                    foreach ($secciones as $seccion) {
+                        $ArregloSecciones[] = $seccion->idSeccion;
+                    }
+                    session()->put('secciones', $secciones);
+                    session()->put('ArregloSecciones', $ArregloSecciones);
+            }
+            
+            return view('sitioEstudiante.inicio', compact('estudiante'));
+        } else {
+            abort('403');
+        }
+    }
+
+    //función para mostrar rutas por año
+    public function showNotas(int $id){
+        if(!session()->has('estudiante')){
+            abort('403');
+        }
+        $seccion = DB::table('secciones')
+                    ->join('añoescolar','secciones.idAño','=','añoescolar.idAño')
+                    ->join('profesor','secciones.encargado','=','profesor.DUI')
+                    ->where('idSeccion', '=', $id)
+                    ->get();
+        $estudiante =session()->get('estudiante');
+        if(isset($seccion[0])){
+            if(in_array($id,session()->get('ArregloSecciones'))){
+                $materias = DB::table('detalleseccionmateria')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->join('profesor','detalleseccionmateria.idProfesor','=','profesor.DUI')
+                            ->where('idSeccion','=',$id)->orderBy('nombreMateria','asc')->get();
+                $notas11 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',1)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',1)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas12 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',2)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',1)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas13 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',3)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',1)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas14 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',4)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',1)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas15 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',5)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',1)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $promedios1 = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idPeriodo','=',1)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->select(DB::raw('SUM(porcentajeGanado) as promedio'))
+                            ->groupBy('idDetalleEstudiante','idPeriodo','idDetalleMateria')
+                            ->orderBy('nombreMateria')->get();
+                $notas21 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',1)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',2)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas22 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',2)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',2)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas23 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',3)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',2)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas24 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',4)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',2)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas25 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',5)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',2)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $promedios2 = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idPeriodo','=',2)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->select(DB::raw('SUM(porcentajeGanado) as promedio'))
+                            ->groupBy('idDetalleEstudiante','idPeriodo','idDetalleMateria')
+                            ->orderBy('nombreMateria')->get();
+                $notas31 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',1)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',3)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas32 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',2)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',3)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas33 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',3)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',3)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas34 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',4)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',3)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas35 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',5)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',3)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $promedios3 = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idPeriodo','=',3)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->select(DB::raw('SUM(porcentajeGanado) as promedio'))
+                            ->groupBy('idDetalleEstudiante','idPeriodo','idDetalleMateria')
+                            ->orderBy('nombreMateria')->get();
+                $notas41 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',1)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',4)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas42 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',2)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',4)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas43 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',3)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',4)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas44 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',4)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',4)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $notas45 = DB::table('nota')
+                            ->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idEvaluacion','=',5)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('idPeriodo','=',4)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->orderBy('nombreMateria','asc')->get();
+                $promedios4 = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('idPeriodo','=',4)
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->select(DB::raw('SUM(porcentajeGanado) as promedio'))
+                            ->groupBy('idDetalleEstudiante','idPeriodo','idDetalleMateria')
+                            ->orderBy('nombreMateria')->get();
+                $notaF = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                            ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                            ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                            ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                            ->where('NIE','=',$estudiante[0]->NIE)
+                            ->where('detalleseccionestudiante.idSeccion','=',$id)
+                            ->select(DB::raw('SUM(porcentajeGanado)/4 as promedio'))
+                            ->groupBy('idDetalleEstudiante','idDetalleMateria')
+                            ->orderBy('nombreMateria')->get(); 
+                $periodo = DB::table('periodos')->where('estado','=',1)->get();
+                $materiasPasadas = 0;
+                $total = 0;
+                foreach($notaF as $nota){
+                    if($nota->promedio>=6)$materiasPasadas++;
+                    $total += $nota->promedio;
+                }
+                $promedioFinal = $total / count($notaF);
+                return view('sitioEstudiante.showNotas',compact('seccion','materias',
+                            'notas11','notas12','notas13','notas14','notas15','promedios1',
+                            'notas21','notas22','notas23','notas24','notas25','promedios2',
+                            'notas31','notas32','notas33','notas34','notas35','promedios3',
+                            'notas41','notas42','notas43','notas44','notas45','promedios4',
+                            'notaF','periodo','promedioFinal','materiasPasadas'));
+            } else{
+                abort('403');
+            }
+        } else{
+            abort('404');
+        }
     }
 }

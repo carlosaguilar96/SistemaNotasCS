@@ -103,6 +103,9 @@ class SeccionController extends Controller
                         $subquery
                         ->select('idEstudiante')
                         ->from('detalleseccionestudiante')
+                        ->join('secciones','detalleseccionestudiante.idSeccion','=','secciones.idSeccion')
+                        ->join('añoEscolar','secciones.idAño','=','añoEscolar.idAño')
+                        ->where('añoEscolar.estadoFinalizacion','=',0)
                         ->whereColumn('detallegradoestudiante.idEstudiante','detalleseccionestudiante.idEstudiante');
                     })->get();
         return view('secciones.show',compact('id','seccion','estudiantes','profesores','profesores2','estudiantesDisponibles'));
@@ -217,8 +220,8 @@ class SeccionController extends Controller
                     $notas1[] = $estudiante->NIE;
                     $i=0;
                     foreach($materias as $materia){
-                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
-                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                        $nota = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                 ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
                                 ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
                                 ->where('idPeriodo','=',1)
@@ -235,8 +238,8 @@ class SeccionController extends Controller
                     $notas2[] = $estudiante->NIE;
                     $i=0;
                     foreach($materias as $materia){
-                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
-                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                        $nota = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                 ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
                                 ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
                                 ->where('idPeriodo','=',2)
@@ -253,8 +256,8 @@ class SeccionController extends Controller
                     $notas3[] = $estudiante->NIE;
                     $i=0;
                     foreach($materias as $materia){
-                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
-                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                        $nota = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                 ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
                                 ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
                                 ->where('idPeriodo','=',3)
@@ -271,8 +274,8 @@ class SeccionController extends Controller
                     $notas4[] = $estudiante->NIE;
                     $i=0;
                     foreach($materias as $materia){
-                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
-                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                        $nota = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                 ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
                                 ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
                                 ->where('idPeriodo','=',4)
@@ -289,8 +292,8 @@ class SeccionController extends Controller
                     $promedios[] = $estudiante->NIE;
                     $i=0;
                     foreach($materias as $materia){
-                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
-                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                        $nota = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                 ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
                                 ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
                                 ->where('materia.idMateria','=',$materia->idMateria)
@@ -304,14 +307,15 @@ class SeccionController extends Controller
                         $i++;
                     }      
                 }
-                $promedioFinal = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
-                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                $divisor=4*count($materias);
+                $promedioFinal = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                 ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
                                 ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
                                 ->where('detalleseccionmateria.idSeccion','=',$seccion[0]->idSeccion)
-                                ->select(DB::raw('SUM(porcentajeGanado)/16 as promedio'))
+                                ->select(DB::raw('SUM(porcentajeGanado)/'.$divisor.' as promedio'))
                                 ->groupBy('idDetalleEstudiante')
-                                ->orderBy('apellidos','asc')->get();                              
+                                ->orderBy('apellidos','asc')->get();                         
                 return view('secciones.miSeccion',compact('seccion','año','periodo','totalEstudiantes','totalEstudiantesM',
                             'totalEstudiantesF','materias','estudiantes','notas1','notas2','notas3','notas4','promedios','promedioFinal'));
             }
@@ -354,8 +358,8 @@ class SeccionController extends Controller
                     $notas1[] = $estudiante->NIE;
                     $i=0;
                     foreach($materias as $materia){
-                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
-                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                        $nota = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                 ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
                                 ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
                                 ->where('idPeriodo','=',1)
@@ -372,8 +376,8 @@ class SeccionController extends Controller
                     $notas2[] = $estudiante->NIE;
                     $i=0;
                     foreach($materias as $materia){
-                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
-                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                        $nota = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                 ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
                                 ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
                                 ->where('idPeriodo','=',2)
@@ -390,8 +394,8 @@ class SeccionController extends Controller
                     $notas3[] = $estudiante->NIE;
                     $i=0;
                     foreach($materias as $materia){
-                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
-                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                        $nota = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                 ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
                                 ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
                                 ->where('idPeriodo','=',3)
@@ -408,8 +412,8 @@ class SeccionController extends Controller
                     $notas4[] = $estudiante->NIE;
                     $i=0;
                     foreach($materias as $materia){
-                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
-                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                        $nota = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                 ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
                                 ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
                                 ->where('idPeriodo','=',4)
@@ -426,8 +430,8 @@ class SeccionController extends Controller
                     $promedios[] = $estudiante->NIE;
                     $i=0;
                     foreach($materias as $materia){
-                        $nota = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
-                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                        $nota = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                 ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
                                 ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
                                 ->where('materia.idMateria','=',$materia->idMateria)
@@ -441,12 +445,13 @@ class SeccionController extends Controller
                         $i++;
                     }      
                 }
-                $promedioFinal = DB::table('nota')->join('detallegradoestudiante', 'nota.idDetalleEstudiante','=','detallegradoestudiante.idDetalle')
-                                ->join('estudiante', 'detallegradoestudiante.idEstudiante','=','estudiante.NIE')
+                $divisor=4*count($materias);
+                $promedioFinal = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
                                 ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
                                 ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
                                 ->where('detalleseccionmateria.idSeccion','=',$seccion[0]->idSeccion)
-                                ->select(DB::raw('SUM(porcentajeGanado)/16 as promedio'))
+                                ->select(DB::raw('SUM(porcentajeGanado)/'.$divisor.' as promedio'))
                                 ->groupBy('idDetalleEstudiante')
                                 ->orderBy('apellidos','asc')->get();                              
                 return view('secciones.showCuadroNotas',compact('seccion','año','periodo','totalEstudiantes','totalEstudiantesM',

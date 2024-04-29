@@ -189,3 +189,12 @@ Route::prefix('profesor')->group(function(){
     //Ruta para obtener información de nota
     Route::get('/obtenerNotas/{id}',[GrupoController::class, 'getNota'])->name('profesor.getNotas');
 });
+
+//Rutas para el sitio estudiante
+Route::prefix('estudiante')->group(function(){
+    //Rutas relacionadas al sitio estudiante
+    //Ruta para mostrar vista de inicio sitio estudiante
+    Route::get('/inicio',[EstudianteController::class,'inicio'])->name('estudiante.inicio');
+    //Ruta para mostrar notas por año
+    Route::get('notas/{id}',[EstudianteController::class,'showNotas'])->name('estudiante.showNotas');
+});

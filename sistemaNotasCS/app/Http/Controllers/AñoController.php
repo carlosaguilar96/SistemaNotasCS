@@ -59,6 +59,35 @@ class AñoController extends Controller
     //Función para terminar año
     public function terminarAño(){
         $año = $this->getAñoActivo();
+        $estudiantesActivos = DB::table('detallegradoestudiante')->where('estadoFinalizacion','=',0)->get();
+        foreach($estudiantesActivos as $estudiante){
+            $notaF = DB::table('nota')->join('detalleseccionestudiante', 'nota.idDetalleEstudiante','=','detalleseccionestudiante.idDetalle')
+                ->join('estudiante', 'detalleseccionestudiante.idEstudiante','=','estudiante.NIE')
+                ->join('detalleseccionmateria','nota.idDetalleMateria','=','detalleseccionmateria.idDetalle')
+                ->join('materia','detalleseccionmateria.idMateria','=','materia.idMateria')
+                ->join('secciones','detalleseccionmateria.idSeccion','=','secciones.idSeccion')
+                ->where('NIE','=',$estudiante->idEstudiante)
+                ->where('secciones.idAño','=',$año->idAño)
+                ->select(DB::raw('SUM(porcentajeGanado)/4 as promedio'))
+                ->groupBy('idDetalleEstudiante','idDetalleMateria')
+                ->orderBy('nombreMateria')->get(); 
+            $materiasPasadas = 0;
+            foreach($notaF as $nota){
+                if($nota->promedio>=6)$materiasPasadas++;
+            }
+            if(count($notaF)==$materiasPasadas){
+                if($estudiante->idGrado==1) 
+                    DB::table('detallegradoestudiante')->where('idDetalle','=',$estudiante->idDetalle)->update(['idGrado'=>2]);
+                    if($estudiante->idGrado==2) 
+                    DB::table('detallegradoestudiante')->where('idDetalle','=',$estudiante->idDetalle)->update(['idGrado'=>3]);
+                    if($estudiante->idGrado==3) 
+                    DB::table('detallegradoestudiante')->where('idDetalle','=',$estudiante->idDetalle)->update(['idGrado'=>4]);
+                    if($estudiante->idGrado==4) 
+                    DB::table('detallegradoestudiante')->where('idDetalle','=',$estudiante->idDetalle)->update(['idGrado'=>5]);
+                    if($estudiante->idGrado==5) 
+                    DB::table('detallegradoestudiante')->where('idDetalle','=',$estudiante->idDetalle)->update(['estadoFinalizacion'=>1]);
+            }
+        }
         DB::table('añoescolar')->where('idAño','=',$año->idAño)->update(['estadoFinalizacion'=>1]);
         return to_route('admin.gestionAño')->with('AñoFinalizado','El año ha sido finalizado');
     }
