@@ -6,7 +6,7 @@
             <div class="card-body">
               <h4 class="card-title" style="font-weight:bold">{{$estudiante[0]->nombres}} {{$estudiante[0]->apellidos}}</h4>
               <p class="card-text" style="font-style:italic">Estudiante</p>
-              <a href="#" class="btn btn-warning text-center mt-2">Ver información</a>
+              <a href="{{route('estudiante.perfil')}}" class="btn btn-warning text-center mt-2">Ver información</a>
             </div>
           </div>
         </div>

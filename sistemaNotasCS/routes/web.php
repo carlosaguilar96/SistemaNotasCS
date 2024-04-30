@@ -11,6 +11,7 @@ use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\SeccionController;
 use App\Models\Profesor;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,18 @@ Route::post('/primerAdmin',[LoginController::class, 'guardarPrimerAdmin'])->name
 Route::post('/inicio',[LoginController::class, 'login'])->name('login');
 //Ruta para realizar logout
 Route::get('/salir',[LoginController::class, 'logout'])->name('logout');
+//Ruta para mostrar vista de "olvidé mi contraseña"
+Route::get('/olvideMiContraseña',[LoginController::class, 'passForgot'])->name('passForgot'); 
+//Ruta para  recuperar contraseña
+Route::get('/recuperarContraseña',[LoginController::class, 'recuperarContraseña'])->name('recuperarContraseña');
+//Ruta para  recuperar contraseña desde el correo
+Route::get('/recuperación/{id}',[LoginController::class, 'recuperacion'])->name('recuperacion');
+//Ruta para cambiar contraseña
+Route::put('/cambioContraseña/{id}',[LoginController::class, 'cambioContraseña'])->name('cambioContraseña');
+
+Route::get('/auth/redirect', [LoginController::class, 'redirect'])->name('googleRedirect');
+ 
+Route::get('/auth/callback', [LoginController::class, 'callback'])->name('googleCallback');
 
 //Rutas para el sitio administrador
 Route::prefix('admin')->group(function(){
@@ -197,4 +210,10 @@ Route::prefix('estudiante')->group(function(){
     Route::get('/inicio',[EstudianteController::class,'inicio'])->name('estudiante.inicio');
     //Ruta para mostrar notas por año
     Route::get('notas/{id}',[EstudianteController::class,'showNotas'])->name('estudiante.showNotas');
+    //Ruta para mostrar perfil del estudiante
+    Route::get('verPerfil',[EstudianteController::class,'showPerfil'])->name('estudiante.perfil');
+    //Ruta para cambiar la contraseña del estudiante
+    Route::get('/cambiarContraseñaEstudent',[EstudianteController::class, 'cambiarContraseñaEstudent'])->name('estudiante.cambiarContraseñaEstudent');
+    //Ruta para mostrar la vista de cambiar contraseña estudiante
+    Route::put('/cambiarContraseñaEstudiante',[EstudianteController::class, 'cambiarContraseñaEstudiante'])->name('estudiante.cambiarContraseñaEstudiante');
 });

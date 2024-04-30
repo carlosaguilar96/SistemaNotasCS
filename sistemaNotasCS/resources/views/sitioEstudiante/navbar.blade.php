@@ -19,7 +19,7 @@
                             <a class="nav-link" aria-current="page" href="{{route('estudiante.inicio')}}">INICIO</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">MI PERFIL</a>
+                            <a class="nav-link" aria-current="page" href="{{route('estudiante.perfil')}}">MI PERFIL</a>
                         </li>
                         @if (session()->has('secciones'))
                             @foreach(session()->get('secciones') as $seccion)
@@ -29,7 +29,7 @@
                             @endforeach
                         @endif
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">CAMBIAR CONTRASEÑA</a>
+                            <a class="nav-link" aria-current="page" href="{{route('estudiante.cambiarContraseñaEstudent')}}">CAMBIAR CONTRASEÑA</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="{{route('logout')}}">CERRAR SESIÓN</a>
