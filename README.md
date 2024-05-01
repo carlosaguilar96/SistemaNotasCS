@@ -5,7 +5,6 @@ INTEGRANTES DEL PROYECTO
 - Aguilar Linares, José Carlos          AL210841    GRUPO 01T
 - Campos Monterroza, Carlos Fernando	CM210153    GRUPO 01T
 - Cruz Reyes, Christopher Amílcar	    CR211136    GRUPO 01T
-- Díaz García, Jorge Antonio	        DG101201    GRUPO 01T
 - Rivera Mendoza, Mónica Lissette	    RM210852    GRUPO 01T
 
 LINK DE LA PLANIFICACIÓN EN TRELLO:
