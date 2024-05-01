@@ -42,7 +42,7 @@ Route::put('/cambioContraseña/{id}',[LoginController::class, 'cambioContraseña
 
 Route::get('/auth/redirect', [LoginController::class, 'redirect'])->name('googleRedirect');
  
-Route::get('/auth/callback', [LoginController::class, 'callback'])->name('googleCallback');
+Route::get('/auth/google/callback', [LoginController::class, 'callback'])->name('googleCallback');
 
 //Rutas para el sitio administrador
 Route::prefix('admin')->group(function(){

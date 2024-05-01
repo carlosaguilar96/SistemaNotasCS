@@ -70,25 +70,25 @@ CREATE TABLE `materia` (
   `estadoeliminacion` int NOT NULL
 )
 
-INSERT INTO `materia` (`nombreMateria`) VALUES
-('Lenguaje y Literatura'),
-('Matemática'),
-('Ciencia, Salud y Medio Ambiente'),
-('Estudios Sociales y Cívica'),
-('Inglés'),
-('Informática'),
-('Educación Física'),
-('Educación en Valores'),
-('Ciencias Físicas'),
-('Ciencias Biológicas'),
-('Orientación para la Vida'),
-('Seminario'),
-('Emprendedurismo'),
-('Laboratorio de Creatividad'),
-('Dibujo Técnico'),
-('Proyecto de Graduación'),
-('Mercadeo'),
-('Matemática Pre Universitaria');
+INSERT INTO `materia` (`nombreMateria`,`estadoeliminacion`) VALUES
+('Lenguaje y Literatura',0),
+('Matemática',0),
+('Ciencia, Salud y Medio Ambiente',0),
+('Estudios Sociales y Cívica',0),
+('Inglés',0),
+('Informática',0),
+('Educación Física',0),
+('Educación en Valores',0),
+('Ciencias Físicas',0),
+('Ciencias Biológicas',0),
+('Orientación para la Vida',0),
+('Seminario',0),
+('Emprendedurismo',0),
+('Laboratorio de Creatividad',0),
+('Dibujo Técnico',0),
+('Proyecto de Graduación',0),
+('Mercadeo',0),
+('Matemática Pre Universitaria',0);
 
 CREATE TABLE `detalleprofesormateria` (
   `idDetalle` int PRIMARY KEY AUTO_INCREMENT,

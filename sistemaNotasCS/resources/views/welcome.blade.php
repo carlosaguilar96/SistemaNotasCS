@@ -43,6 +43,17 @@
                     });
                 </script>
                 @endif
+                @if (session('errorLogGoogle'))
+                <script>
+                    Swal.fire({
+                        title: "Acceso Denegado",
+                        text: "{{ session('errorLogGoogle') }}",
+                        icon: "error",
+                        button: "OK",
+                        confirmButtonColor: "#B84C4C",
+                    });
+                </script>
+                @endif
 
                 <form method="POST" action="{{route('login')}}">
                     @csrf
