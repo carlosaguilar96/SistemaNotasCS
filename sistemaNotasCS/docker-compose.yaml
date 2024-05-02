@@ -17,7 +17,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root1
     ports:
-      - 3306:3306
+      - 2003:3306
 
   phpmyadmin:
     container_name: phpmyadmin
