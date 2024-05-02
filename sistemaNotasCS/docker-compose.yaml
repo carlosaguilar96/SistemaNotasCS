@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  php-env:
+    container_name: php-env
+    build: .
+    volumes:
+      - ../sistemaNotasCS:/var/www/html
+    ports:
+      - 2002:80
+
+  mysql_db:
+    container_name: mysql_db
+    image: mysql:8.2
+    command: --default-authentication-plugin=caching_sha2_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root1
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:5.2.1
+    restart: always
+    ports:
+      - 2001:80
+    environment:
+      - PMA_ARBITRARY=1

@@ -249,8 +249,8 @@ CREATE TABLE `Nota` (
   `idPeriodo` int NOT NULL,
   `nota` float NOT NULL,
   `porcentajeGanado` float NOT NULL,
-  FOREIGN KEY(`idDetalleEstudiante`) REFERENCES `detalleseccionestudiante`(`idDetalle`),
-  FOREIGN KEY(`idDetalleMateria`) REFERENCES `detalleseccionmateria`(`idDetalle`),
+  FOREIGN KEY(`idDetalleEstudiante`) REFERENCES `detalleSeccionEstudiante`(`idDetalle`),
+  FOREIGN KEY(`idDetalleMateria`) REFERENCES `detalleSeccionMateria`(`idDetalle`),
   FOREIGN KEY(`idEvaluacion`) REFERENCES `evaluacion`(`idEvaluacion`),
   FOREIGN KEY(`idPeriodo`) REFERENCES `periodos`(`idPeriodo`)
 );
