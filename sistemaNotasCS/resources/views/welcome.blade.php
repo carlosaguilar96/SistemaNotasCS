@@ -3,7 +3,7 @@
     <div class="col-12 col-md-8 col-lg-6 col-xl-5">
         <div class="card shadow-2-strong" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
-                <img class="img mx-auto d-block" width="175" src="http://127.0.0.1:8000/img/logo.png" alt="">
+                <img class="img mx-auto d-block" width="175" src="{{asset('img/logo.png')}}" alt="">
                 <div class="my-4" style="background-color:black; height: 1px; border-radius: 2rem"></div>
                 @if ($errors->any())
                 <div class="alert alert-danger my-2 pb-0">

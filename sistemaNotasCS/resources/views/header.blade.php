@@ -21,7 +21,7 @@
             <nav id="navHeader" class="navbar navbar-expand-lg border-bottom border-body">         
                 <div class="container-fluid" style="height:50pt;">
                     <a class="navbar-brand" href="{{route('welcome')}}">
-                        <img class="img mt-lg-0 mb-2" width="50" src="http://127.0.0.1:8000/img/logo.png" alt="">
+                        <img class="img mt-lg-0 mb-2" width="50" src="{{asset('img/logo.png')}}" alt="">
                         <p class="mt-lg-2">Colegio Salarrué</p>
                     </a>
                 </div>                

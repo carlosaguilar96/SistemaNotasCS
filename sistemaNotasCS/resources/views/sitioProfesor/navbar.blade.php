@@ -2,7 +2,7 @@
     <nav id="navHeader" class="navbar border-bottom border-body">         
         <div class="container-fluid" style="height:50pt;">
             <a class="navbar-brand " href="{{route('profesor.inicio')}}" style="margin-top:3px">
-                <img class="img mb-2" width="50" src="http://127.0.0.1:8000/img/logo.png" alt="">
+                <img class="img mb-2" width="50" src="{{asset('img/logo.png')}}" alt="">
                 <p>Colegio Salarrué</p>
             </a>
             <button  class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation" style="border-color:aliceblue; margin-top:-10px">
