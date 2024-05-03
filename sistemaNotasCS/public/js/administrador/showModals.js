@@ -2,9 +2,9 @@ const actualizarDatosModal = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionAdministrador/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerInformacionAdministrador/${id}`,            
         type : 'GET',        
-        dataType : 'json',
+        dataType : 'json',  
             
         success : function(data) {
             const {DUI, nombres, apellidos, correo} = data;
@@ -15,7 +15,7 @@ const actualizarDatosModal = (id) => {
             
             $('#modalDatos').modal('show');                        
         },
-    
+        
         // código a ejecutar si la petición falla;
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
@@ -34,7 +34,7 @@ const actualizarFotoModal = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionAdministrador/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerInformacionAdministrador/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
@@ -63,7 +63,7 @@ const eliminarAdministrador = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionAdministrador/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerInformacionAdministrador/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
@@ -93,7 +93,7 @@ const reactivarAdministrador = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionAdministrador/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerInformacionAdministrador/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
