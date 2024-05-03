@@ -170,7 +170,7 @@ INSERT INTO `detallegradomateria` (`idGrado`,`idMateria`) VALUES
 ('5','15'),
 ('5','18');
 
-CREATE TABLE `añoEscolar` (
+CREATE TABLE `añoescolar` (
   `idAño` int PRIMARY KEY AUTO_INCREMENT,
   `nombreAño` int NOT NULL,
   `estadoFinalizacion` int NOT NULL
@@ -200,7 +200,7 @@ CREATE TABLE `secciones` (
   FOREIGN KEY(`idAño`) REFERENCES `añoEscolar`(`idAño`)
 );
 
-CREATE TABLE `detalleSeccionMateriaProfesor` (
+CREATE TABLE `detalleseccionmateriaprofesor` (
   `idDetalle` int PRIMARY KEY AUTO_INCREMENT,
   `idProfesor` varchar(100) NOT NULL,
   `idSeccion` int NOT NULL,
@@ -210,7 +210,7 @@ CREATE TABLE `detalleSeccionMateriaProfesor` (
   FOREIGN KEY(`idMateria`) REFERENCES `materia`(`idMateria`)
 );
 
-CREATE TABLE `detalleSeccionEstudiante` (
+CREATE TABLE `detalleseccionestudiante` (
   `idDetalle` int PRIMARY KEY AUTO_INCREMENT,
   `idEstudiante` int NOT NULL,
   `idSeccion` int NOT NULL,
@@ -218,7 +218,7 @@ CREATE TABLE `detalleSeccionEstudiante` (
   FOREIGN KEY(`idSeccion`) REFERENCES `secciones`(`idSeccion`)
 );
 
-CREATE TABLE `detalleSeccionMateria` (
+CREATE TABLE `detalleseccionmateria` (
   `idDetalle` int PRIMARY KEY AUTO_INCREMENT,
   `idSeccion` int NOT NULL,
   `idMateria` int NOT NULL,
@@ -241,7 +241,7 @@ INSERT INTO `evaluacion` (`nombreEvaluacion`,`porcentaje`) VALUES
 ('Laboratorio',20),
 ('Examen',30);
 
-CREATE TABLE `Nota` (
+CREATE TABLE `nota` (
   `idNota` int PRIMARY KEY AUTO_INCREMENT,
   `idDetalleEstudiante` int NOT NULL,
   `idDetalleMateria` int NOT NULL,
