@@ -2,7 +2,7 @@ const actualizarDatosModal = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionEstudiante/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerInformacionEstudiante/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
@@ -52,7 +52,7 @@ const actualizarFotoModal = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionEstudiante/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerInformacionEstudiante/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
@@ -81,7 +81,7 @@ const eliminarEstudiante = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionEstudiante/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerInformacionEstudiante/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
@@ -111,7 +111,7 @@ const reactivarEstudiante = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionEstudiante/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerInformacionEstudiante/${id}`,            
         type : 'GET',        
         dataType : 'json',
             

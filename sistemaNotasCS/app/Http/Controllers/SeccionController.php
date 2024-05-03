@@ -83,7 +83,7 @@ class SeccionController extends Controller
         if(!session()->has('administrador')){
             abort('403');
         }
-        $seccion = DB::table('secciones')->join('añoEscolar','secciones.idAño','=','añoEscolar.idAño')
+        $seccion = DB::table('secciones')->join('añoescolar','secciones.idAño','=','añoescolar.idAño')
                                          ->join('profesor','secciones.encargado','=','profesor.DUI')
                                          ->where('idSeccion','=',$id)->get();
         $estudiantes = DB::table('detalleseccionestudiante')
@@ -104,8 +104,8 @@ class SeccionController extends Controller
                         ->select('idEstudiante')
                         ->from('detalleseccionestudiante')
                         ->join('secciones','detalleseccionestudiante.idSeccion','=','secciones.idSeccion')
-                        ->join('añoEscolar','secciones.idAño','=','añoEscolar.idAño')
-                        ->where('añoEscolar.estadoFinalizacion','=',0)
+                        ->join('añoescolar','secciones.idAño','=','añoescolar.idAño')
+                        ->where('añoescolar.estadoFinalizacion','=',0)
                         ->whereColumn('detallegradoestudiante.idEstudiante','detalleseccionestudiante.idEstudiante');
                     })->get();
         return view('secciones.show',compact('id','seccion','estudiantes','profesores','profesores2','estudiantesDisponibles'));

@@ -9,6 +9,6 @@
 <body>
     <h1>Enlace para recuperar contraseña</h1>
     <h2>¡Hola {{ $nombre}}!<br> Ingresa a este link para recuperar tu contraseña:</h2>
-    <a href="http://127.0.0.1:8000/recuperación/{{$usuario}}">http://127.0.0.1:8000/recuperación/{{$usuario}}</a>
+    <a href="http://127.0.0.1:2002/public/recuperación/{{$usuario}}">http://127.0.0.1:8000/recuperación/{{$usuario}}</a>
 </body>
 </html>

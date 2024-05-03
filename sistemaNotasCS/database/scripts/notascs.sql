@@ -197,7 +197,7 @@ CREATE TABLE `secciones` (
   `estadoeliminacion` int NOT NULL,
   FOREIGN KEY(`encargado`) REFERENCES `profesor`(`DUI`),
   FOREIGN KEY(`idGrado`) REFERENCES `grado`(`idGrado`),
-  FOREIGN KEY(`idAño`) REFERENCES `añoEscolar`(`idAño`)
+  FOREIGN KEY(`idAño`) REFERENCES `añoescolar`(`idAño`)
 );
 
 CREATE TABLE `detalleseccionmateriaprofesor` (

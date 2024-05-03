@@ -10,7 +10,7 @@ const asignarProfesor = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/getProfesoresPorMateria/${id}`,            
+        url : `http://localhost:2002/public/admin/getProfesoresPorMateria/${id}`,            
         type : 'GET',        
         dataType : 'json',
             

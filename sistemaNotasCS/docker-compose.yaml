@@ -3,9 +3,9 @@ version: '3.9'
 services:
   php-env:
     container_name: php-env
-    build: .
+    build: ./
     volumes:
-      - ../sistemaNotasCS:/var/www/html
+      - .:/var/www/html
     ports:
       - 2002:80
 

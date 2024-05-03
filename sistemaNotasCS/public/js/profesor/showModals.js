@@ -2,7 +2,7 @@ const actualizarDatosModal = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionProfesor/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerInformacionProfesor/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
@@ -34,7 +34,7 @@ const eliminarMateria = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerDetalleMateria/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerDetalleMateria/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
@@ -69,7 +69,7 @@ const actualizarFotoModal = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionProfesor/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerInformacionProfesor/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
@@ -98,7 +98,7 @@ const eliminarProfesor = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionProfesor/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerInformacionProfesor/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
@@ -128,7 +128,7 @@ const reactivarProfesor = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/obtenerInformacionProfesor/${id}`,            
+        url : `http://localhost:2002/public/admin/obtenerInformacionProfesor/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
@@ -158,7 +158,7 @@ const actualizarNota = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/profesor/obtenerNotas/${id}`,            
+        url : `http://localhost:2002/public/profesor/obtenerNotas/${id}`,            
         type : 'GET',        
         dataType : 'json',
             

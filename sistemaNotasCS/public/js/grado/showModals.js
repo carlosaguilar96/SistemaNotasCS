@@ -2,7 +2,7 @@ const eliminarMateria = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/getDetalleGM/${id}`,            
+        url : `http://localhost:2002/public/admin/getDetalleGM/${id}`,            
         type : 'GET',        
         dataType : 'json',
             

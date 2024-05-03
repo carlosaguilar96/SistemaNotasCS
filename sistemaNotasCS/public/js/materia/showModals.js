@@ -6,7 +6,7 @@ const updateMateria = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/getMateria/${id}`,            
+        url : `http://localhost:2002/public/admin/getMateria/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
@@ -36,7 +36,7 @@ const eliminarMateria = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/getMateria/${id}`,            
+        url : `http://localhost:2002/public/admin/getMateria/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
@@ -66,7 +66,7 @@ const restoreMateria = (id) => {
 
     $.ajax({
         // la URL para la petición
-        url : `http://127.0.0.1:8000/admin/getMateria/${id}`,            
+        url : `http://localhost:2002/public/admin/getMateria/${id}`,            
         type : 'GET',        
         dataType : 'json',
             
