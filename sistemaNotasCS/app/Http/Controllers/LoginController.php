@@ -6,6 +6,7 @@ use App\Mail\Credenciales;
 use App\Mail\recuperarContraseña;
 use App\Models\Administrador;
 use App\Models\Usuario;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -226,84 +227,87 @@ class LoginController extends Controller
         $usuario = DB::table('usuarios')
             ->where('usuario', '=', $request->input('user'))->get();
 
-        if(count($usuario) == 1){
+        if (count($usuario) == 1) {
             Mail::to($usuario[0]->correo)->send(new recuperarContraseña($usuario[0]->usuario, $usuario[0]->idUsuario));
-            return to_route('welcome')->with('exitoRecuperarContra','La solicitud ha sido enviada, revisa tu correo electrónico');
-        }else{
-            return redirect()->back()->with('errorRecuperarContra','El usuario ingresado no está registrado');
+            return to_route('welcome')->with('exitoRecuperarContra', 'La solicitud ha sido enviada, revisa tu correo electrónico');
+        } else {
+            return redirect()->back()->with('errorRecuperarContra', 'El usuario ingresado no está registrado');
         }
-
     }
 
     //función para mostrar vista con formulario para restablecer contraseña
-    public function recuperacion(int $id){
+    public function recuperacion(int $id)
+    {
         return view('recuperarContraseña', compact('id'));
     }
 
     //función para restablecer contraseña
-    public function cambioContraseña(int $id, Request $request){
+    public function cambioContraseña(int $id, Request $request)
+    {
         $request->validate([
             'contraseñaNueva' => ['required'],
-            'contraseñaNueva' => ['required','confirmed', 'min:10'],
+            'contraseñaNueva' => ['required', 'confirmed', 'min:10'],
         ]);
         $contraseña = Hash('SHA256', $request->input('contraseñaNueva'));
-        DB::table('usuarios')->where('idUsuario','=', $id)->update(['contraseña'=>$contraseña]);
-        return to_route('welcome')->with('exitoCambioContraseña','La contraseña fue cambiada con éxito, ingrese al sistema');
+        DB::table('usuarios')->where('idUsuario', '=', $id)->update(['contraseña' => $contraseña]);
+        return to_route('welcome')->with('exitoCambioContraseña', 'La contraseña fue cambiada con éxito, ingrese al sistema');
     }
 
     //función para seleccionar la cuenta de google
-    public function redirect() {
+    public function redirect()
+    {
         return Socialite::driver('google')->redirect();
     }
 
     //función para realizar ingreso a través de google
-    public function callback(Request $request) {
+    public function callback(Request $request)
+    {
+        
         $user = Socialite::driver('google')->stateless()->user();
         $datosUser = DB::table('usuarios')
-                        ->where('correo', '=', $user->email)
-                        ->get();
-
-            if (!empty($datosUser[0])) {
-                    $nivel = $datosUser[0]->nivel;
-                    //Buscar que tipo de usuario es
-                    if ($nivel == 0) { //Administrador
-                        $adminCarnet = $datosUser[0]->usuario;
-                        $admin = DB::table('administrador')->where('carnet', '=', $adminCarnet)->get();
-                        if ($admin[0]->estadoeliminacion == 1) {
-                            //Si no está eliminado, se crean variables de sesión con la información del usuario
-                            $request->session()->put('user', $datosUser);
-                            session()->put('administrador', $admin);
-                            return to_route('admin.inicio');
-                        } else {
-                            return to_route('welcome')->with('errorLogGoogle', 'Usuario sin permiso para entrar al sistema');
-                        }
-                    } else if ($nivel == 1) { //Profesor
-                        $profesorCarnet = $datosUser[0]->usuario;
-                        $profesor = DB::table('profesor')->where('carnet', '=', $profesorCarnet)->get();
-                        if ($profesor[0]->estadoeliminacion == 1) {
-                            //Si no está eliminado, se crean variables de sesión con la información del usuario
-                            $request->session()->put('user', $datosUser);
-                            session()->put('profesor', $profesor);
-                            return to_route('profesor.inicio');
-                        } else {
-                            return to_route('welcome')->with('errorLogGoogle', 'Usuario sin permiso para entrar al sistema');
-                        }
-                    } else if ($nivel == 2) { //Estudiante
-                        $estudianteCarnet = $datosUser[0]->usuario;
-                        $estudiante = DB::table('estudiante')->where('carnet', '=', $estudianteCarnet)->get();
-                        if ($estudiante[0]->estadoeliminacion == 1) {
-                            //Si no está eliminado, se crean variables de sesión con la información del usuario
-                            $request->session()->put('user', $datosUser);
-                            session()->put('estudiante', $estudiante);
-                            return to_route('estudiante.inicio');
-                        } else {
-                            return to_route('welcome')->with('errorLogGoogle', 'Usuario sin permiso para entrar al sistema');
-                        }
-                    } else {
-                        return to_route('welcome')->with('errorLogGoogle', 'Usuario sin permiso para entrar al sistema');
-                    }
+            ->where('correo', '=', $user->email)
+            ->get();
+        if (!empty($datosUser[0])) {
+            $nivel = $datosUser[0]->nivel;
+            //Buscar que tipo de usuario es
+            if ($nivel == 0) { //Administrador
+                $adminCarnet = $datosUser[0]->usuario;
+                $admin = DB::table('administrador')->where('carnet', '=', $adminCarnet)->get();
+                if ($admin[0]->estadoeliminacion == 1) {
+                    //Si no está eliminado, se crean variables de sesión con la información del usuario
+                    $request->session()->put('user', $datosUser);
+                    session()->put('administrador', $admin);
+                    return to_route('admin.inicio');
+                } else {
+                    return to_route('welcome')->with('errorLogGoogle', 'Usuario sin permiso para entrar al sistema');
+                }
+            } else if ($nivel == 1) { //Profesor
+                $profesorCarnet = $datosUser[0]->usuario;
+                $profesor = DB::table('profesor')->where('carnet', '=', $profesorCarnet)->get();
+                if ($profesor[0]->estadoeliminacion == 1) {
+                    //Si no está eliminado, se crean variables de sesión con la información del usuario
+                    $request->session()->put('user', $datosUser);
+                    session()->put('profesor', $profesor);
+                    return to_route('profesor.inicio');
+                } else {
+                    return to_route('welcome')->with('errorLogGoogle', 'Usuario sin permiso para entrar al sistema');
+                }
+            } else if ($nivel == 2) { //Estudiante
+                $estudianteCarnet = $datosUser[0]->usuario;
+                $estudiante = DB::table('estudiante')->where('carnet', '=', $estudianteCarnet)->get();
+                if ($estudiante[0]->estadoeliminacion == 1) {
+                    //Si no está eliminado, se crean variables de sesión con la información del usuario
+                    $request->session()->put('user', $datosUser);
+                    session()->put('estudiante', $estudiante);
+                    return to_route('estudiante.inicio');
+                } else {
+                    return to_route('welcome')->with('errorLogGoogle', 'Usuario sin permiso para entrar al sistema');
+                }
             } else {
-                return to_route('welcome')->with('errorLogGoogle', 'El usuario no está registrado en el sistema');
+                return to_route('welcome')->with('errorLogGoogle', 'Usuario sin permiso para entrar al sistema');
             }
+        } else {
+            return to_route('welcome')->with('errorLogGoogle', 'El usuario no está registrado en el sistema');
+        }
     }
 }
