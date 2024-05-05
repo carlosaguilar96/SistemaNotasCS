@@ -137,6 +137,7 @@ class AdminController extends Controller
         }
     }
 
+    //función para mostrar administradores registrados
     public function index(){
         if(!session()->has('administrador')){
             abort('403');
@@ -146,6 +147,7 @@ class AdminController extends Controller
         return view('admin.index',compact('administradoresActivos','administradoresInactivos'));
     }
 
+    //función para mostrar la información de un administrador
     public function show(string $id){
         if(!session()->has('administrador')){
             abort('403');
@@ -155,6 +157,7 @@ class AdminController extends Controller
         return view('admin.show', compact('administrador'));
     }
 
+    //función que muestra el perfil del administrador logeado
     public function showPerfil(){
         if(!session()->has('administrador')){
             abort('403');
@@ -163,6 +166,7 @@ class AdminController extends Controller
         return view('sitioAdmin.showPerfil',compact('user'));
     }
 
+    //función que retorna el arreglo con la información de un administrador
     public function getAdmin(string $id)
 	{
         if(!session()->has('administrador')){
@@ -172,6 +176,7 @@ class AdminController extends Controller
 		return $administrador;
 	}
 
+    //función para eliminar un administrador
     public function delete(Request $request){
         if(!session()->has('administrador')){
             abort('403');
@@ -185,6 +190,7 @@ class AdminController extends Controller
 		}
     }
 
+    //función para actualizar información de un administrador
     public function update(Request $request){
         if(!session()->has('administrador')){
             abort('403');
@@ -215,6 +221,7 @@ class AdminController extends Controller
         }
     }
 
+    //función para reactivar un administrador
     public function restore(Request $request){
         if(!session()->has('administrador')){
             abort('403');
@@ -228,6 +235,7 @@ class AdminController extends Controller
 		}
     }
 
+    //función para cambiar foto de perfil de un administrador
     public function updateFoto(Request $request){
         if(!session()->has('administrador')){
             abort('403');
@@ -260,6 +268,7 @@ class AdminController extends Controller
         }
     }
 
+    //función para mostrar el formulario para cambiar contraseña
     public function cambiarContraseña(){
         if(!session()->has('administrador')){
             abort('403');
@@ -267,6 +276,7 @@ class AdminController extends Controller
         return view('sitioAdmin.cambiarContraseña');
     }
 
+    //función para obtener información de usuario
     public function getUser(int $id)
 	{
         if(!session()->has('administrador')){
@@ -276,6 +286,7 @@ class AdminController extends Controller
 		return $usuario;
 	}
 
+    //función para realizar cambio de contraseña
     public function cambiarContraseñaAdmin(Request $request){
 
         if(!session()->has('administrador')){

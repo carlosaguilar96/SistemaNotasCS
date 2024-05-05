@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class GrupoController extends Controller
 {
-    //ruta para mostrar grupo
+    //función para mostrar grupo
     public function show(int $id){
         //verificando que la sesión sea de un usuario profesor
         if(!session()->has('profesor')){
@@ -281,6 +281,7 @@ class GrupoController extends Controller
         }
     }
 
+    //función para mostrar formulario para agregar notas
     public function agregarNotas(int $evaluacion, int $idgrupo)
     {
         if (!session()->has('profesor')) {
@@ -312,6 +313,7 @@ class GrupoController extends Controller
         }
     }
 
+    //función para insertar notas a bd
     public function insertarNotas(Request $request)
     {
         if (!session()->has('profesor')) {
@@ -346,6 +348,7 @@ class GrupoController extends Controller
         }
     }
 
+    //función para mostrar notas
     public function mostrarNotas(int $evaluacion, int $idgrupo)
     {
         if (!session()->has('profesor')) {
@@ -378,6 +381,7 @@ class GrupoController extends Controller
         }
     }
 
+    //función para actualizar notas
     public function updateNotas(Request $request){
         if (!session()->has('profesor')) {
             abort('403');
@@ -402,6 +406,7 @@ class GrupoController extends Controller
         }
     }
 
+    //función para obtener información de una nota
     public function getNota(int $id)
     {
         if (!session()->has('profesor')) {

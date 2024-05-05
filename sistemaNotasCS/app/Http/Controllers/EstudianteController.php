@@ -630,6 +630,7 @@ class EstudianteController extends Controller
         }
     }
 
+    //función para mostrar perfil de estudiante
     public function showPerfil()
     {
         if (!session()->has('estudiante')) {
@@ -648,6 +649,7 @@ class EstudianteController extends Controller
         }
     }
 
+    //función para mostrar formulario para cambiar contraseña
     public function cambiarContraseñaEstudent()
     {
         if (!session()->has('estudiante')) {
@@ -656,6 +658,7 @@ class EstudianteController extends Controller
         return view('sitioEstudiante.cambiarContraseña');
     }
 
+    //función para cambiar contraseña de un estudiante
     public function cambiarContraseñaEstudiante(Request $request)
     {
 

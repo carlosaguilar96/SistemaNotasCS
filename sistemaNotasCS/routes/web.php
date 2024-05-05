@@ -39,9 +39,8 @@ Route::get('/recuperarContraseña',[LoginController::class, 'recuperarContraseñ
 Route::get('/recuperación/{id}',[LoginController::class, 'recuperacion'])->name('recuperacion');
 //Ruta para cambiar contraseña
 Route::put('/cambioContraseña/{id}',[LoginController::class, 'cambioContraseña'])->name('cambioContraseña');
-
+//Rutas para realizar autenticación de Google
 Route::get('/auth/redirect', [LoginController::class, 'redirect'])->name('googleRedirect');
- 
 Route::get('/auth/google/callback', [LoginController::class, 'callback'])->name('googleCallback');
 
 //Rutas para el sitio administrador

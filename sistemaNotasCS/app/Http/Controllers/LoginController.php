@@ -210,11 +210,13 @@ class LoginController extends Controller
         return to_route('welcome');
     }
 
+    //función para mostrar el formulario para crear solicitud de contraseña olvidada
     public function passForgot()
     {
         return view('olvideContraseña');
     }
 
+    //función para mandar correo con el enlace para restablecer contraseña
     public function recuperarContraseña(Request $request)
     {
         $request->validate([
@@ -233,10 +235,12 @@ class LoginController extends Controller
 
     }
 
+    //función para mostrar vista con formulario para restablecer contraseña
     public function recuperacion(int $id){
         return view('recuperarContraseña', compact('id'));
     }
 
+    //función para restablecer contraseña
     public function cambioContraseña(int $id, Request $request){
         $request->validate([
             'contraseñaNueva' => ['required'],
@@ -247,10 +251,12 @@ class LoginController extends Controller
         return to_route('welcome')->with('exitoCambioContraseña','La contraseña fue cambiada con éxito, ingrese al sistema');
     }
 
+    //función para seleccionar la cuenta de google
     public function redirect() {
         return Socialite::driver('google')->redirect();
     }
 
+    //función para realizar ingreso a través de google
     public function callback(Request $request) {
         $user = Socialite::driver('google')->stateless()->user();
         $datosUser = DB::table('usuarios')

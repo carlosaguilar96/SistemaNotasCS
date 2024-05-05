@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class GradoController extends Controller
 {
+    //función para mostrar un grado
     public function show(int $id){
         //Validar que el inicio se mostrará al administrador solamente
         if(!session()->has('administrador')){
@@ -31,6 +32,7 @@ class GradoController extends Controller
         return view('grado.show',compact('informacion','materias','materiasDisponibles'));
     }
 
+    //función para obtener detalle grado materia
     public function getDetalleGM(int $id){
         //Validar que el inicio se mostrará al administrador solamente
         if(!session()->has('administrador')){
@@ -43,6 +45,7 @@ class GradoController extends Controller
 		return $detalle[0];
     }
 
+    //función para eliminar detalle grado materia
     public function eliminarDetalleGM(Request $request){
         //Validar que el inicio se mostrará al administrador solamente
         if(!session()->has('administrador')){
@@ -58,6 +61,7 @@ class GradoController extends Controller
         }
     }
 
+    //función para añadir una materia a un grado
     public function agregarDetalleGM(Request $request){
         //Validar que el inicio se mostrará al administrador solamente
         if(!session()->has('administrador')){

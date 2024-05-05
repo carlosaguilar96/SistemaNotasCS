@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class SeccionController extends Controller
 {
+    //función para mostrar secciones por año
     public function index(int $id){
         if(!session()->has('administrador')){
             abort('403');
@@ -32,6 +33,7 @@ class SeccionController extends Controller
         return view('secciones.index', compact('secciones','grados','encargados', 'id','año'));
     }
 
+    //función para almacenar una nueva sección
     public function store(Request $request){
         if(!session()->has('administrador')){
             abort('403');
@@ -79,6 +81,7 @@ class SeccionController extends Controller
         }
     }
 
+    //función para mostrar información de una sección
     public function show(int $id){
         if(!session()->has('administrador')){
             abort('403');
@@ -111,6 +114,7 @@ class SeccionController extends Controller
         return view('secciones.show',compact('id','seccion','estudiantes','profesores','profesores2','estudiantesDisponibles'));
     }
 
+    //función para agregar estudiantes a una sección
     public function addEstudiantes(Request $request){
         if(!session()->has('administrador')){
             abort('403');
@@ -150,6 +154,7 @@ class SeccionController extends Controller
         }
     }
 
+    //función para obtener profesores asignados a las materias de una sección
     public function getProfesoresPorMateria(int $id){
         if(!session()->has('administrador')){
             abort('403');
@@ -162,6 +167,7 @@ class SeccionController extends Controller
         return $profesores;
     }
 
+    //función para asignar un profesor a una materia de una sección
     public function asignarProfesor(Request $request){
         if(!session()->has('administrador')){
             abort('403');
@@ -191,6 +197,7 @@ class SeccionController extends Controller
         }
     }
 
+    //función para ver la sección que el docente es encargado
     public function miSeccion(int $id){
         if(!session()->has('profesor')){
             abort('403');

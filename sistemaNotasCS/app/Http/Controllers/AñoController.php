@@ -11,6 +11,9 @@ class AñoController extends Controller
 {
     //Función para crear e iniciar nuevo año escolar
     public function store(){
+        if (!session()->has('administrador')) {
+            abort('403');
+        }
         DB::beginTransaction();
         $año = new AñoEscolar();
         $año->nombreAño = date('Y');
@@ -18,23 +21,32 @@ class AñoController extends Controller
         $año->save();
         DB::commit();
         DB::table('periodos')->where('idPeriodo','=',1)->update(['estado' => 1]);
-        return to_route('admin.gestionAño')->with('AñoIniciado','El Año '.$año->nombreAño.' ha sido iniciado\n El periodo I ha comenzado');
+        return to_route('admin.gestionAño')->with('AñoIniciado','El Año '.$año->nombreAño.' ha sido iniciado. El periodo I ha comenzado');
     }
 
     //Función para obtener periodo activo
     public function getPeriodoActivo(){
+        if (!session()->has('administrador')) {
+            abort('403');
+        }
         $periodo = DB::table('periodos')->where('estado','=',1)->get();
         return $periodo[0];
     }
 
     //Función para obtener a{o} activo
     public function getAñoActivo(){
+        if (!session()->has('administrador')) {
+            abort('403');
+        }
         $año = DB::table('añoescolar')->where('estadoFinalizacion','=',0)->get();
         return $año[0];
     }
 
     //Función para terminar periodo
     public function terminarPeriodo(){
+        if (!session()->has('administrador')) {
+            abort('403');
+        }
         $periodo = $this->getPeriodoActivo();
         if($periodo->idPeriodo==1){
             DB::table('periodos')->where('idPeriodo','=',2)->update(['estado' => 1]);
@@ -58,6 +70,9 @@ class AñoController extends Controller
 
     //Función para terminar año
     public function terminarAño(){
+        if (!session()->has('administrador')) {
+            abort('403');
+        }
         $año = $this->getAñoActivo();
         $estudiantesActivos = DB::table('detallegradoestudiante')->where('estadoFinalizacion','=',0)->get();
         foreach($estudiantesActivos as $estudiante){
@@ -94,6 +109,9 @@ class AñoController extends Controller
 
     //Función para mostrar historial de años
     public function historialAños(){
+        if (!session()->has('administrador')) {
+            abort('403');
+        }
         $años=DB::table('añoescolar')->where('estadoFinalizacion','=',1)->get();
         return view('años.index',compact('años'));
     }

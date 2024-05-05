@@ -121,6 +121,7 @@ class ProfesorController extends Controller
         }
     }
 
+    //función para mostrar profesores registrados
     public function index()
     {
         //Validar que el inicio se mostrará al administrador solamente
@@ -134,6 +135,7 @@ class ProfesorController extends Controller
         return view('profesor.index', compact('profesoresActivos', 'profesoresInactivos'));
     }
 
+    //función para mostrar información de un profesor
     public function show(string $id)
     {
         //Validar que el inicio se mostrará al administrador solamente
@@ -161,6 +163,7 @@ class ProfesorController extends Controller
         return view('profesor.show', compact('profesor', 'informacion', 'materiasDisponibles'));
     }
 
+    //función para devolver la información de un profesor
     public function getProfesor(string $id)
     {
         //Validar que el inicio se mostrará al administrador solamente
@@ -172,6 +175,7 @@ class ProfesorController extends Controller
         return $profesor;
     }
 
+    //función para obtener las materias que el profesor imparte
     public function getProfesorMateria(int $id)
     {
         //Validar que el inicio se mostrará al administrador solamente
@@ -186,6 +190,7 @@ class ProfesorController extends Controller
         return $detalle[0];
     }
 
+    //función para agregar una nueva materia al profesor
     public function agregarDetallePM(Request $request)
     {
         //Validar que el inicio se mostrará al administrador solamente
@@ -221,6 +226,7 @@ class ProfesorController extends Controller
         }
     }
 
+    //función para borrar una materia al profesor
     public function deleteMateria(Request $request)
     {
         //Validar que el inicio se mostrará al administrador solamente
@@ -237,6 +243,7 @@ class ProfesorController extends Controller
         }
     }
 
+    //función para actualizar información del profesor
     public function update(Request $request)
     {
         //Validar que el inicio se mostrará al administrador solamente
@@ -270,6 +277,7 @@ class ProfesorController extends Controller
         }
     }
 
+    //función para actualizar la foto de perfil de un profesor
     public function updateFoto(Request $request)
     {
         //Validar que el inicio se mostrará al administrador solamente
@@ -305,6 +313,7 @@ class ProfesorController extends Controller
         }
     }
 
+    //función para eliminar profesor
     public function delete(Request $request)
     {
         //Validar que el inicio se mostrará al administrador solamente
@@ -321,6 +330,7 @@ class ProfesorController extends Controller
         }
     }
 
+    //función para reactivar profesor
     public function restore(Request $request)
     {
         //Validar que el inicio se mostrará al administrador solamente
@@ -374,6 +384,7 @@ class ProfesorController extends Controller
         }
     }
 
+    //función para mostrar formulario para cambiar contraseña
     public function cambiarContraseñaProfe()
     {
         if (!session()->has('profesor')) {
@@ -382,6 +393,7 @@ class ProfesorController extends Controller
         return view('sitioProfesor.cambiarContraseña');
     }
 
+    //función para cambiar contraseña
     public function cambiarContraseñaProfesor(Request $request)
     {
 
@@ -414,6 +426,7 @@ class ProfesorController extends Controller
         }
     }
 
+    //función para mostra el perfil de profesor
     public function showPerfil()
     {
         if (!session()->has('profesor')) {
