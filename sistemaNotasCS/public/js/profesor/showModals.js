@@ -20,7 +20,7 @@ const actualizarDatosModal = (id) => {
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error : function(xhr, status) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Ha ocurrido un error al mostrar los datos, pongase en contacto con el administrador",
                 icon: "error",
@@ -51,7 +51,7 @@ const eliminarMateria = (id) => {
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error : function(xhr, status) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Ha ocurrido un error al mostrar los datos, pongase en contacto con el administrador",
                 icon: "error",
@@ -84,7 +84,7 @@ const actualizarFotoModal = (id) => {
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error : function(xhr, status) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Ha ocurrido un error al mostrar los datos, pongase en contacto con el administrador",
                 icon: "error",
@@ -114,7 +114,7 @@ const eliminarProfesor = (id) => {
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error : function(xhr, status) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Ha ocurrido un error al mostrar los datos, pongase en contacto con el administrador",
                 icon: "error",
@@ -144,7 +144,7 @@ const reactivarProfesor = (id) => {
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error : function(xhr, status) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Ha ocurrido un error al mostrar los datos, pongase en contacto con el administrador",
                 icon: "error",
@@ -174,7 +174,7 @@ const actualizarNota = (id) => {
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error : function(xhr, status) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Ha ocurrido un error al mostrar los datos, pongase en contacto con el administrador",
                 icon: "error",

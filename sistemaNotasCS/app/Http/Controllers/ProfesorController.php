@@ -236,7 +236,7 @@ class ProfesorController extends Controller
 
         try {
             $id = $request->input('idA');
-            DB::table('detalleProfesorMateria')->where('idDetalle', $id)->delete();
+            DB::table('detalleprofesormateria')->where('idDetalle', $id)->delete();
             return to_route('admin.showProfesor', $request->input('dui'))->with('exitoEliminacion', 'La materia ha sido eliminada exitosamente.');
         } catch (Exception $e) {
             return to_route('admin.showProfesor', $request->input('dui'))->with('errorEliminacion', 'Ha ocurrido un error al eliminar la materia.');

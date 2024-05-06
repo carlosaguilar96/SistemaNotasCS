@@ -22,7 +22,7 @@ const updateMateria = (id) => {
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error : function(xhr, status) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Ha ocurrido un error al mostrar los datos, pongase en contacto con el administrador",
                 icon: "error",
@@ -52,7 +52,7 @@ const eliminarMateria = (id) => {
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error : function(xhr, status) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Ha ocurrido un error al mostrar los datos, pongase en contacto con el administrador",
                 icon: "error",
@@ -82,7 +82,7 @@ const restoreMateria = (id) => {
         // son pasados como argumentos a la función
         // el objeto de la petición en crudo y código de estatus de la petición
         error : function(xhr, status) {
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Ha ocurrido un error al mostrar los datos, pongase en contacto con el administrador",
                 icon: "error",

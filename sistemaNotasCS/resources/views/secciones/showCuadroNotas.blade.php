@@ -56,19 +56,11 @@
             <div class="col-12">
                 <p class="text-center" style="font-size:16pt; font-weight:bold; color:black">{{$seccion[0]->nombreSeccion}}</p>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="card mb-3" style="max-width: 100%;">
                     <div class="card-body">
                         <h5 class="card-title">Año</h5>
                         <h3><b>{{$año[0]->nombreAño}}</b></h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card mb-3" style="max-width: 100%;">
-                    <div class="card-body">
-                        <h5 class="card-title">Periodo</h5>
-                        <h3><b>@if(isset($periodo[0])){{$periodo[0]->nombrePeriodo}}@else Periodos finalizados @endif</b></h3>
                     </div>
                 </div>
             </div>
